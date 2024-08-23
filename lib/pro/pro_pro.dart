@@ -12,27 +12,27 @@ class ProPro extends StatefulWidget {
 }
 
 class _ProProState extends State<ProPro> with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation animation;
+  late AnimationController proAniC;
+  late Animation proAni;
 
   @override
   void initState() {
-    animationController = AnimationController(vsync: this);
-    animation = Tween<double>(begin: 0, end: 1).chain(CurveTween(curve: Curves.ease)).animate(animationController);
+    proAniC = AnimationController(vsync: this);
+    proAni = Tween<double>(begin: 0, end: 1).chain(CurveTween(curve: Curves.ease)).animate(proAniC);
 
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
-      animationController.duration = const Duration(seconds: 2);
+      proAniC.duration = const Duration(seconds: 2);
 
-      await animationController.forward(from: animationController.value);
+      await proAniC.forward(from: proAniC.value);
       widget.call();
     });
   }
 
   @override
   void dispose() {
-    animationController.dispose();
+    proAniC.dispose();
     super.dispose();
   }
 
@@ -48,10 +48,10 @@ class _ProProState extends State<ProPro> with SingleTickerProviderStateMixin {
       child: ClipRRect(
           borderRadius: BorderRadius.circular(4.w),
           child: AnimatedBuilder(
-            animation: animation,
+            animation: proAni,
             builder: (context, child) => FractionallySizedBox(
               alignment: Alignment.centerLeft,
-              widthFactor: animation.value,
+              widthFactor: proAni.value,
               child: child,
             ),
             child: Container(

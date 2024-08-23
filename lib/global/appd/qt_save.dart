@@ -4,22 +4,25 @@ import 'package:intl/intl.dart';
 
 final GetStorage _save = GetStorage();
 
-const QtSaveKey<int> aa = QtSaveKey(key: "aa", de: 0);
+const QtSaveKey<int> curK = QtSaveKey(key: "curK", de: 0);
+
+//--
+const QtSaveKey<int> freK = QtSaveKey(key: "freK", de: 5);
 
 class QtSaveKey<T> {
   final String key;
-  final T de;
+  final T _de;
 
-  const QtSaveKey({required this.key, required this.de});
+  const QtSaveKey({required this.key, required T de}) : _de = de;
 
-  T def() => de;
+  T def() => _de;
 
   putV(T v) {
     _save.write(key, v);
   }
 
   T getV() {
-    return _save.read<T>(key) ?? de;
+    return _save.read<T>(key) ?? _de;
   }
 
   addV(int operate) {
@@ -41,6 +44,7 @@ initDay() {
     var newDay = DateFormat.yMd().format(DateTime.now());
     if (newDay != _day.getV()) {
       _day.putV(newDay);
+      freK.putV(freK.def());
     }
   }
 }
