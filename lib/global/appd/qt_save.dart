@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 final GetStorage _save = GetStorage();
 
 const QtSaveKey<int> curK = QtSaveKey(key: "curK", de: 0);
+const QtSaveKey<int> levelK = QtSaveKey(key: "levelK", de: 1);
 
 //--
 const QtSaveKey<int> freK = QtSaveKey(key: "freK", de: 5);

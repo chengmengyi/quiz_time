@@ -27,7 +27,13 @@ class QtStr {
   String hhew = "Answer Again";
   String nrree = "Congratulations";
   String hreh = "Upgrade To Level #";
+  String agewft = "Level #";
   String hreww = "Do You Want Yo Continue The Challenge?";
   String hawwe = "Number Of Questions You Can Answer Today Has Reached The Limit. Please Try Again Tomorrow.";
   String heew = "Category";
+  String agtew_n = "Nature";
+  String agtew_h = "History";
+  String agtew_s = "Science";
+  String agtew_m = "Math";
+  String agtew_a = "Animal";
 }
