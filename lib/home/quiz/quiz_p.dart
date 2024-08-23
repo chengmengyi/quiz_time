@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../global/pop/d_pop.dart';
-import 'dpop_level.dart';
-
 class QuizP extends StatefulWidget {
   const QuizP({super.key});
 
@@ -14,10 +11,6 @@ class _QuizPState extends State<QuizP> {
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((callback) async {
-      DPopLevel(5).dPop(context);
-    });
   }
 
   @override

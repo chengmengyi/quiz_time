@@ -23,8 +23,10 @@ class QtStr {
   String gawr = "Get Reward";
   String nrew = "Continue";
   String nrer = "Sorry,Wrong Answer";
+  String gaw = "OK";
   String hhew = "Answer Again";
   String nrree = "Congratulations";
   String hreh = "Upgrade To Level #";
   String hreww = "Do You Want Yo Continue The Challenge?";
+  String hawwe = "Number Of Questions You Can Answer Today Has Reached The Limit. Please Try Again Tomorrow.";
 }

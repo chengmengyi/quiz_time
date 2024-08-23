@@ -15,11 +15,11 @@ class DPopYes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 344.w,
-      height: 368.w,
+      height: 378.w,
       decoration: BoxDecoration(image: getBgDecorationImage("ktyefawf368")),
       child: Column(
         children: [
-          SizedBox(height: 20.w),
+          SizedBox(height: 21.w),
           QtText(
             gQtStr.hew,
             fontSize: 24.sp,

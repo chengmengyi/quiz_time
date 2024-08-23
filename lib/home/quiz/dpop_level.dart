@@ -15,12 +15,12 @@ class DPopLevel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 344.w,
-      height: 456.w,
+      height: 406.w,
       padding: EdgeInsets.symmetric(horizontal: 50.w),
       decoration: BoxDecoration(image: getBgDecorationImage("ktyefawf456")),
       child: Column(
         children: [
-          SizedBox(height: 19.w),
+          SizedBox(height: 17.w),
           QtText(
             gQtStr.nrree,
             fontSize: 24.sp,
@@ -45,7 +45,7 @@ class DPopLevel extends StatelessWidget {
             fontWeight: FontWeight.w400,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 17.w),
+          SizedBox(height: 18.w),
           InkWell(
             onTap: () {
               Navigator.pop(context);
@@ -63,11 +63,6 @@ class DPopLevel extends StatelessWidget {
             ),
           ),
           SizedBox(height: 6.w),
-          InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: QtText(gQtStr.nrew, fontSize: 18.sp, color: const Color(0xFFD9831E), fontWeight: FontWeight.w500))
         ],
       ),
     );
