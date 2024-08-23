@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:quiztime55/global/appd/qt_save.dart';
 import 'package:quiztime55/pro/pro_p.dart';
 
-void main() {
+void main() async{
+  await GetStorage.init();
+  initDay();
+
   runApp(const MyApp());
 }
 

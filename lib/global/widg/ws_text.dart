@@ -6,7 +6,12 @@ class QtText extends StatelessWidget {
   final Color color;
   final FontWeight fontWeight;
 
-  const QtText(this.name, {super.key, required this.fontSize, required this.color, required this.fontWeight});
+  final TextAlign? textAlign;
+
+  final List<Shadow>? shadows;
+
+  const QtText(this.name,
+      {super.key, required this.fontSize, required this.color, required this.fontWeight, this.shadows, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +19,17 @@ class QtText extends StatelessWidget {
     if (fontWeight != FontWeight.w400 && fontWeight != FontWeight.w500 && fontWeight != FontWeight.w600) {
       nn = "Weight Error";
     }
-    return Text(nn, style: TextStyle(fontSize: fontSize, fontFamily: "oirirj", color: color, fontWeight: fontWeight));
+    return Text(
+      textAlign: textAlign,
+      nn,
+      style: TextStyle(
+        fontSize: fontSize,
+        fontFamily: "oirirj",
+        color: color,
+        fontWeight: fontWeight,
+        height: 1.3,
+        shadows: shadows,
+      ),
+    );
   }
 }

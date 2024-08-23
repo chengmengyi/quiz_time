@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quiztime55/global/clas/inp_clas_1.dart';
+import 'package:quiztime55/home/quiz/quiz_p.dart';
+import 'package:quiztime55/home/set/set_p.dart';
 
 import '../global/widg/qt_image.dart';
 
@@ -24,15 +26,9 @@ class _HomePState extends State<HomeP> {
           children: [
             Expanded(
                 child: IndexedStack(
+              alignment: Alignment.topCenter,
               index: i,
-              children: [
-                Container(
-                  width: 300.w,
-                  height: 300.w,
-                  color: Colors.white,
-                ),
-                
-              ],
+              children: const [QuizP(), SetP()],
             )),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

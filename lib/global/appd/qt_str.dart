@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 var gQtStr = QtStr();
 
-String wstrAssembly(String s, String as) {
+String qtRepAs(String s, String as) {
   var rets = "";
   for (var e in s.characters) {
     if (e == "#") {
@@ -15,5 +15,16 @@ String wstrAssembly(String s, String as) {
 }
 
 class QtStr {
-  String afwe = "";
+  String afwe = "Setting";
+  String jrooe = "Privacy Policy";
+  String hrew = "Term Of User";
+  String btnr = "Contact Us";
+  String hew = "Answer Is Right!";
+  String gawr = "Get Reward";
+  String nrew = "Continue";
+  String nrer = "Sorry,Wrong Answer";
+  String hhew = "Answer Again";
+  String nrree = "Congratulations";
+  String hreh = "Upgrade To Level #";
+  String hreww = "Do You Want Yo Continue The Challenge?";
 }
