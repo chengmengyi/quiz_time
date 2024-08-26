@@ -36,4 +36,6 @@ class QtStr {
   String agtew_s = "Science";
   String agtew_m = "Math";
   String agtew_a = "Animal";
+  String hreerw = "Play";
+  String bher = "Complete";
 }

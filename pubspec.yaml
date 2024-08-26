@@ -64,7 +64,7 @@ dependencies:
 #  connectivity_plus: 6.0.4 #网络状态
 #  flutter_lifecycle_detector: 0.0.6 #app生命周期
   #  flutter_app_lifecycle: 0.0.1 #app生命周期
-#  synchronized: 3.1.0+1
+  synchronized: 3.2.0
 
 #  adjust_sdk: 4.38.2
 #  applovin_max: 3.11.0

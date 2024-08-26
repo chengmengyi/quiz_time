@@ -4,6 +4,8 @@ import 'package:quiztime55/global/appd/qt_str.dart';
 import 'package:quiztime55/home/quiz/cur_v.dart';
 import 'package:quiztime55/home/quiz/quiz_con_v.dart';
 
+import '../../global/appd/qt_event.dart';
+import '../../global/appd/qt_quiz_hep.dart';
 import '../../global/clas/inp_clas_1.dart';
 import '../../global/widg/qt_image.dart';
 import '../../global/widg/ws_text.dart';
@@ -25,8 +27,12 @@ class QuizP extends StatelessWidget {
             const FreV(),
             const Spacer(),
             InkWell(
-              onTap: () {
-                Navigator.push(context, getMaterialRoute(const CatP()));
+              onTap: () async {
+                await QtQuizHep.loadQtData();
+                var nk = await Navigator.push(context, getMaterialRoute(const CatP()));
+                if (nk != null) {
+                  QtEvent.send(QtEvent.quizNk, nk);
+                }
               },
               child: Container(
                 height: 28.w,
@@ -35,10 +41,11 @@ class QuizP extends StatelessWidget {
                   children: [
                     SizedBox(width: 10.w),
                     QtImage("herwrg", w: 20.w, h: 20.w),
-                    SizedBox(width: 10.w),
+                    SizedBox(width: 8.w),
                     QtText(gQtStr.heew, fontSize: 14.sp, color: Colors.white, fontWeight: FontWeight.w500),
-                    //TODO 缺个图标
-                    SizedBox(width: 15.w)
+                    SizedBox(width: 3.w),
+                    QtImage("gegrera", w: 11.w, h: 11.w),
+                    SizedBox(width: 12.w)
                   ],
                 ),
               ),

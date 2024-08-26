@@ -4,10 +4,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:quiztime55/global/appd/qt_save.dart';
 import 'package:quiztime55/pro/pro_p.dart';
 
-void main() async{
+import 'global/appd/qt_quiz_hep.dart';
+
+void main() async {
   await GetStorage.init();
   initDay();
 
+  QtQuizHep.loadQtData();
   runApp(const MyApp());
 }
 

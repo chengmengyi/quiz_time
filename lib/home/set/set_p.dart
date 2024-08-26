@@ -38,11 +38,11 @@ class SetP extends StatelessWidget {
         ),
         SizedBox(height: 23.w),
         _item("ygeewe", gQtStr.jrooe, () {
-          launchUrl(Uri.parse("https://www.google.com/"));
+          launchUrl(Uri.parse("http://quizrightanswer.com/privacy/"));
         }),
         SizedBox(height: 2.w),
         _item("krui", gQtStr.hrew, () {
-          launchUrl(Uri.parse("https://www.google.com/"));
+          launchUrl(Uri.parse("https://quizrightanswer.com/terms/"));
         }),
         SizedBox(height: 2.w),
         _item("cuer", gQtStr.btnr, () {

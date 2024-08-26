@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,7 +9,6 @@ import '../../global/clas/inp_clas_1.dart';
 import '../../global/widg/qt_image.dart';
 import '../../global/widg/ws_text.dart';
 
-//TODO 进入该页确保json解析完成，可在跳转的地方await json 初始化（需枷锁）
 class CatP extends StatelessWidget {
   const CatP({super.key});
 
@@ -37,24 +38,28 @@ class CatP extends StatelessWidget {
               ],
             ),
             SizedBox(height: 18.w),
-            qPitem(QtQuizHep.QH_NK_N),
-            qPitem(QtQuizHep.QH_NK_H),
-            qPitem(QtQuizHep.QH_NK_S),
-            qPitem(QtQuizHep.QH_NK_M),
-            qPitem(QtQuizHep.QH_NK_A),
+            qPitem(QtQuizHep.QH_NK_N, context),
+            qPitem(QtQuizHep.QH_NK_H, context),
+            qPitem(QtQuizHep.QH_NK_S, context),
+            qPitem(QtQuizHep.QH_NK_M, context),
+            qPitem(QtQuizHep.QH_NK_A, context),
           ],
         )),
       ),
     );
   }
 
-  Widget qPitem(String nk) {
+  Widget qPitem(String nk, BuildContext context) {
+    var max = QtQuizHep.getItems(nk)?.length ?? 1;
+    var inp = QtQuizHep.getKeyPosSave(nk).getV();
+    var isCom = inp >= max;
+
     return Container(
       width: 352.w,
       height: 96.w,
-      padding: EdgeInsets.symmetric(horizontal: 26.w),
       decoration: BoxDecoration(image: getBgDecorationImage("ghteww")),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Stack(
             children: [
@@ -76,12 +81,12 @@ class CatP extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  catPro(0.1),
+                  catPro(isCom, inp / max),
                   SizedBox(width: 4.w),
                   QtText(
-                    "(x/x)",
+                    "($inp/$max)",
                     fontSize: 12.sp,
-                    color: const Color(0xFFED7200),
+                    color: isCom ? const Color(0xFF3DB24F) : const Color(0xFFED7200),
                     fontWeight: FontWeight.w400,
                   )
                 ],
@@ -89,14 +94,31 @@ class CatP extends StatelessWidget {
             ],
           ),
           SizedBox(width: 2.w),
-          //TODO 按钮
+          InkWell(
+            onTap: () {
+              if (!isCom) {
+                Navigator.pop(context, nk);
+              }
+            },
+            child: Container(
+              width: 68.w,
+              height: 32.w,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(image: getBgDecorationImage(isCom ? "gawerw68_g" : "gawerw68")),
+              child: QtText(isCom ? gQtStr.bher : gQtStr.hreerw,
+                  fontSize: 12.sp,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400,
+                  shadows: [Shadow(color: Colors.black.withOpacity(0.25), blurRadius: 1.w, offset: Offset(0, 0.5.w))]),
+            ),
+          )
         ],
       ),
     );
   }
 
   //进度条
-  Widget catPro(double d) {
+  Widget catPro(bool isCom, double d) {
     return Container(
         width: 140.w,
         height: 12.w,
@@ -104,14 +126,18 @@ class CatP extends StatelessWidget {
         decoration: BoxDecoration(image: getBgDecorationImage("nyrtee")),
         child: FractionallySizedBox(
           alignment: Alignment.centerLeft,
-          widthFactor: d,
+          widthFactor: min(d, 1),
           child: Container(
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.w),
-              gradient: const LinearGradient(
-                  begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFFFFF681), Color(0xFFFFAE12)]),
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: isCom
+                      ? [const Color(0xFFFFF681), const Color(0xFFCEFFA7), const Color(0xFF41C556)]
+                      : [const Color(0xFFFFF681), const Color(0xFFFFAE12)]),
             ),
           ),
         ));
