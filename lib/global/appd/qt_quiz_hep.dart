@@ -69,6 +69,17 @@ class QtQuizHep {
     return List.from(data![nk]);
   }
 
+  static int getQuizAllLength(){
+    if(null==data){
+      return 0;
+    }
+    var l=0;
+    data?.forEach((key,value){
+      l+=(getItems(key)??[]).length;
+    });
+    return l;
+  }
+
   static String checkNext() {
     if (getKeyPosSave(QtQuizHep.QH_NK_N).getV() < (getItems(QtQuizHep.QH_NK_N)?.length ?? 0)) {
       return QtQuizHep.QH_NK_N;

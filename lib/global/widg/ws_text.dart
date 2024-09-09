@@ -9,9 +9,18 @@ class QtText extends StatelessWidget {
   final TextAlign? textAlign;
 
   final List<Shadow>? shadows;
+  final int? maxLines;
 
   const QtText(this.name,
-      {super.key, required this.fontSize, required this.color, required this.fontWeight, this.shadows, this.textAlign});
+      {
+        super.key,
+        required this.fontSize,
+        required this.color,
+        required this.fontWeight,
+        this.shadows,
+        this.textAlign,
+        this.maxLines,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +31,7 @@ class QtText extends StatelessWidget {
     return Text(
       textAlign: textAlign,
       nn,
+      maxLines: maxLines,
       style: TextStyle(
         fontSize: fontSize,
         fontFamily: "oirirj",

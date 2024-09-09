@@ -50,7 +50,7 @@ dependencies:
   #  pedometer: 4.0.1 #记步
   #  marquee: 2.2.3 #跑马灯
   #  collection: 1.18.0 #列表集合操作
-#  fluttertoast: 8.2.6 #toast
+  fluttertoast: 8.2.6 #toast
   #  flutter_local_notifications: 17.2.2 #通知
 #  flutter_local_notifications:
 #    path: plugin/flutter_local_notifications-17.2.2 #通知本地导入
@@ -65,6 +65,9 @@ dependencies:
 #  flutter_lifecycle_detector: 0.0.6 #app生命周期
   #  flutter_app_lifecycle: 0.0.1 #app生命周期
   synchronized: 3.2.0
+  decimal: 3.0.2
+  flutter_max_ad: 0.3.0
+  get: 4.6.6
 
 #  adjust_sdk: 4.38.2
 #  applovin_max: 3.11.0

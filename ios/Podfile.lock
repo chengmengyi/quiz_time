@@ -1,27 +1,91 @@
 PODS:
+  - Adjust (4.31.0):
+    - Adjust/Core (= 4.31.0)
+  - Adjust/Core (4.31.0)
+  - adjust_sdk (4.31.0):
+    - Adjust (= 4.31.0)
+    - Flutter
+  - applovin_max (3.9.2):
+    - AppLovinSDK (= 12.4.1)
+    - Flutter
+  - AppLovinSDK (12.4.1)
+  - facebook_app_events (0.0.1):
+    - FBAudienceNetwork (~> 6.15)
+    - FBSDKCoreKit (~> 17.0)
+    - Flutter
+  - FBAEMKit (17.0.3):
+    - FBSDKCoreKit_Basics (= 17.0.3)
+  - FBAudienceNetwork (6.15.2)
+  - FBSDKCoreKit (17.0.3):
+    - FBAEMKit (= 17.0.3)
+    - FBSDKCoreKit_Basics (= 17.0.3)
+  - FBSDKCoreKit_Basics (17.0.3)
   - Flutter (1.0.0)
+  - flutter_max_ad (0.0.1):
+    - Flutter
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - Toast (4.1.1)
   - url_launcher_ios (0.0.1):
     - Flutter
 
 DEPENDENCIES:
+  - adjust_sdk (from `.symlinks/plugins/adjust_sdk/ios`)
+  - applovin_max (from `.symlinks/plugins/applovin_max/ios`)
+  - facebook_app_events (from `.symlinks/plugins/facebook_app_events/ios`)
   - Flutter (from `Flutter`)
+  - flutter_max_ad (from `.symlinks/plugins/flutter_max_ad/ios`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
+SPEC REPOS:
+  trunk:
+    - Adjust
+    - AppLovinSDK
+    - FBAEMKit
+    - FBAudienceNetwork
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - Toast
+
 EXTERNAL SOURCES:
+  adjust_sdk:
+    :path: ".symlinks/plugins/adjust_sdk/ios"
+  applovin_max:
+    :path: ".symlinks/plugins/applovin_max/ios"
+  facebook_app_events:
+    :path: ".symlinks/plugins/facebook_app_events/ios"
   Flutter:
     :path: Flutter
+  flutter_max_ad:
+    :path: ".symlinks/plugins/flutter_max_ad/ios"
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  Adjust: 8d4c9da5bb1d161db5d35dd091e34a641c9511ef
+  adjust_sdk: 5e02361d2ccc4b1fd9dcd9a9fffa744b17f65f28
+  applovin_max: f4c696080f11d8c361c7130ca1a6af8c144b99d8
+  AppLovinSDK: c57ad0d34625c971d2db127f8ef60570b28ff51a
+  facebook_app_events: acb7c266406d3e3592bcf846d7184172ecfd6492
+  FBAEMKit: 9900b2edd99a2d21629a6277e6166f14c6215799
+  FBAudienceNetwork: 2457a89b45e2596241fd81b0c2fd8cb6f6053869
+  FBSDKCoreKit: 0791f8f68a8630931a4c12aa23a56cc021551596
+  FBSDKCoreKit_Basics: 46d6b472c0dd0a5a7e972c025033d1c567f54eb4
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_max_ad: 5db00d299b263bfcd559c02a630cdc4d29f7c8df
+  fluttertoast: e9a18c7be5413da53898f660530c56f35edfba9c
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796

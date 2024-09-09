@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quiztime55/b/home/home.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
 import 'package:quiztime55/global/widg/ws_text.dart';
 import 'package:quiztime55/pro/pro_pro.dart';
@@ -28,7 +29,8 @@ class ProP extends StatelessWidget {
           Positioned(
             bottom: 125.w,
             child: ProPro(() {
-              Navigator.pushReplacement(context, getMaterialRoute(const HomeP()));
+              // Navigator.pushReplacement(context, getMaterialRoute(const HomeP()));
+              Navigator.pushReplacement(context, getMaterialRoute(Home()));
             }),
           ),
         ],
