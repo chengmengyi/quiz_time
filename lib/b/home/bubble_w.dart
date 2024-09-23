@@ -3,8 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_ad/ad/ad_type.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quiztime55/b/hep/ad_hep.dart';
+import 'package:quiztime55/b/hep/ad/ad_pppp.dart';
+import 'package:quiztime55/b/hep/ad/show_ad_hep.dart';
 import 'package:quiztime55/b/hep/info_hep.dart';
+import 'package:quiztime55/b/hep/sql/sql_hep.dart';
+import 'package:quiztime55/b/hep/task/task_hep.dart';
+import 'package:quiztime55/b/hep/tttt/point_name.dart';
+import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
 import 'package:quiztime55/b/hep/value_hep.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
 import 'package:quiztime55/global/widg/ws_text.dart';
@@ -72,7 +77,7 @@ class _BubbleWState extends State<BubbleW>{
   _startTimer(){
     var size = globalKey.currentContext?.size;
     var sWidth=(size?.width??760.w)-68.w;
-    var sHeight=(size?.height??360.w)-68.w;
+    var sHeight=(size?.height??360.w)-64.w;
     _timer=Timer.periodic(const Duration(milliseconds: 10), (timer) {
       if(you){
         cx++;
@@ -112,17 +117,20 @@ class _BubbleWState extends State<BubbleW>{
   }
 
   _clickBubble(){
+    TTTTHep.instance.pointEvent(PointName.float_c);
     setState(() {
       show=false;
     });
+    SqlHep.instance.updateTaskCompletedNumRecord(TaskType.pop);
     if(!receivedBubbleBean.getV()){
       InfoHep.instance.addCoins(addNum);
       receivedBubbleBean.putV(true);
       _delayShowBubble();
       return;
     }
-    AdHep.instance.showAd(
+    ShowAdHep.instance.showAd(
       adType: AdType.reward,
+      adPPPP: AdPPPP.kztym_rv_magic_gold,
       hiddenAd: (){
         InfoHep.instance.addCoins(addNum);
         _delayShowBubble();
@@ -134,7 +142,7 @@ class _BubbleWState extends State<BubbleW>{
   }
 
   _delayShowBubble(){
-    Future.delayed(Duration(seconds: InfoHep.instance.bubbleShowTime),(){
+    Future.delayed(Duration(seconds: ValueHep.instance.floatDismissSecond),(){
       setState(() {
         addNum=ValueHep.instance.getFloatCoins();
         show=true;

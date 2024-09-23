@@ -1,3 +1,5 @@
+import 'package:quiztime55/b/hep/sql/sql_hep.dart';
+import 'package:quiztime55/b/hep/task/task_hep.dart';
 import 'package:quiztime55/global/appd/qt_quiz_hep.dart';
 import 'package:quiztime55/global/appd/qt_save.dart';
 
@@ -57,5 +59,6 @@ class QuizHep{
   updateAnswerRight(){
     answerRightNum++;
     answerRightBean.putV(answerRightNum);
+    SqlHep.instance.updateTaskCompletedNumRecord(TaskType.quiz);
   }
 }

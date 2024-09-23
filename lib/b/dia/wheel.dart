@@ -3,9 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_ad/ad/ad_type.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quiztime55/b/hep/ad_hep.dart';
+import 'package:quiztime55/b/hep/ad/ad_pppp.dart';
+import 'package:quiztime55/b/hep/ad/show_ad_hep.dart';
 import 'package:quiztime55/b/hep/heppppp.dart';
 import 'package:quiztime55/b/hep/info_hep.dart';
+import 'package:quiztime55/b/hep/sql/sql_hep.dart';
+import 'package:quiztime55/b/hep/tttt/point_name.dart';
+import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
 import 'package:quiztime55/b/hep/value_hep.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
 import 'package:quiztime55/global/widg/ws_text.dart';
@@ -30,6 +34,7 @@ class _WheelState extends  State<WheelDialog>{
   @override
   void initState() {
     super.initState();
+    TTTTHep.instance.pointEvent(PointName.wheel_pop,params: {"source_from":_getSourceFrom()});
     if(widget.wheelFrom==WheelFrom.oldUser){
       Future((){
         _startWheel();
@@ -140,12 +145,13 @@ class _WheelState extends  State<WheelDialog>{
 
   _stopWheel(int wheelAddNum){
     _wheelTimer?.cancel();
-    Future.delayed(const Duration(milliseconds: 800),(){
+    Future.delayed(const Duration(milliseconds: 800),()async{
       _wheelTimer=null;
       switch(widget.wheelFrom){
         case WheelFrom.oldUser:
-          AdHep.instance.showAd(
+          ShowAdHep.instance.showAd(
             adType: AdType.inter,
+            adPPPP: AdPPPP.kztym_int_spin_step,
             hiddenAd: (){
               closeDialog();
               InfoHep.instance.addCoins(wheelAddNum.toDouble());
@@ -164,8 +170,10 @@ class _WheelState extends  State<WheelDialog>{
           widget.dismissDialog.call(wheelAddNum.toDouble());
           break;
         case WheelFrom.progress:
-          AdHep.instance.showAd(
+          var start = await SqlHep.instance.checkStartCashTask();
+          ShowAdHep.instance.showAd(
             adType: AdType.inter,
+            adPPPP: start?AdPPPP.kztym_int_task_spin_go:AdPPPP.kztym_int_spin_go,
             hiddenAd: (){
               closeDialog();
               InfoHep.instance.addCoins(wheelAddNum.toDouble());
@@ -180,11 +188,18 @@ class _WheelState extends  State<WheelDialog>{
     });
   }
 
-  _clickClose(BuildContext context){
+  _clickClose(BuildContext context)async{
     _wheelTimer?.cancel();
     _wheelTimer=null;
-    AdHep.instance.showAd(
+    if(widget.wheelFrom==WheelFrom.answer8Guide){
+      closeDialog();
+      widget.dismissDialog.call(ValueHep.instance.getWheelAddNum().toDouble());
+      return;
+    }
+    var start = await SqlHep.instance.checkStartCashTask();
+    ShowAdHep.instance.showAd(
       adType: AdType.inter,
+      adPPPP: start?AdPPPP.kztym_int_task_close_spin:AdPPPP.kztym_int_close_spin,
       hiddenAd: (){
         Navigator.pop(context);
       },
@@ -192,6 +207,14 @@ class _WheelState extends  State<WheelDialog>{
         Navigator.pop(context);
       },
     );
+  }
+
+  String _getSourceFrom(){
+    switch(widget.wheelFrom){
+      case WheelFrom.answer8Guide: return "guide";
+      case WheelFrom.progress: return "quiz";
+      case WheelFrom.oldUser: return "old";
+    }
   }
 
   @override

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quiztime55/b/hep/notifi/notifi_hep.dart';
+import 'package:quiztime55/b/hep/tttt/point_name.dart';
+import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
 
 //进度条
 class ProPro extends StatefulWidget {
@@ -23,11 +26,13 @@ class _ProProState extends State<ProPro> with SingleTickerProviderStateMixin {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
-      proAniC.duration = const Duration(seconds: 2);
+      proAniC.duration = const Duration(seconds: 10);
 
       await proAniC.forward(from: proAniC.value);
       widget.call();
     });
+
+    _launchPoint();
   }
 
   @override
@@ -64,5 +69,11 @@ class _ProProState extends State<ProPro> with SingleTickerProviderStateMixin {
             ),
           )),
     );
+  }
+
+  _launchPoint()async{
+    var details = await NotifiHep.instance.getNotificationAppLaunchDetails();
+    TTTTHep.instance.pointEvent(PointName.launch_page,params: {"source_from":details?.didNotificationLaunchApp==true?"push":"icon"});
+    NotifiHep.instance.tbaPointClickNotifi(details?.notificationResponse?.id);
   }
 }

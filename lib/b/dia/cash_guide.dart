@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quiztime55/b/hep/info_hep.dart';
+import 'package:quiztime55/b/hep/tttt/point_name.dart';
+import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
 import 'package:quiztime55/b/hep/value_hep.dart';
 import 'package:quiztime55/b/home/finger_w.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
 import 'package:quiztime55/global/widg/ws_text.dart';
 
 class CashGuide extends StatelessWidget{
+  var addNum=ValueHep.instance.getNewUserCoins();
   Function(bool toCash) dismissDialog;
   CashGuide({required this.dismissDialog});
 
@@ -35,13 +39,14 @@ class CashGuide extends StatelessWidget{
                 children: [
                   QtImage("money1", w: 160.w, h: 160.w),
                   QtText(
-                    "+\$${ValueHep.instance.getNewUserCoins()}",
+                    "+\$$addNum",
                     fontSize: 32.sp,
                     color: const Color(0xffF26805),
                     fontWeight: FontWeight.w500,
                   ),
                   InkWell(
                     onTap: (){
+                      TTTTHep.instance.pointEvent(PointName.quiz_guide_cash_pop_c);
                       _click(true, context);
                     },
                     child: Stack(
@@ -72,6 +77,7 @@ class CashGuide extends StatelessWidget{
 
   _click(bool toCash,context){
     Navigator.pop(context);
-    dismissDialog.call(!toCash);
+    InfoHep.instance.addCoins(addNum.toDouble());
+    dismissDialog.call(toCash);
   }
 }

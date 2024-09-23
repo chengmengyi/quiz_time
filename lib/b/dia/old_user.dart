@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quiztime55/b/hep/tttt/point_name.dart';
+import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
 import 'package:quiztime55/global/widg/ws_text.dart';
 
@@ -38,6 +40,7 @@ class OldUser extends StatelessWidget{
                       SizedBox(height: 12.h,),
                       InkWell(
                         onTap: (){
+                          TTTTHep.instance.pointEvent(PointName.old_user_pop_c);
                           Navigator.pop(context);
                           dismissDialog.call(true);
                         },

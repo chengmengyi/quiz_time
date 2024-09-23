@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quiztime55/b/hep/pro_hep.dart';
+import 'package:quiztime55/b/hep/tttt/point_name.dart';
+import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
 import 'package:quiztime55/b/home/finger_w.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
 import 'package:quiztime55/global/widg/ws_text.dart';
@@ -22,10 +24,11 @@ class ProgressBoxOver extends StatelessWidget{
         child: Stack(
           children: [
             Positioned(
-              top: offset.dy,
+              top: offset.dy+18.h,
               left: offset.dx+9.w,
               child: InkWell(
                 onTap: (){
+                  TTTTHep.instance.pointEvent(PointName.box_guide_c);
                   ProHep.instance.hideOverlay();
                   dismissOver.call();
                 },

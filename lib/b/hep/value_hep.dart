@@ -1,10 +1,18 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:decimal/decimal.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_check_adjust_cloak/flutter_check_adjust_cloak.dart';
+import 'package:flutter_max_ad/ad/ad_type.dart';
 import 'package:quiztime55/b/hep/heppppp.dart';
 import 'package:quiztime55/b/hep/info_hep.dart';
+import 'package:quiztime55/global/appd/qt_save.dart';
 import 'package:synchronized/synchronized.dart';
+
+const QtSaveKey<String> valueConfBean = QtSaveKey(key: "valueConf", de: "");
+
 
 class ValueHep{
   factory ValueHep()=>_getInstance();
@@ -21,11 +29,17 @@ class ValueHep{
 
   ValueHep._internal();
 
+  var floatDismissSecond=10;
+
   loadQtData() async {
-    await _lock.synchronized(() async {
-      var s = await rootBundle.loadString("qtf/f2/value.txt");
-      _valueB=ValueB.fromJson(jsonDecode(_decode(s)));
-    });
+    if(valueConfBean.getV().isNotEmpty){
+      _valueB=ValueB.fromJson(jsonDecode(valueConfBean.getV()));
+    }else{
+      await _lock.synchronized(() async {
+        var s = await rootBundle.loadString("qtf/f2/value.txt");
+        _valueB=ValueB.fromJson(jsonDecode(_decode(s)));
+      });
+    }
   }
 
   int getNewUserCoins()=>_valueB?.newPrize??0;
@@ -37,6 +51,43 @@ class ValueHep{
   double getBoxCoins()=>_getRandomValueByList(_valueB?.boxPrize??[]);
 
   double getSignCoins()=>_getRandomValueByList(_valueB?.checkPrize??[]);
+
+  List<int> getCashMoneyList()=>_valueB?.eqRange??[800,1000,1500,2000];
+
+  int getBoxAddMaxCoins(){
+    var list = _valueB?.boxPrize??[];
+    if(list.isEmpty){
+      return 1;
+    }
+    var userCoins = InfoHep.instance.userCoins;
+    if(userCoins>=(list.last.endNumber??800)){
+      return list.last.prize?.last??1;
+    }
+    for (var value in list) {
+      if(userCoins>=(value.firstNumber??0)&&userCoins<(value.endNumber??800)){
+        return value.prize?.last??1;
+      }
+    }
+    return 1;
+  }
+
+  Task getTaskByIndex(int index){
+    try{
+      return (_valueB?.task??[])[index];
+    }catch(e){
+      return Task(title: "quiz",data: 50,time: 1);
+    }
+  }
+
+  Task getTaskByTitle(String title){
+    try{
+      var list = _valueB?.task??[];
+      var indexWhere = list.indexWhere((value)=>value.title==title);
+      return list[indexWhere];
+    }catch(e){
+      return Task(title: "quiz",data: 50,time: 1);
+    }
+  }
 
   double _getRandomValueByList(List<QuizPrize> list){
     if(list.isEmpty){
@@ -76,12 +127,66 @@ class ValueHep{
     return 80;
   }
 
+  bool canShowAdByType(AdType type){
+    // if(kDebugMode){
+    //   return true;
+    // }
+    List<IntadPoint> list = type==AdType.inter?(_valueB?.intadPoint??[]):type==AdType.reward?(_valueB?.rvadPoint??[]):[];
+    if(list.isEmpty){
+      return false;
+    }
+    var userCoins = InfoHep.instance.userCoins;
+    if(userCoins>=(list.last.endNumber??800)){
+      return Random().nextInt(100)<(list.last.point??0);
+    }
+    for(var v in list){
+      if(userCoins>=(v.firstNumber??0)&&userCoins<(v.endNumber??0)){
+        return Random().nextInt(100)<(v.point??0);
+      }
+    }
+    return false;
+  }
+
   double _getMaxMin(min,max)=>(Random().nextDouble()*(max-min)+min).toStringAsFixed(2).toDou();
 
   String _decode(String st) {
     List<int> bytes = base64Decode(st.replaceAll(RegExp(r'\s|\n'), ''));
     String result = utf8.decode(bytes);
     return result.replaceFirst(RegExp(r'\s|\n'), '', result.length - 1);
+  }
+
+  int getNextCashNum(){
+    var list = getCashMoneyList();
+    for (var value in list) {
+      if(InfoHep.instance.userCoins<value){
+        return value;
+      }
+    }
+    return list.last;
+  }
+
+  double getToCashEarnNum(){
+    var nextCashNum = getNextCashNum();
+    if(InfoHep.instance.userCoins>=nextCashNum){
+      return 0;
+    }
+    var result = (Decimal.fromInt(nextCashNum)-Decimal.parse("${InfoHep.instance.userCoins}")).toDouble();
+    if(result<=0){
+      return 0;
+    }
+    return result;
+  }
+
+  getFirebaseConfig()async{
+    var value = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("qt_number");
+    if(value.isNotEmpty&&valueConfBean.getV().isEmpty){
+      valueConfBean.putV(value);
+      loadQtData();
+    }
+    var s = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("float_dis");
+    if(s.isNotEmpty){
+      floatDismissSecond=s.toint(10);
+    }
   }
 }
 
@@ -133,7 +238,14 @@ class ValueB {
       });
     }
     wheel = json['wheel'] != null ? Wheel.fromJson(json['wheel']) : null;
-    task = json['task'] != null ? Task.fromJson(json['task']) : null;
+
+    if (json['tixian_task'] != null) {
+      task = [];
+      json['tixian_task'].forEach((v) {
+        task?.add(Task.fromJson(v));
+      });
+    }
+
     if (json['check_prize'] != null) {
       checkPrize = [];
       json['check_prize'].forEach((v) {
@@ -149,30 +261,24 @@ class ValueB {
   List<QuizPrize>? floatPrize;
   List<QuizPrize>? boxPrize;
   Wheel? wheel;
-  Task? task;
+  List<Task>? task;
   List<QuizPrize>? checkPrize;
 }
 
 class Task {
   Task({
-    this.video,
-    this.box,
-    this.wheel,
-    this.float,
-    this.check,});
+    this.title,
+    this.data,
+    this.time,});
 
   Task.fromJson(dynamic json) {
-    video = json['video'];
-    box = json['box'];
-    wheel = json['wheel'];
-    float = json['float'];
-    check = json['check'];
+    title = json['title'];
+    data = json['data'];
+    time = json['time'];
   }
-  int? video;
-  int? box;
-  int? wheel;
-  int? float;
-  int? check;
+  String? title;
+  int? data;
+  int? time;
 }
 
 class Wheel {

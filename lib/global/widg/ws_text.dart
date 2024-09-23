@@ -10,6 +10,7 @@ class QtText extends StatelessWidget {
 
   final List<Shadow>? shadows;
   final int? maxLines;
+  final TextOverflow? overflow;
 
   const QtText(this.name,
       {
@@ -20,6 +21,7 @@ class QtText extends StatelessWidget {
         this.shadows,
         this.textAlign,
         this.maxLines,
+        this.overflow,
       });
 
   @override
@@ -39,6 +41,7 @@ class QtText extends StatelessWidget {
         fontWeight: fontWeight,
         height: 1.3,
         shadows: shadows,
+        overflow: overflow,
       ),
     );
   }

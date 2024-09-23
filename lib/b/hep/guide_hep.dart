@@ -15,8 +15,12 @@ class OldUserGuideStep{
   static const String completed="completed";
 }
 
+enum RightAnswerFingerFrom{
+  newUser,other,
+}
+
 abstract class GuideListener{
-  showRightAnswerFinger();
+  showRightAnswerFinger(RightAnswerFingerFrom from);
   showCashGuideDialog();
   showBubble();
   showOldUserDialog();
@@ -49,7 +53,7 @@ class GuideHep {
   showGuide(){
     switch(newGuideBean.getV()){
       case NewUserGuideStep.rightAnswerFinger:
-        _guideListener?.showRightAnswerFinger();
+        _guideListener?.showRightAnswerFinger(RightAnswerFingerFrom.newUser);
         break;
       case NewUserGuideStep.cashDialog:
         _guideListener?.showCashGuideDialog();

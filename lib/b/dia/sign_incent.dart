@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_max_ad/ad/ad_type.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quiztime55/b/hep/ad_hep.dart';
+import 'package:quiztime55/b/hep/ad/ad_pppp.dart';
+import 'package:quiztime55/b/hep/ad/show_ad_hep.dart';
 import 'package:quiztime55/b/hep/heppppp.dart';
 import 'package:quiztime55/b/hep/info_hep.dart';
+import 'package:quiztime55/b/hep/tttt/point_name.dart';
+import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
 import 'package:quiztime55/b/hep/value_hep.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
 import 'package:quiztime55/global/widg/ws_text.dart';
@@ -82,6 +85,7 @@ class SignIncent extends StatelessWidget{
 
   _douBtnWidget()=>InkWell(
     onTap: (){
+      TTTTHep.instance.pointEvent(PointName.daily_pop_c,params: {"source_from":"check"});
       _clickDou();
     },
     child: Stack(
@@ -109,8 +113,9 @@ class SignIncent extends StatelessWidget{
 
   _clickDou(){
     var add = signSAddNum.tox2();
-    AdHep.instance.showAd(
+    ShowAdHep.instance.showAd(
       adType: AdType.reward,
+      adPPPP: AdPPPP.kztym_rv_double_only,
       hiddenAd: (){
         closeDialog();
         InfoHep.instance.addCoins(add);

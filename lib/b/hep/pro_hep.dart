@@ -4,6 +4,10 @@ import 'package:quiztime55/b/dia/wheel.dart';
 import 'package:quiztime55/b/hep/heppppp.dart';
 import 'package:quiztime55/b/hep/info_hep.dart';
 import 'package:quiztime55/b/hep/quiz_hep.dart';
+import 'package:quiztime55/b/hep/sql/sql_hep.dart';
+import 'package:quiztime55/b/hep/task/task_hep.dart';
+import 'package:quiztime55/b/hep/tttt/point_name.dart';
+import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
 import 'package:quiztime55/b/hep/value_hep.dart';
 import 'package:quiztime55/b/overlay/progress_box_over.dart';
 import 'package:quiztime55/b/overlay/progress_wheel_over.dart';
@@ -49,7 +53,7 @@ class ProHep{
   updateProgress(){
     progressList[QuizHep.instance.answerRightNum-1]=_createProBean(QuizHep.instance.answerRightNum-1);
     var indexWhere = progressList.indexWhere((value)=>value.showFinger);
-    if(QuizHep.instance.answerRightNum==2){
+    if(QuizHep.instance.answerRightNum==2||QuizHep.instance.answerRightNum==8){
       return;
     }
     if(indexWhere<0){
@@ -64,6 +68,7 @@ class ProHep{
     if(proBean.color&&!InfoHep.instance.checkProgressReceived(1)){
       var renderBox = globalKey.currentContext!.findRenderObject() as RenderBox;
       var offset = renderBox.localToGlobal(Offset.zero);
+      TTTTHep.instance.pointEvent(PointName.box_guide);
       showOverlay(
         context: context,
         widget: ProgressBoxOver(
@@ -83,6 +88,7 @@ class ProHep{
     if(proBean.color&&!InfoHep.instance.checkProgressReceived(7)){
       var renderBox = globalKey.currentContext!.findRenderObject() as RenderBox;
       var offset = renderBox.localToGlobal(Offset.zero);
+      TTTTHep.instance.pointEvent(PointName.wheel_guide);
       showOverlay(
         context: context,
         widget: ProgressWheelOver(
@@ -104,19 +110,27 @@ class ProHep{
         return;
       }
       if(box){
+        SqlHep.instance.updateTaskCompletedNumRecord(TaskType.box);
         Incent(
+          incentFrom: IncentFrom.box,
           add: ValueHep.instance.getBoxCoins(),
           dismissCall: (){
             InfoHep.instance.updateProgressReceivedList(index);
           },
         ).show();
       }else{
+        SqlHep.instance.updateTaskCompletedNumRecord(TaskType.spin);
         WheelDialog(
           wheelFrom: from,
           dismissDialog: (addNum){
+            if(from==WheelFrom.answer8Guide){
+              InfoHep.instance.updateProgressReceivedList(index);
+              InfoHep.instance.addCoins(addNum);
+            }
             if(from==WheelFrom.progress){
               Incent(
                 add: addNum,
+                incentFrom: IncentFrom.wheel,
                 dismissCall: (){
                   InfoHep.instance.updateProgressReceivedList(index);
                 },
@@ -136,17 +150,6 @@ class ProHep{
   hideOverlay(){
     _overlayEntry?.remove();
     _overlayEntry=null;
-  }
-
-  test(){
-    var indexWhere = progressList.indexWhere((value)=>value.showFinger);
-    if(indexWhere<0){
-      for(var index=0;index<progressList.length;index++){
-        if(progressList[index].color&&!InfoHep.instance.checkProgressReceived(index)){
-          progressList[index].showFinger=true;
-        }
-      }
-    }
   }
 }
 
