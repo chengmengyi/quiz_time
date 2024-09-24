@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_max_ad/ad/ad_type.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:quiztime55/b/dia/cash_guide.dart';
@@ -31,6 +32,7 @@ import 'package:quiztime55/b/hep/value_hep.dart';
 import 'package:quiztime55/b/home/bubble_w.dart';
 import 'package:quiztime55/b/home/coins_animator.dart';
 import 'package:quiztime55/b/home/finger_w.dart';
+import 'package:quiztime55/b/home/set/set_page.dart';
 import 'package:quiztime55/b/home/top_coins_w.dart';
 import 'package:quiztime55/global/pop/d_pop.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
@@ -41,14 +43,16 @@ class QuizChild extends StatefulWidget{
   State<StatefulWidget> createState() => _QuizChildState();
 }
 class _QuizChildState extends State<QuizChild> implements GuideListener{
-  var _quizResult=-1,_showBubble=false;
+  var _quizResult=-1,_showBubble=false,_showProgressFingerIndex=-1;
   final GlobalKey _answerAGlobalKey=GlobalKey();
   final GlobalKey _answerBGlobalKey=GlobalKey();
   final GlobalKey _firstProgressBoxGlobalKey=GlobalKey();
   final GlobalKey _firstProgressWheelGlobalKey=GlobalKey();
+  final GlobalKey _progressListGlobalKey=GlobalKey();
   Offset? _rightAnswerOffset;
   Map<String, dynamic>? _quizMap={};
   Timer? _rightAnswerTimer;
+  ScrollController scrollController=ScrollController();
   RightAnswerFingerFrom _rightAnswerFingerFrom=RightAnswerFingerFrom.other;
 
   @override
@@ -61,6 +65,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     GuideHep.instance.setGuideListener(this);
     Future((){
       GuideHep.instance.showGuide();
+      _checkProgressFingerIndex();
     });
   }
 
@@ -74,7 +79,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
           top: true,
           child: Column(
             children: [
-              _topWidget(),
+              _topWidget(context),
               _progressWidget(),
               Expanded(
                 child: _contentWidget(context),
@@ -86,17 +91,19 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
         _fingerWidget(),
         _showBubble?BubbleW():Container(),
         CoinsAnimatorWidget(),
-        // Lottie.asset("qtf/f4/kai.json")
       ],
     ),
   );
 
-  _topWidget()=>Row(
+  _topWidget(BuildContext context)=>Row(
     children: [
       SizedBox(width: 12.w,),
       TopCoinsW(),
       const Spacer(),
       InkWell(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>SetPage()));
+        },
         child: QtImage("gewrger",w: 24.w,h: 24.w,),
       ),
       SizedBox(width: 12.w,),
@@ -112,10 +119,12 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
       Container(
         width: double.infinity,
         height: 68.h,
+        key: _progressListGlobalKey,
         margin: EdgeInsets.only(left: 25.w,right: 25.w,top: 8.h ),
         child: ListView.builder(
           itemCount: ProHep.instance.progressList.length,
           scrollDirection: Axis.horizontal,
+          controller: scrollController,
           itemBuilder: (context,index){
             var proBean = ProHep.instance.progressList[index];
             return SizedBox(
@@ -218,6 +227,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     onTap: (){
       setState(() {
         proBean.showFinger=false;
+        _showProgressFingerIndex=-1;
       });
       ProHep.instance.clickProgressItem(index, box);
     },
@@ -225,7 +235,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
       mainAxisSize: MainAxisSize.min,
       children: [
         Visibility(
-          visible: proBean.showFinger&&index!=1&&index!=7,
+          visible: _showProgressFingerIndex==index,
           // visible: proBean.showFinger,
           maintainAnimation: true,
           maintainState: true,
@@ -275,9 +285,9 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
                 right: 0,
                 bottom: 0,
                 child: Visibility(
-                  visible: proBean.showFinger&&index!=1&&index!=7,
+                  visible: _showProgressFingerIndex==index,
                   // visible: proBean.showFinger,
-                  child: FingerW(width: 40.w,height: 40.w,),
+                  child: FingerW(width: 30.w,height: 30.w,),
                 ),
               )
             ],
@@ -302,7 +312,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
             children: [
               QtImage("fwefweg",w: 240.w,h: 48.h,),
               QtText(
-                "History",
+                QuizHep.instance.getCatStr(),
                 fontSize: 16.sp,
                 color: const Color(0xffFFF1CD),
                 fontWeight: FontWeight.w600,
@@ -460,9 +470,37 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
   }
 
   _updateProgressList(){
-    setState(() {
-      ProHep.instance.updateProgress();
-    });
+    ProHep.instance.updateProgress();
+    _checkProgressFingerIndex();
+  }
+
+  _checkProgressFingerIndex(){
+    for(var index=0;index<ProHep.instance.progressList.length;index++){
+      if(index==1||index==7){
+        continue;
+      }
+      if(ProHep.instance.progressList[index].color&&!InfoHep.instance.checkProgressReceived(index)){
+        _showProgressFingerIndex=index;
+        break;
+      }
+    }
+    setState(() {});
+    var indexWhere = ProHep.instance.progressList.lastIndexWhere((value)=>value.color);
+    if(indexWhere<13){
+      return;
+    }
+
+    double distance=0;
+    for(int index=0;index<=indexWhere;index++){
+      var progressBean = ProHep.instance.progressList[index];
+      distance+=(progressBean.proEnum==ProEnum.normal?10.w:50.w);
+    }
+    var listViewRb = _progressListGlobalKey.currentContext!.findRenderObject() as RenderBox;
+    distance=distance-listViewRb.size.width+60.w;
+    if(distance<=0){
+      return;
+    }
+    scrollController.animateTo(distance, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   @override
@@ -556,5 +594,6 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     }
     // SqlHep.instance.updateTaskCompletedNumRecord(TaskType.pop);
     // SignHep.instance.test();
+    print(InfoHep.instance.checkProgressReceived(1));
   }
 }

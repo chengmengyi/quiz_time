@@ -53,7 +53,7 @@ class ProgressBoxOver extends StatelessWidget{
                               borderRadius: BorderRadius.circular(4.w),
                             ),
                             child: QtText(
-                              "Pass 2 questions to get a treasure chest reward",
+                              "Pass 2 questions to get a treasure chest reward!",
                               fontSize: 12.sp,
                               color: Colors.black,
                               fontWeight: FontWeight.w400,

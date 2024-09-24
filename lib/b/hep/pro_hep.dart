@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiztime55/b/dia/box_animator.dart';
 import 'package:quiztime55/b/dia/incent.dart';
 import 'package:quiztime55/b/dia/wheel.dart';
 import 'package:quiztime55/b/hep/heppppp.dart';
@@ -111,11 +112,20 @@ class ProHep{
       }
       if(box){
         SqlHep.instance.updateTaskCompletedNumRecord(TaskType.box);
-        Incent(
-          incentFrom: IncentFrom.box,
-          add: ValueHep.instance.getBoxCoins(),
-          dismissCall: (){
-            InfoHep.instance.updateProgressReceivedList(index);
+        BoxAnimatorDialog(
+          dismiss: (){
+            if(index==1){
+              InfoHep.instance.updateProgressReceivedList(index);
+              InfoHep.instance.addCoins(ValueHep.instance.getBoxCoins());
+              return;
+            }
+            Incent(
+              incentFrom: IncentFrom.box,
+              add: ValueHep.instance.getBoxCoins(),
+              dismissCall: (){
+                InfoHep.instance.updateProgressReceivedList(index);
+              },
+            ).show();
           },
         ).show();
       }else{
@@ -124,8 +134,8 @@ class ProHep{
           wheelFrom: from,
           dismissDialog: (addNum){
             if(from==WheelFrom.answer8Guide){
-              InfoHep.instance.updateProgressReceivedList(index);
               InfoHep.instance.addCoins(addNum);
+              InfoHep.instance.updateProgressReceivedList(index);
             }
             if(from==WheelFrom.progress){
               Incent(

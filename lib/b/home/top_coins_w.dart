@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quiztime55/b/hep/call_listener/call_listener_hep.dart';
 import 'package:quiztime55/b/hep/info_hep.dart';
 import 'package:quiztime55/b/hep/value_hep.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
@@ -42,6 +43,9 @@ class _TopCoinsWState extends State<TopCoinsW>{
                 QtText("\$$coins", fontSize: 14.sp, color: Colors.white, fontWeight: FontWeight.w500),
                 SizedBox(width: 10.w,),
                 InkWell(
+                  onTap: (){
+                    CallListenerHep.instance.changeHomeTab(1);
+                  },
                   child: Container(
                     height: 24.w,
                     padding: EdgeInsets.only(left: 8.w,right: 8.w),
@@ -50,7 +54,7 @@ class _TopCoinsWState extends State<TopCoinsW>{
                       color: const Color(0xffFA9600),
                       borderRadius: BorderRadius.circular(12.w),
                     ),
-                    child: QtText("withdraw", fontSize: 12.sp, color: Colors.white, fontWeight: FontWeight.w500),
+                    child: QtText("Withdraw", fontSize: 12.sp, color: Colors.white, fontWeight: FontWeight.w500),
                   ),
                 )
               ],

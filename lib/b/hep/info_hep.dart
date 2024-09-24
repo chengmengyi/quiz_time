@@ -46,7 +46,7 @@ class InfoHep{
       }
 
       GetCoinsDialog(
-        addNum: 200,
+        addNum: add,
         dismissDialog: (){
           CallListenerHep.instance.showCoinsAnimator(userCoins);
         },

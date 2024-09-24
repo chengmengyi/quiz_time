@@ -16,7 +16,7 @@ class AdTTTT{
       "quote":maxInfoBean?.plat??"",
       "deport":maxInfoBean?.id??"",
       "methyl":adPPPP.name,
-      "booky":adFFFF==AdType.reward?"rv":"rv",
+      "booky":adFFFF==AdType.reward?"rv":"int",
       "freshen":maxAd?.revenuePrecision??"",
     };
     return baseMap;

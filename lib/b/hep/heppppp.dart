@@ -30,7 +30,7 @@ extension Doux2 on double{
   double tox2()=>(Decimal.parse("$this")*Decimal.fromInt(2)).toDouble();
 }
 
-double douAdd(double d1,double d2)=>(Decimal.parse("$d1")*Decimal.parse("$d2")).toDouble();
+double douAdd(double d1,double d2)=>(Decimal.parse("$d1")+Decimal.parse("$d2")).toDouble();
 
 String getTodayStr(){
   var time = DateTime.now();

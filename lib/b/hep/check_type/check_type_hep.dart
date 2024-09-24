@@ -24,7 +24,7 @@ class CheckTypeHep implements CheckListener{
   checkType()async{
     var url = await _createCloakUrl();
     var forsaken = await FlutterTbaInfo.instance.getDistinctId();
-    FlutterCheckAdjustCloak.instance.forceBuyUser(true);
+    // FlutterCheckAdjustCloak.instance.forceBuyUser(true);
     FlutterCheckAdjustCloak.instance.initCheck(
       cloakPath: url,
       normalModeStr: "breathe",

@@ -19,7 +19,6 @@ class BubbleW extends StatefulWidget{
   State<StatefulWidget> createState() => _BubbleWState();
 }
 class _BubbleWState extends State<BubbleW>{
-  late Timer _timer;
   GlobalKey globalKey=GlobalKey();
   double addNum=ValueHep.instance.getFloatCoins();
   var you=true,xia=true,cx=0.0,cy=0.0,show=true;
@@ -29,6 +28,11 @@ class _BubbleWState extends State<BubbleW>{
     super.initState();
     Future((){
       _startTimer();
+    });
+    coinsBean.listen((v){
+      setState(() {
+        addNum=ValueHep.instance.getFloatCoins();
+      });
     });
   }
 
@@ -78,7 +82,7 @@ class _BubbleWState extends State<BubbleW>{
     var size = globalKey.currentContext?.size;
     var sWidth=(size?.width??760.w)-68.w;
     var sHeight=(size?.height??360.w)-64.w;
-    _timer=Timer.periodic(const Duration(milliseconds: 10), (timer) {
+    Timer.periodic(const Duration(milliseconds: 10), (timer) {
       if(you){
         cx++;
         if(xia){

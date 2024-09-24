@@ -26,8 +26,11 @@ class _HomeState extends State<Home> implements ClickTaskListener,ChangeHomeTabI
     super.initState();
     TTTTHep.instance.pointEvent(PointName.quiz_page);
     CallListenerHep.instance.updateClickTaskListener(this);
+    CallListenerHep.instance.updateChangeHomeTabIndexListener(this);
     LifecycleHep.instance.initListener();
     NotifiHep.instance.showNotifi();
+    _checkFromNotifi();
+    TTTTHep.instance.uploadLocalTbaData();
   }
 
   @override
@@ -89,5 +92,14 @@ class _HomeState extends State<Home> implements ClickTaskListener,ChangeHomeTabI
   @override
   showHomeIndex(int index) {
     _clickBottom(index);
+  }
+
+  _checkFromNotifi(){
+    Future(()async{
+      var details = await NotifiHep.instance.getNotificationAppLaunchDetails();
+      if(details?.didNotificationLaunchApp==true&&details?.notificationResponse?.id==NotifiId.pay){
+        _clickBottom(1);
+      }
+    });
   }
 }

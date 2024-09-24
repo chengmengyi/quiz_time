@@ -29,7 +29,7 @@ class ValueHep{
 
   ValueHep._internal();
 
-  var floatDismissSecond=10;
+  var floatDismissSecond=10,tba_console="1";
 
   loadQtData() async {
     if(valueConfBean.getV().isNotEmpty){
@@ -129,7 +129,7 @@ class ValueHep{
 
   bool canShowAdByType(AdType type){
     // if(kDebugMode){
-    //   return true;
+    //   return false;
     // }
     List<IntadPoint> list = type==AdType.inter?(_valueB?.intadPoint??[]):type==AdType.reward?(_valueB?.rvadPoint??[]):[];
     if(list.isEmpty){
@@ -187,6 +187,7 @@ class ValueHep{
     if(s.isNotEmpty){
       floatDismissSecond=s.toint(10);
     }
+    tba_console=await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("tba_console");
   }
 }
 

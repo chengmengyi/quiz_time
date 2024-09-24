@@ -1,6 +1,10 @@
 import 'dart:math';
 import 'package:flutter_local_notifications_platform_interface/src/types.dart';
+import 'package:flutter_max_ad/ad/ad_type.dart';
+import 'package:flutter_max_ad/flutter_max_ad.dart';
 import 'package:quiztime55/b/dia/open_notifi.dart';
+import 'package:quiztime55/b/hep/ad/ad_pppp.dart';
+import 'package:quiztime55/b/hep/ad/show_ad_hep.dart';
 import 'package:quiztime55/b/hep/heppppp.dart';
 import 'package:quiztime55/b/hep/info_hep.dart';
 import 'package:quiztime55/b/hep/notifi/base_noti.dart';
@@ -114,6 +118,18 @@ class NotifiHep extends BaseNotifi{
   @override
   clickNotification(NotificationResponse notificationResponse) {
     tbaPointClickNotifi(notificationResponse.id);
+    if(FlutterMaxAd.instance.checkHasCache(AdType.inter)){
+      ShowAdHep.instance.showOpenAd(
+        adType: AdType.inter,
+        adPPPP: AdPPPP.kztym_launch,
+        hiddenAd: (){
+
+        },
+        showFail: (){
+
+        },
+      );
+    }
   }
 
   tbaPointClickNotifi(int? id){

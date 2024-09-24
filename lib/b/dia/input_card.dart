@@ -107,6 +107,7 @@ class InputCardDialog extends StatelessWidget{
     if(content.isEmpty){
       return;
     }
+    "Congratulations on your successful withdrawal. Your money has arrived.".toast();
     closeDialog();
     call.call(content);
   }

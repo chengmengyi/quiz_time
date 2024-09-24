@@ -154,19 +154,16 @@ class _WheelState extends  State<WheelDialog>{
             adPPPP: AdPPPP.kztym_int_spin_step,
             hiddenAd: (){
               closeDialog();
-              InfoHep.instance.addCoins(wheelAddNum.toDouble());
               widget.dismissDialog.call(wheelAddNum.toDouble());
             },
             showFail: (){
               closeDialog();
-              InfoHep.instance.addCoins(wheelAddNum.toDouble());
               widget.dismissDialog.call(wheelAddNum.toDouble());
             },
           );
           break;
         case WheelFrom.answer8Guide:
           closeDialog();
-          InfoHep.instance.addCoins(wheelAddNum.toDouble());
           widget.dismissDialog.call(wheelAddNum.toDouble());
           break;
         case WheelFrom.progress:
@@ -176,11 +173,11 @@ class _WheelState extends  State<WheelDialog>{
             adPPPP: start?AdPPPP.kztym_int_task_spin_go:AdPPPP.kztym_int_spin_go,
             hiddenAd: (){
               closeDialog();
-              InfoHep.instance.addCoins(wheelAddNum.toDouble());
               widget.dismissDialog.call(wheelAddNum.toDouble());
             },
             showFail: (){
               closeDialog();
+              widget.dismissDialog.call(wheelAddNum.toDouble());
             },
           );
           break;

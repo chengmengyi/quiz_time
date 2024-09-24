@@ -41,6 +41,7 @@ class LoadAdHep{
           firstInterAdList: intAd1,
           secondInterAdList: intAd2,
         ),
+        showMediationDebugger: true
       );
     });
   }

@@ -18,6 +18,7 @@ import 'package:quiztime55/b/hep/tttt/point_name.dart';
 import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
 import 'package:quiztime55/b/hep/value_hep.dart';
 import 'package:quiztime55/b/home/cash/pay_type_bean.dart';
+import 'package:quiztime55/b/home/finger_w.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
 import 'package:quiztime55/global/widg/ws_text.dart';
 
@@ -27,7 +28,7 @@ class CashChild extends StatefulWidget{
 }
 
 class _CashChildState extends State<CashChild> implements UpdateTaskListener{
-  var completedTask=false;
+  var completedTask=false,showCashBtnFinger=false;
   var selectedPayType=payTypeIndexBean.getV().toPayType(),chooseMoneyIndex=chooseMoneyIndexBean.getV();
   List<int> moneyList=ValueHep.instance.getCashMoneyList();
   List<TaskBean> taskList=[];
@@ -47,6 +48,7 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
     SignHep.instance.sign();
     coinsBean.listen((v){
       setState(() {});
+      _checkShowCashFinger();
     });
     Future((){
       _initTaskList();
@@ -144,6 +146,7 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
               payTypeIndexBean.putV(selectedPayType.name);
             });
             _initTaskList();
+            _checkShowCashFinger();
           },
           child: Container(
             width: selected?128.w:108.w,
@@ -173,38 +176,6 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
     ],
   );
 
-  _chooseMoneyLargeWidget()=>SizedBox(
-    width: double.infinity,
-    height: 200.h,
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: moneyList.length,
-      itemBuilder: (context,index)=>InkWell(
-        onTap: (){
-          setState(() {
-            chooseMoneyIndex=index;
-          });
-          chooseMoneyIndexBean.putV(chooseMoneyIndex);
-        },
-        child: Container(
-          margin: EdgeInsets.only(right: 12.w),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              QtImage(chooseMoneyIndex==index?"hkjio":"nonkm",w: 152.w,h: 200.h,),
-              QtText(
-                "\$${moneyList[index]}",
-                fontSize: 24.sp,
-                color: chooseMoneyIndex==index?const Color(0xffFF7A00):const Color(0xffA77E42),
-                fontWeight: FontWeight.w500,
-              )
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
-
   _chooseMoneySmallWidget(BuildContext context)=>Column(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -220,6 +191,7 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
                 chooseMoneyIndex=index;
               });
               _initTaskList();
+              _checkShowCashFinger();
             },
             child: Container(
               width: 140.w,
@@ -345,12 +317,25 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
         onTap: (){
           _clickCashBtn();
         },
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            QtImage("btn",w: 220.w,h: 56.h,),
-            QtText(completedTask?"Successful":"Withdraw", fontSize: 18.sp, color: Colors.white, fontWeight: FontWeight.w500,)
-          ],
+        child: SizedBox(
+          width: 220.w,
+          height: 56.h,
+          child: Stack(
+            children: [
+              QtImage("btn",w: 220.w,h: 56.h,),
+              Align(
+                alignment: Alignment.center,
+                child: QtText(completedTask?"Successful":"Withdraw", fontSize: 18.sp, color: Colors.white, fontWeight: FontWeight.w500,),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Visibility(
+                  visible: showCashBtnFinger,
+                  child: FingerW(width: 40.w,height: 40.w,),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       SizedBox(height: 8.h,),
@@ -448,5 +433,21 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
   @override
   updateTask() {
     _initTaskList();
+  }
+
+  _checkShowCashFinger()async{
+    var chooseMoney = moneyList[chooseMoneyIndex];
+    if(InfoHep.instance.userCoins<chooseMoney){
+      if(showCashBtnFinger){
+        setState(() {
+          showCashBtnFinger=false;
+        });
+      }
+      return;
+    }
+    var list = await SqlHep.instance.queryTaskRecordByPayTypeAndChooseMoney(selectedPayType, chooseMoney);
+    setState(() {
+      showCashBtnFinger=list.isEmpty;
+    });
   }
 }

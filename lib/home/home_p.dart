@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
 import 'package:quiztime55/global/clas/inp_clas_1.dart';
 import 'package:quiztime55/home/quiz/quiz_p.dart';
 import 'package:quiztime55/home/set/set_p.dart';
@@ -15,6 +16,12 @@ class HomeP extends StatefulWidget {
 
 class _HomePState extends State<HomeP> {
   int i = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    TTTTHep.instance.uploadLocalTbaData();
+  }
 
   @override
   Widget build(BuildContext context) {

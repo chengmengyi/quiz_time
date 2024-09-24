@@ -6,6 +6,7 @@ import 'package:flutter_max_ad/flutter_max_ad.dart';
 import 'package:flutter_tba_info/flutter_tba_info.dart';
 import 'package:quiztime55/b/hep/ad/ad_pppp.dart';
 import 'package:quiztime55/b/hep/heppppp.dart';
+import 'package:quiztime55/b/hep/sql/sql_hep.dart';
 import 'package:quiztime55/b/hep/tttt/ad_tttt.dart';
 import 'package:quiztime55/b/hep/tttt/base_tttt.dart';
 import 'package:quiztime55/b/hep/tttt/header_tttt.dart';
@@ -13,6 +14,7 @@ import 'package:quiztime55/b/hep/tttt/install_tttt.dart';
 import 'package:quiztime55/b/hep/tttt/point_name.dart';
 import 'package:quiztime55/b/hep/tttt/point_tttt.dart';
 import 'package:quiztime55/b/hep/tttt/query_tttt.dart';
+import 'package:quiztime55/b/hep/value_hep.dart';
 import 'package:quiztime55/global/appd/qt_save.dart';
 
 const QtSaveKey<bool> installEventBean = QtSaveKey(key: "installEvent", de: false);
@@ -71,6 +73,8 @@ class TTTTHep{
         Future.delayed(const Duration(milliseconds: 2000),(){
           sessionEvent(tryAgain: false);
         });
+      }else{
+        SqlHep.instance.insertTbaData(sessionMap);
       }
     }
   }
@@ -92,6 +96,8 @@ class TTTTHep{
         Future.delayed(const Duration(milliseconds: 2000),(){
           adEvent(maxAd, maxInfoBean, adPPPP, adFFFF,tryAgain: false);
         });
+      }else{
+        SqlHep.instance.insertTbaData(adMap);
       }
     }
   }
@@ -113,6 +119,27 @@ class TTTTHep{
         Future.delayed(const Duration(milliseconds: 2000),(){
           pointEvent(pointName,params: params,tryAgain: false);
         });
+      }else{
+        SqlHep.instance.insertTbaData(pointMap);
+      }
+    }
+  }
+
+  uploadLocalTbaData()async{
+    var list = await SqlHep.instance.queryTbaData();
+    if(list.isNotEmpty){
+      if(ValueHep.instance.tba_console=="0"){
+        SqlHep.instance.clearTbaTableData();
+        return;
+      }
+      var logId = await FlutterTbaInfo.instance.getLogId();
+      var headerMap = await _getHeaderMap();
+      headerMap["Content-Encoding"]="gzip";
+      var path = await _getPath(logId);
+      var dioResult = await DioManager.instance.requestListPost(url: path, list: list,headerMap: headerMap);
+      FlutterMaxAd.instance.printDebug("request tba event:upload local data--->result:${dioResult.success}--->params:$list");
+      if(dioResult.success){
+        SqlHep.instance.clearTbaTableData();
       }
     }
   }

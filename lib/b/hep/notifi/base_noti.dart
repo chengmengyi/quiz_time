@@ -45,7 +45,7 @@ abstract class BaseNotifi{
         id,
         title,
         body,
-        kDebugMode?RepeatInterval.everyMinute:repeatInterval,
+        repeatInterval,
         notificationDetails
     );
   }

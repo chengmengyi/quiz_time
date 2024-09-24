@@ -56,6 +56,17 @@ class QuizHep{
     currentQuizIndexBean.putV(currentIndex);
   }
 
+  String getCatStr(){
+    switch(currentCat){
+      case QtQuizHep.QH_NK_M: return "Math";
+      case QtQuizHep.QH_NK_A: return "Animal";
+      case QtQuizHep.QH_NK_N: return "Nature";
+      case QtQuizHep.QH_NK_S: return "Science";
+      case QtQuizHep.QH_NK_H: return "History";
+      default: return "";
+    }
+  }
+
   updateAnswerRight(){
     answerRightNum++;
     answerRightBean.putV(answerRightNum);

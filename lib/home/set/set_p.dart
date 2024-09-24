@@ -15,25 +15,39 @@ class SetP extends StatelessWidget {
     return Column(
       children: [
         Stack(
+          alignment: Alignment.center,
           children: [
-            Text(gQtStr.afwe,
-                style: TextStyle(
-                    foreground: Paint()
-                      ..style = PaintingStyle.stroke
-                      ..strokeWidth = 1.w
-                      ..color = const Color(0xFF6F5E27),
-                    fontSize: 24.sp,
-                    height: 1.3,
-                    fontFamily: "oirirj",
-                    fontWeight: FontWeight.w500)),
-            ShaderMask(
-                blendMode: BlendMode.srcIn,
-                shaderCallback: (bounds) => const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFFFFE798), Color(0xFFB8A460)]).createShader(bounds),
-                child: Text(gQtStr.afwe,
-                    style: TextStyle(fontSize: 24.sp, height: 1.3, fontFamily: "oirirj", fontWeight: FontWeight.w500))),
+            Stack(
+              children: [
+                Text(gQtStr.afwe,
+                    style: TextStyle(
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1.w
+                          ..color = const Color(0xFF6F5E27),
+                        fontSize: 24.sp,
+                        height: 1.3,
+                        fontFamily: "oirirj",
+                        fontWeight: FontWeight.w500)),
+                ShaderMask(
+                    blendMode: BlendMode.srcIn,
+                    shaderCallback: (bounds) => const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0xFFFFE798), Color(0xFFB8A460)]).createShader(bounds),
+                    child: Text(gQtStr.afwe,
+                        style: TextStyle(fontSize: 24.sp, height: 1.3, fontFamily: "oirirj", fontWeight: FontWeight.w500))),
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back,color: Colors.black,),
+              ),
+            )
           ],
         ),
         SizedBox(height: 23.w),

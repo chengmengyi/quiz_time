@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:quiztime55/b/hep/call_listener/call_listener_hep.dart';
 import 'package:quiztime55/b/hep/comment_hep.dart';
 import 'package:quiztime55/b/hep/heppppp.dart';
@@ -11,6 +13,7 @@ class TableName{
   static const String task="task";
   static const String sign="sign";
   static const String everyDayAnswerNum="everyDayAnswerNum";
+  static const String tbaData="tbaData";
 }
 
 class SqlHep {
@@ -148,6 +151,29 @@ class SqlHep {
     }
   }
 
+  insertTbaData(Map<String,dynamic> map)async{
+    var db = await _openDB();
+    db.insert(TableName.tbaData, {"data":jsonEncode(map)});
+  }
+
+  Future<List> queryTbaData()async{
+    var db = await _openDB();
+    var list = await db.query(TableName.tbaData);
+    if(list.isEmpty){
+      return [];
+    }
+    List result=[];
+    for (var value in list) {
+      result.add(jsonDecode(value["data"] as String));
+    }
+    return result;
+  }
+
+  clearTbaTableData()async{
+    var db = await _openDB();
+    db.delete(TableName.tbaData);
+  }
+
   Future<Database> _openDB() async => await openDatabase(
     "quiz.db",
     version: 1,
@@ -155,6 +181,7 @@ class SqlHep {
       db.execute('CREATE TABLE ${TableName.sign} (id INTEGER PRIMARY KEY AUTOINCREMENT, signTimer TEXT)');
       db.execute('CREATE TABLE ${TableName.task} (id INTEGER PRIMARY KEY AUTOINCREMENT, payType TEXT, chooseMoney INTEGER, taskType TEXT, completedNum INTEGER, totalNum INTEGER, signedNum INTEGER, signTotalNum INTEGER, cardsNum TEXT)');
       db.execute('CREATE TABLE ${TableName.everyDayAnswerNum} (id INTEGER PRIMARY KEY AUTOINCREMENT, timer TEXT, answerNum INTEGER)');
+      db.execute('CREATE TABLE ${TableName.tbaData} (id INTEGER PRIMARY KEY AUTOINCREMENT, data TEXT)');
     },
     // onUpgrade: (db,oldVersion,newVersion){
     //   if(newVersion==4){
