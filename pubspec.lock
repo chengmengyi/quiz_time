@@ -225,10 +225,11 @@ packages:
   flutter_check_adjust_cloak:
     dependency: "direct main"
     description:
-      path: "/Users/qut55/Documents/flutter_check_adjust_cloak-0.2.9"
-      relative: false
-    source: path
-    version: "0.2.9"
+      name: flutter_check_adjust_cloak
+      sha256: "4b89931b1dce8658254adf0fd538321d53c9964f4968c909514d662f429edd3f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   flutter_lints:
     dependency: "direct dev"
     description:

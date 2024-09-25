@@ -26,7 +26,7 @@ class _ProProState extends State<ProPro> with SingleTickerProviderStateMixin {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
-      proAniC.duration = const Duration(seconds: 10);
+      proAniC.duration = const Duration(seconds: 15);
 
       await proAniC.forward(from: proAniC.value);
       widget.call();

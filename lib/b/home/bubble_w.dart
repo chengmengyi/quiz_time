@@ -120,7 +120,7 @@ class _BubbleWState extends State<BubbleW>{
     });
   }
 
-  _clickBubble(){
+  _clickBubble()async{
     TTTTHep.instance.pointEvent(PointName.float_c);
     setState(() {
       show=false;
@@ -132,9 +132,10 @@ class _BubbleWState extends State<BubbleW>{
       _delayShowBubble();
       return;
     }
+    var start = await SqlHep.instance.checkStartCashTask();
     ShowAdHep.instance.showAd(
       adType: AdType.reward,
-      adPPPP: AdPPPP.kztym_rv_magic_gold,
+      adPPPP: start?AdPPPP.kztym_rv_task_gold:AdPPPP.kztym_rv_magic_gold,
       hiddenAd: (){
         InfoHep.instance.addCoins(addNum);
         _delayShowBubble();

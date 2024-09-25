@@ -75,14 +75,14 @@ class _CommentDialogState extends State<CommentDialog>{
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        QtText("complete reviews earn 5000", fontSize: 14.sp, color: const Color(0xffA36B21), fontWeight: FontWeight.w400,),
-                        SizedBox(width: 4.w,),
-                        QtImage("fmiowfow",w: 20.w,h: 20.w,)
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisSize: MainAxisSize.min,
+                    //   children: [
+                    //     QtText("complete reviews earn 5000", fontSize: 14.sp, color: const Color(0xffA36B21), fontWeight: FontWeight.w400,),
+                    //     SizedBox(width: 4.w,),
+                    //     QtImage("fmiowfow",w: 20.w,h: 20.w,)
+                    //   ],
+                    // ),
                     SizedBox(height: 12.h,),
                     InkWell(
                       onTap: (){

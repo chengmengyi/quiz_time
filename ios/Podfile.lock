@@ -14,6 +14,9 @@ PODS:
   - applovin_max (3.9.2):
     - AppLovinSDK (= 12.4.1)
     - Flutter
+  - AppLovinMediationBigoAdsAdapter (4.5.1.0):
+    - AppLovinSDK (>= 12.4.1)
+    - BigoADS (= 4.5.1)
   - AppLovinMediationByteDanceAdapter (6.2.0.7.1):
     - Ads-Global/BUAdSDK_Compatible (= 6.2.0.6)
     - AppLovinSDK
@@ -52,6 +55,7 @@ PODS:
     - AppLovinSDK
     - VungleAds (= 7.4.1)
   - AppLovinSDK (12.4.1)
+  - BigoADS (4.5.1)
   - BURelyFoundation_Global/AFNetworking (1.0.0.6)
   - BURelyFoundation_Global/APM (1.0.0.6)
   - BURelyFoundation_Global/Foundation (1.0.0.6):
@@ -219,6 +223,7 @@ DEPENDENCIES:
   - adjust_sdk (from `.symlinks/plugins/adjust_sdk/ios`)
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - applovin_max (from `.symlinks/plugins/applovin_max/ios`)
+  - AppLovinMediationBigoAdsAdapter
   - AppLovinMediationByteDanceAdapter
   - AppLovinMediationChartboostAdapter
   - AppLovinMediationFacebookAdapter
@@ -250,6 +255,7 @@ SPEC REPOS:
   trunk:
     - Adjust
     - Ads-Global
+    - AppLovinMediationBigoAdsAdapter
     - AppLovinMediationByteDanceAdapter
     - AppLovinMediationChartboostAdapter
     - AppLovinMediationFacebookAdapter
@@ -263,6 +269,7 @@ SPEC REPOS:
     - AppLovinMediationUnityAdsAdapter
     - AppLovinMediationVungleAdapter
     - AppLovinSDK
+    - BigoADS
     - BURelyFoundation_Global
     - ChartboostSDK
     - FBAEMKit
@@ -332,6 +339,7 @@ SPEC CHECKSUMS:
   Ads-Global: cf90e5dfbbc4c07ef7096a15f818bf11caf4f2da
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   applovin_max: f4c696080f11d8c361c7130ca1a6af8c144b99d8
+  AppLovinMediationBigoAdsAdapter: 8608d4bfe7d8d7d3d5445cd9d49e3fbb8525fa05
   AppLovinMediationByteDanceAdapter: db16a553d3511cd583d75552adb3a8bd91802b70
   AppLovinMediationChartboostAdapter: a97b3e22897d260b02e96f3121236bbf325446a2
   AppLovinMediationFacebookAdapter: 0bebbe6e56573474c0e77b981b31c88424d67a18
@@ -345,6 +353,7 @@ SPEC CHECKSUMS:
   AppLovinMediationUnityAdsAdapter: cfe80f88affb4bacb9a93b39ea5fcad45205bfe8
   AppLovinMediationVungleAdapter: 7f092e3527007637dfb90ba816aa6d96e208d319
   AppLovinSDK: c57ad0d34625c971d2db127f8ef60570b28ff51a
+  BigoADS: ee4a4bc66c66d9872bb8c5866cb195ac21f81d9e
   BURelyFoundation_Global: 17faee76affe097bd20b422fe829f9f90ed10e25
   ChartboostSDK: 0cd093c90a5a21c89783fe5be486e511fb2dbfc8
   facebook_app_events: acb7c266406d3e3592bcf846d7184172ecfd6492
@@ -386,6 +395,6 @@ SPEC CHECKSUMS:
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
   VungleAds: 97140121d0b909891eb217d1c102a194601da607
 
-PODFILE CHECKSUM: c6d7af0b56d06e098fa08a4cba09d089d6e909e4
+PODFILE CHECKSUM: fb126429663fd5d4a2ca7dc5f619e81f7186da81
 
 COCOAPODS: 1.15.2

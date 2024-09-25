@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_check_adjust_cloak/flutter_check_adjust_cloak.dart';
 import 'package:flutter_max_ad/ad/ad_type.dart';
+import 'package:flutter_max_ad/flutter_max_ad.dart';
 import 'package:quiztime55/b/hep/heppppp.dart';
 import 'package:quiztime55/b/hep/info_hep.dart';
 import 'package:quiztime55/global/appd/qt_save.dart';

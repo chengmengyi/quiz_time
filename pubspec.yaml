@@ -69,9 +69,7 @@ dependencies:
   flutter_max_ad: 0.3.0
   get: 4.6.6
   sqflite: 2.3.3+1
-#  flutter_check_adjust_cloak: 0.2.9
-  flutter_check_adjust_cloak:
-    path: /Users/qut55/Documents/flutter_check_adjust_cloak-0.2.9
+  flutter_check_adjust_cloak: 0.3.0
   flutter_tba_info: 0.0.7
   flutter_app_lifecycle: 0.0.1
   app_settings: 5.1.1

@@ -350,27 +350,28 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
       CashSuccessDialog(chooseMoney: chooseMoney).show();
       return;
     }
+    var cashTaskList = await SqlHep.instance.queryTaskRecordByPayTypeAndChooseMoney(selectedPayType, chooseMoney);
+    if(cashTaskList.isNotEmpty){
+      _showTaskDialog();
+      return;
+    }
+
     if(InfoHep.instance.userCoins<chooseMoney){
       TTTTHep.instance.pointEvent(PointName.cash_not_pop);
       NoMoneyDialog().show();
       return;
     }
-    var firstCash = await SqlHep.instance.checkFirstCash(selectedPayType, chooseMoney);
-    if(firstCash){
-      InputCardDialog(
-        chooseMoney: chooseMoney,
-        call: (card)async{
-          var result = await SqlHep.instance.insertTaskRecord(selectedPayType, chooseMoney, card);
-          if(result){
-            InfoHep.instance.addCoins(-(chooseMoney.toDouble()));
-            await _initTaskList();
-            _showTaskDialog();
-          }
-        },
-      ).show();
-      return;
-    }
-    _showTaskDialog();
+    InputCardDialog(
+      chooseMoney: chooseMoney,
+      call: (card)async{
+        var result = await SqlHep.instance.insertTaskRecord(selectedPayType, chooseMoney, card);
+        if(result){
+          InfoHep.instance.addCoins(-(chooseMoney.toDouble()));
+          await _initTaskList();
+          _showTaskDialog();
+        }
+      },
+    ).show();
   }
 
   _showTaskDialog(){
@@ -383,7 +384,6 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
       ).show();
       return;
     }
-    TTTTHep.instance.pointEvent(PointName.cash_suc_pop);
     CashSuccessDialog(chooseMoney: moneyList[chooseMoneyIndex]).show();
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quiztime55/b/hep/pro_hep.dart';
 import 'package:quiztime55/b/hep/tttt/point_name.dart';
 import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
@@ -34,7 +35,7 @@ class ProgressBoxOver extends StatelessWidget{
                 },
                 child: Stack(
                   children: [
-                    QtImage("fswfsfew",w: 32.w,h: 32.h,),
+                    Lottie.asset("qtf/f4/doudong_box.json",width: 32.w,height: 32.w),
                     Container(
                       margin: EdgeInsets.only(left: 40.w),
                       child: Row(

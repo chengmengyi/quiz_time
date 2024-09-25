@@ -8,7 +8,8 @@ import '../../global/widg/qt_image.dart';
 import '../../global/widg/ws_text.dart';
 
 class SetP extends StatelessWidget {
-  const SetP({super.key});
+  bool showBack;
+  SetP({super.key, this.showBack=false});
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +42,14 @@ class SetP extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child: InkWell(
-                onTap: (){
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.arrow_back,color: Colors.black,),
+              child: Visibility(
+                visible: showBack,
+                child: InkWell(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.arrow_back,color: Colors.black,),
+                ),
               ),
             )
           ],

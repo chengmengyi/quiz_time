@@ -15,6 +15,7 @@ import 'package:quiztime55/b/dia/old_user.dart';
 import 'package:quiztime55/b/dia/sign_incent.dart';
 import 'package:quiztime55/b/dia/wheel.dart';
 import 'package:quiztime55/b/dia/wheel_incent.dart';
+import 'package:quiztime55/b/hep/ad/load_ad_hep.dart';
 import 'package:quiztime55/b/hep/call_listener/call_listener_hep.dart';
 import 'package:quiztime55/b/hep/check_type/check_type_hep.dart';
 import 'package:quiztime55/b/hep/guide_hep.dart';
@@ -227,9 +228,13 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     onTap: (){
       setState(() {
         proBean.showFinger=false;
-        _showProgressFingerIndex=-1;
+        if(_showProgressFingerIndex==index){
+          _showProgressFingerIndex=-1;
+        }
       });
-      ProHep.instance.clickProgressItem(index, box);
+      ProHep.instance.clickProgressItem(index, box,receivedCall: (){
+        _checkProgressFingerIndex();
+      });
     },
     child: Column(
       mainAxisSize: MainAxisSize.min,
@@ -243,7 +248,8 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
-              Lottie.asset("qtf/f4/max.json",width: 48.w,height: 18.h,fit: BoxFit.fill),
+              QtImage("miemgie",w: 48.w,h: 18.h,),
+              // Lottie.asset("qtf/f4/max.json",width: 48.w,height: 18.h,fit: BoxFit.fill),
               QtText("Max\$${ValueHep.instance.getBoxAddMaxCoins()}", fontSize: 10.sp, color: Colors.white, fontWeight: FontWeight.w400),
             ],
           ),
@@ -287,7 +293,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
                 child: Visibility(
                   visible: _showProgressFingerIndex==index,
                   // visible: proBean.showFinger,
-                  child: FingerW(width: 30.w,height: 30.w,),
+                  child: FingerW(width: 35.w,height: 35.w,),
                 ),
               )
             ],
@@ -434,6 +440,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     }
     Future.delayed(const Duration(milliseconds: 800),(){
       _quizResult=-1;
+      SqlHep.instance.updateTodayAnswerNum();
       if(result){
         if(newGuideBean.getV()==NewUserGuideStep.rightAnswerFinger){
           _toNextQuiz();
@@ -463,7 +470,6 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
 
   _toNextQuiz(){
     QuizHep.instance.updateNextQuiz();
-    SqlHep.instance.updateTodayAnswerNum();
     setState(() {
       _initCurQuizMap();
     });
@@ -594,6 +600,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     }
     // SqlHep.instance.updateTaskCompletedNumRecord(TaskType.pop);
     // SignHep.instance.test();
-    print(InfoHep.instance.checkProgressReceived(1));
+    InfoHep.instance.addCoins(500);
   }
+
 }

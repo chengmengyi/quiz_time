@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:quiztime55/b/hep/heppppp.dart';
 import 'package:quiztime55/global/widg/qt_image.dart';
@@ -21,6 +22,7 @@ class _GetCoinsDialogState extends State<GetCoinsDialog>{
     super.initState();
     Future.delayed(const Duration(milliseconds: 1500),(){
       closeDialog();
+      // Get.back();
       widget.dismissDialog.call();
     });
   }

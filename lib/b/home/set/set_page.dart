@@ -10,7 +10,7 @@ class SetPage extends StatelessWidget{
         QtImage("hrerw0",w: double.infinity,h: double.infinity,),
         SafeArea(
           top: true,
-          child: SetP(),
+          child: SetP(showBack: true,),
         ),
 
       ],

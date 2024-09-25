@@ -43,6 +43,8 @@ target 'Runner' do
   pod 'AppLovinMediationMolocoAdapter'
   pod 'AppLovinMediationByteDanceAdapter'
   pod 'AppLovinMediationUnityAdsAdapter'
+  pod 'AppLovinMediationBigoAdsAdapter'
+
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do

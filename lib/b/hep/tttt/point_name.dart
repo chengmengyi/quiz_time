@@ -45,5 +45,4 @@ enum PointName{
   cash_ad_detail,
   kztym_ad_chance,
   kztym_ad_impression,
-  testttt
 }

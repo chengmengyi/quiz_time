@@ -41,7 +41,6 @@ class LoadAdHep{
           firstInterAdList: intAd1,
           secondInterAdList: intAd2,
         ),
-        showMediationDebugger: true
       );
     });
   }
@@ -81,6 +80,7 @@ class LoadAdHep{
 
   getFirebaseConfig()async{
     var s = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("kztym_ad_config");
+    print("kk====$s");
     if(s.isNotEmpty){
       localAdBean.putV(s);
     }

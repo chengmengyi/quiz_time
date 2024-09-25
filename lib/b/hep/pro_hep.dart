@@ -104,7 +104,7 @@ class ProHep{
     return false;
   }
 
-  clickProgressItem(int index,bool box,{WheelFrom from=WheelFrom.progress}){
+  clickProgressItem(int index,bool box,{WheelFrom from=WheelFrom.progress,Function()? receivedCall}){
     if(progressList[index].color){
       if(InfoHep.instance.checkProgressReceived(index)){
         (box?"Today’s treasure chest reward has been collected":"The wheel reward has been received").toast();
@@ -124,6 +124,7 @@ class ProHep{
               add: ValueHep.instance.getBoxCoins(),
               dismissCall: (){
                 InfoHep.instance.updateProgressReceivedList(index);
+                receivedCall?.call();
               },
             ).show();
           },
@@ -143,6 +144,7 @@ class ProHep{
                 incentFrom: IncentFrom.wheel,
                 dismissCall: (){
                   InfoHep.instance.updateProgressReceivedList(index);
+                  receivedCall?.call();
                 },
               ).show();
             }

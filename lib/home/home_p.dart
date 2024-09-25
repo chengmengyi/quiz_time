@@ -35,7 +35,7 @@ class _HomePState extends State<HomeP> {
                 child: IndexedStack(
               alignment: Alignment.topCenter,
               index: i,
-              children: const [QuizP(), SetP()],
+              children: [QuizP(), SetP()],
             )),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
