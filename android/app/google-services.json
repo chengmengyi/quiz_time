@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "396693537288",
+    "project_id": "android-c55-quiztime",
+    "storage_bucket": "android-c55-quiztime.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396693537288:android:4aea391e146a9fe253c7bd",
+        "android_client_info": {
+          "package_name": "com.quizright.answer.playtime"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnAQX1q8Luxq99Zxmv-P1ukiaVBIDDJQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

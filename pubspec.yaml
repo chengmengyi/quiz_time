@@ -35,58 +35,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: 1.0.8
-
-#  http: 1.2.1
-#  lottie: 3.1.2
-  flutter_screenutil: 5.9.3 #屏幕适配
-  url_launcher: 6.3.0 #打开网页，邮箱
-  get_storage: 2.1.1 #sp
-#  shimmer: 3.0.0 #闪亮
-  #  sqflite: 2.3.3+1 #数据库
-  #  provider: 6.1.2 #状态管理
-  #  shared_preferences: 2.2.3 #sp
-  #  event_bus: 2.0.0 #消息
-#  flutter_tba_info: 0.0.7 #tba数据
-  #  pedometer: 4.0.1 #记步
-  #  marquee: 2.2.3 #跑马灯
-  #  collection: 1.18.0 #列表集合操作
-  fluttertoast: 8.2.6 #toast
-  #  flutter_local_notifications: 17.2.2 #通知
-#  flutter_local_notifications:
-#    path: plugin/flutter_local_notifications-17.2.2 #通知本地导入
-  #  close:
-  #    path: plug_n/close #广告关闭本地导入
-  intl: 0.19.0 #时间，数字格式化
-  #  showcaseview: 2.0.3 #新手引导
-  #  flutter_shakemywidget: 1.0.5+1 #摇动
-#  in_app_review: 2.0.9 #商店打分
-  #  audioplayers: 5.2.1 #音频
-#  connectivity_plus: 6.0.4 #网络状态
-#  flutter_lifecycle_detector: 0.0.6 #app生命周期
-  #  flutter_app_lifecycle: 0.0.1 #app生命周期
-  synchronized: 3.2.0
-  decimal: 3.0.2
-  flutter_max_ad: 0.3.0
-  get: 4.6.6
-  sqflite: 2.3.3+1
-  flutter_check_adjust_cloak: 0.3.0
-  flutter_tba_info: 0.0.7
-  flutter_app_lifecycle: 0.0.1
-  app_settings: 5.1.1
-  flutter_staggered_grid_view: 0.4.1
-  in_app_review: 2.0.9
-  lottie: 2.6.0
-  flutter_local_notifications:
-    path: plugins/flutter_local_notifications-17.2.2
-
-#  adjust_sdk: 4.38.2
-#  applovin_max: 3.11.0
-#  firebase_core: 2.32.0
-#  firebase_remote_config: 4.4.7
-#  firebase_analytics: 10.10.7
-#  firebase_crashlytics: 3.5.7
-#  firebase_messaging: 14.9.4
-
+  time_a:
+    path: time_a
+  time_b:
+    path: time_b
+  time_base:
+    path: time_base
 
 dev_dependencies:
   flutter_test:

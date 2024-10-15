@@ -3,15 +3,14 @@ import 'package:flutter_check_adjust_cloak/flutter_check_adjust_cloak.dart';
 import 'package:flutter_max_ad/ad/ad_type.dart';
 import 'package:flutter_max_ad/flutter_max_ad.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quiztime55/b/hep/ad/ad_pppp.dart';
-import 'package:quiztime55/b/hep/ad/show_ad_hep.dart';
-import 'package:quiztime55/b/home/home.dart';
-import 'package:quiztime55/global/widg/qt_image.dart';
-import 'package:quiztime55/global/widg/ws_text.dart';
 import 'package:quiztime55/pro/pro_pro.dart';
-
-import '../global/clas/inp_clas_1.dart';
-import '../home/home_p.dart';
+import 'package:time_a/hep/ad/show_ad_hep.dart';
+import 'package:time_a/home/home.dart';
+import 'package:time_b/home/home.dart';
+import 'package:time_base/hep/heppppp.dart';
+import 'package:time_base/hep/tttt/ad_pppp.dart';
+import 'package:time_base/w/qt_image.dart';
+import 'package:time_base/w/ws_text.dart';
 
 class ProP extends StatelessWidget {
   const ProP({super.key});
@@ -63,6 +62,7 @@ class ProP extends StatelessWidget {
   }
 
   _toHome(BuildContext context,bool checkType){
-    Navigator.pushReplacement(context, getMaterialRoute(checkType?Home():const HomeP()));
+    // Navigator.pushReplacement(context, getMaterialRoute(QuizHomeA()));
+    Navigator.pushReplacement(context, getMaterialRoute(checkType?QuizHomeB():QuizHomeA()));
   }
 }

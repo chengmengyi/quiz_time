@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/layout_large_bg">
+    <ImageView
+        android:id="@+id/notificationB"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        />
+    <TextView
+        android:id="@+id/notificationContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#834F13"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginLeft="12dp"
+        android:text="Claim 20,000 gold"/>
+    <TextView
+        android:id="@+id/notificationBtn"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:background="@drawable/btn"
+        android:text="withdraw"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+</LinearLayout>

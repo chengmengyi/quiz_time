@@ -2,25 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:quiztime55/b/hep/ad/load_ad_hep.dart';
-import 'package:quiztime55/b/hep/check_type/check_type_hep.dart';
-import 'package:quiztime55/b/hep/sign/sign_hep.dart';
-import 'package:quiztime55/b/hep/sql/sql_hep.dart';
-import 'package:quiztime55/b/hep/tttt/tttt_hep.dart';
-import 'package:quiztime55/b/hep/value_hep.dart';
-import 'package:quiztime55/global/appd/qt_save.dart';
 import 'package:quiztime55/pro/pro_p.dart';
-
-import 'global/appd/qt_quiz_hep.dart';
+import 'package:time_a/hep/sign/sign_hep.dart';
+import 'package:time_a/hep/value_hep.dart';
+import 'package:time_b/hep/value_hep.dart';
+import 'package:time_base/hep/ad/load_ad_hep.dart';
+import 'package:time_base/hep/check_type/check_type_hep.dart';
+import 'package:time_base/hep/save/qt_quiz_hep.dart';
+import 'package:time_base/hep/sql/sql_hep.dart';
+import 'package:time_base/hep/tttt/tttt_hep.dart';
+import 'package:time_base/quiz_language/quiz_translations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  initDay();
-
   QtQuizHep.loadQtData();
   await SqlHep.instance.initDB();
-  ValueHep.instance.loadQtData();
+  ValueHepA.instance.loadQtData();
+  ValueHepB.instance.loadQtData();
   SignHep.instance.initSignList();
   CheckTypeHep.instance.checkType();
   LoadAdHep.instance.loadAd();
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
         designSize: const Size(360, 760),
         builder: (context, child) {
           return GetMaterialApp(
-            title: "QuizTime Pro",
+            title: "QuizTime",
             theme: ThemeData(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
@@ -46,6 +45,9 @@ class MyApp extends StatelessWidget {
             ),
             home: const ProP(),
             debugShowCheckedModeBanner: false,
+            translations: QuizTranslations(),
+            locale: Get.deviceLocale,
+            fallbackLocale: const Locale("en","US"),
             builder: (context,widget)=>Material(
               child: InkWell(
                 onTap: (){

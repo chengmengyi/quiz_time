@@ -136,8 +136,6 @@ PODS:
     - Flutter
   - flutter_check_adjust_cloak (0.0.1):
     - Flutter
-  - flutter_local_notifications (0.0.1):
-    - Flutter
   - flutter_max_ad (0.0.1):
     - Flutter
   - flutter_tba_info (0.0.1):
@@ -242,7 +240,6 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_app_lifecycle (from `.symlinks/plugins/flutter_app_lifecycle/ios`)
   - flutter_check_adjust_cloak (from `.symlinks/plugins/flutter_check_adjust_cloak/ios`)
-  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_max_ad (from `.symlinks/plugins/flutter_max_ad/ios`)
   - flutter_tba_info (from `.symlinks/plugins/flutter_tba_info/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -316,8 +313,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_app_lifecycle/ios"
   flutter_check_adjust_cloak:
     :path: ".symlinks/plugins/flutter_check_adjust_cloak/ios"
-  flutter_local_notifications:
-    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_max_ad:
     :path: ".symlinks/plugins/flutter_max_ad/ios"
   flutter_tba_info:
@@ -374,7 +369,6 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_app_lifecycle: 8dcf95e3e3db994b040426a60863db32d200094d
   flutter_check_adjust_cloak: c90834c085c430a930f35c60069cb2a1e386efc9
-  flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_max_ad: 5db00d299b263bfcd559c02a630cdc4d29f7c8df
   flutter_tba_info: a8d28bab6ac4832dc4f3e8375e6a1adba8efe235
   fluttertoast: e9a18c7be5413da53898f660530c56f35edfba9c
