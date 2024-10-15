@@ -46,12 +46,8 @@ class CommentHep{
         if(stars<3){
           CommentSuccessDialog().show();
         }else{
-          // // InfoHep.instance.addCoins(0.5);
-          // var instance = InAppReview.instance;
-          // var result = await instance.isAvailable();
-          // if(result){
-          //   instance.requestReview();
-          // }requestReview
+          var url="https://play.google.com/store/apps/details?id=${await FlutterTbaInfo.instance.getBundleId()}";
+          launchUrl(Uri.parse(url));
         }
       },
     ).show();

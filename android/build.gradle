@@ -32,6 +32,8 @@ allprojects {
         maven {
             url "https://cboost.jfrog.io/artifactory/chartboost-mediation"
         }
+
+
         maven { url "https://cboost.jfrog.io/artifactory/chartboost-ads/" }
         maven { url "https://android-sdk.is.com" }
         maven { url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" }
@@ -73,6 +75,7 @@ buildscript {
         maven {
             url "https://cboost.jfrog.io/artifactory/chartboost-mediation"
         }
+
         maven { url "https://cboost.jfrog.io/artifactory/chartboost-ads/" }
         maven { url "https://android-sdk.is.com" }
         maven { url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" }

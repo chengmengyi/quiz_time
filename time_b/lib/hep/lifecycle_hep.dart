@@ -5,6 +5,7 @@ import 'package:adjust_sdk/adjust.dart';
 import 'package:flutter_max_ad/ad/ad_type.dart';
 import 'package:flutter_max_ad/flutter_max_ad.dart';
 import 'package:time_b/hep/ad/show_ad_hep.dart';
+import 'package:time_base/hep/notification/notification_hep.dart';
 import 'package:time_base/hep/tttt/ad_pppp.dart';
 import 'package:time_base/hep/tttt/tttt_hep.dart';
 class LifecycleHep {
@@ -34,6 +35,7 @@ class LifecycleHep {
           _backTimer?.cancel();
           TTTTHep.instance.sessionEvent();
           Future.delayed(const Duration(milliseconds: 100),(){
+            NotificationHep.instance.pushStatusTba();
             if(FlutterMaxAd.instance.fullAdShowing()){
               appBackground=false;
             }else{

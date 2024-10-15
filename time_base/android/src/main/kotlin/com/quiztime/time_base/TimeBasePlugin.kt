@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -48,6 +49,7 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
       "getLaunchNotificationId"->getLaunchNotificationId()
       "startTimeQuizWork"->startQuizTimeWork(call)
       "startTimeQuizService"->startTimeQuizService(call)
+//      "toNotificationSetting"->toNotificationSetting()
     }
   }
 
@@ -152,6 +154,11 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
       ContextCompat.startForegroundService(mApplicationContext, nIntent)
     }
   }
+
+//  private fun toNotificationSetting(){
+//    val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+//    mApplicationContext.startActivity(intent)
+//  }
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)

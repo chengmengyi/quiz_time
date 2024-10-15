@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/notification/notification_call.dart';
 import 'package:time_base/hep/notification/notification_id.dart';
+import 'package:time_base/hep/notification/open_notifi.dart';
 import 'package:time_base/hep/tttt/point_name.dart';
 import 'package:time_base/hep/tttt/tttt_hep.dart';
 import 'package:time_base/quiz_language/local_text.dart';
@@ -37,6 +38,12 @@ class NotificationHep{
     _addClickListener();
     // FirebaseMessaging.instance.subscribeToTopic("BR~ALL");
     }
+    // else{
+    //   OpenNotifiDialog(
+    //     openCall: ()async{
+    //     },
+    //   ).show();
+    // }
   }
 
   _startForegroundService(double userCoins) async{
@@ -62,6 +69,7 @@ class NotificationHep{
     _notificationTba(id);
     var hasSim = await FlutterCheckAdjustCloak.instance.checkHasSim();
     TTTTHep.instance.pointEvent(PointName.sim_user,params: {"user_from":hasSim?"1":"0"});
+    pushStatusTba();
   }
 
   _addClickListener(){
@@ -72,14 +80,21 @@ class NotificationHep{
     );
   }
 
-  _notificationTba(int id){
-    // switch(id){
-    //   case NotificationId.foregroundNotificationId:
-    //     TbaUtils.instance.appEvent(AppEventName.fix_pop_c);
-    //     break;
-    //   case NotificationId.timerNotificationId:
-    //     TbaUtils.instance.appEvent(AppEventName.time_pop_c);
-    //     break;
-    // }
+  _notificationTba(int id)async{
+    switch(id){
+      case NotificationId.notificationId:
+        TTTTHep.instance.pointEvent(PointName.inform_c,params: {"inform_from":"fix"});
+        break;
+      case NotificationId.serviceNotificationId:
+        TTTTHep.instance.pointEvent(PointName.inform_c,params: {"inform_from":"cash"});
+        break;
+    }
+  }
+
+  pushStatusTba()async{
+    var has = await TimeBase.instance.checkTimeQuizHasNotificationPer();
+    if(has){
+      TTTTHep.instance.pointEvent(PointName.push_status,);
+    }
   }
 }

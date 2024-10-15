@@ -54,8 +54,30 @@
 -keep class com.facebook.react.uimanager.annotations
 
 
+-keep public class com.adjust.sdk.**{ *; }
+-keep class com.google.android.gms.common.ConnectionResult {
+    int SUCCESS;
+}
+-keep class com.google.android.gms.ads.identifier.AdvertisingIdClient {
+    com.google.android.gms.ads.identifier.AdvertisingIdClient$Info getAdvertisingIdInfo(android.content.Context);
+}
+-keep class com.google.android.gms.ads.identifier.AdvertisingIdClient$Info {
+    java.lang.String getId();
+    boolean isLimitAdTrackingEnabled();
+}
+-keep public class com.android.installreferrer.**{ *; }
+
+#okhttp
+-dontwarn okhttp3.**
+-keep class okhttp3.**{*;}
+
+#okio
+-dontwarn okio.**
+-keep class okio.**{*;}
+
 
 # topon
+# Vungle
 -dontwarn com.vungle.ads.**
 -keepclassmembers class com.vungle.ads.** {
   *;
@@ -164,28 +186,6 @@
 -keep public class androidx.appcompat.widget.AppCompatImageView { *; }
 -keep public class androidx.recyclerview.*{ *; }
 -keep class com.chartboost.** { *; }
-
-
--keep public class com.adjust.sdk.**{ *; }
--keep class com.google.android.gms.common.ConnectionResult {
-    int SUCCESS;
-}
--keep class com.google.android.gms.ads.identifier.AdvertisingIdClient {
-    com.google.android.gms.ads.identifier.AdvertisingIdClient$Info getAdvertisingIdInfo(android.content.Context);
-}
--keep class com.google.android.gms.ads.identifier.AdvertisingIdClient$Info {
-    java.lang.String getId();
-    boolean isLimitAdTrackingEnabled();
-}
--keep public class com.android.installreferrer.**{ *; }
-
-#okhttp
--dontwarn okhttp3.**
--keep class okhttp3.**{*;}
-
-#okio
--dontwarn okio.**
--keep class okio.**{*;}
 
 
 

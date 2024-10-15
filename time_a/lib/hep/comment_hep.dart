@@ -1,3 +1,5 @@
+import 'package:time_a/dia/comment/comment.dart';
+import 'package:time_a/dia/comment/comment_success.dart';
 import 'package:time_a/hep/sql/sql_hep_a.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/save/qt_save.dart';
@@ -36,20 +38,16 @@ class CommentHep{
   }
 
   _showCommentDialog(){
-    // CommentDialog(
-    //   call: (stars)async{
-    //     alreadyCommentBean.putV(true);
-    //     if(stars<3){
-    //       CommentSuccessDialog().show();
-    //     }else{
-    //       // InfoHep.instance.addCoins(0.5);
-    //       var instance = InAppReview.instance;
-    //       var result = await instance.isAvailable();
-    //       if(result){
-    //         instance.requestReview();
-    //       }
-    //     }
-    //   },
-    // ).show();
+    CommentDialog(
+      call: (stars)async{
+        alreadyCommentBean.putV(true);
+        if(stars<3){
+          CommentSuccessDialog().show();
+        }else{
+          var url="https://play.google.com/store/apps/details?id=${await FlutterTbaInfo.instance.getBundleId()}";
+          launchUrl(Uri.parse(url));
+        }
+      },
+    ).show();
   }
 }
