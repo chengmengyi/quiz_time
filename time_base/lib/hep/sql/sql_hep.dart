@@ -55,7 +55,7 @@ class SqlHep {
 
   Future<Database> createDB() async => await openDatabase(
     "quiz.db",
-    version: 2,
+    version: 1,
     onCreate: (db,version)async{
       db.execute('CREATE TABLE ${TableName.sign} (id INTEGER PRIMARY KEY AUTOINCREMENT, signTimer TEXT)');
       db.execute('CREATE TABLE ${TableName.task} (id INTEGER PRIMARY KEY AUTOINCREMENT, payType TEXT, chooseMoney INTEGER, taskType TEXT, completedNum INTEGER, totalNum INTEGER, signedNum INTEGER, signTotalNum INTEGER, cardsNum TEXT)');
@@ -64,11 +64,11 @@ class SqlHep {
 
       _createTableB(db);
       },
-    onUpgrade: (db,oldVersion,newVersion){
-      if(newVersion==2){
-        _createTableB(db);
-      }
-    }
+    // onUpgrade: (db,oldVersion,newVersion){
+    //   if(newVersion==2){
+    //     _createTableB(db);
+    //   }
+    // }
   );
 
   _createTableB(Database db){

@@ -298,7 +298,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
   _contentWidget(BuildContext context)=>Stack(
     alignment: Alignment.topCenter,
     children: [
-      const QtImage("fwefewd",w: double.infinity,fit: BoxFit.fitWidth,),
+      const QtImage("fgwetwefwe",w: double.infinity,fit: BoxFit.fitWidth,),
       Container(
         margin: EdgeInsets.only(top: 20.h),
         child: InkWell(

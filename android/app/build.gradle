@@ -180,4 +180,5 @@ dependencies {
     implementation 'com.applovin.mediation:unityads-adapter:+'
     implementation 'com.applovin.mediation:moloco-adapter:+'
     implementation 'com.applovin.mediation:bigoads-adapter:+'
+    implementation 'com.applovin.mediation:bidmachine-adapter:+'
 }

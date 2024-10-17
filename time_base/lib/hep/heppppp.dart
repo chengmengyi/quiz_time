@@ -21,6 +21,9 @@ export 'package:url_launcher/url_launcher.dart';
 export 'package:flutter_tba_info/flutter_tba_info.dart';
 export 'package:flutter_max_ad/flutter_max_ad.dart';
 export 'package:flutter_max_ad/ad/ad_type.dart';
+export 'package:synchronized/synchronized.dart';
+export 'package:applovin_max/applovin_max.dart';
+export 'package:adjust_sdk/adjust_event.dart';
 
 const String adjustToken="t1x2a22x1kow";
 const String maxKeyBase64="TVdKemhuRVB0S3F4TEtSTEFsVnJUeVFmTzJWeFdaV3RWeF9TelRXQ19NZ29aTDdrVEtOdDl0M01fT2dJWjI0bkJYUlh4VmQ5b2dRRXA3NjE2VFdmM0M=";

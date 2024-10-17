@@ -11,6 +11,7 @@ import 'package:time_base/hep/tttt/tttt_hep.dart';
 const QtSaveKey<String> localAdBean = QtSaveKey(key: "localAd", de: "");
 const QtSaveKey<String> valueConfBeanA = QtSaveKey(key: "valueConfA", de: "");
 const QtSaveKey<String> valueConfBeanB = QtSaveKey(key: "valueConfB", de: "");
+const QtSaveKey<String> kwaiEventB = QtSaveKey(key: "kwai_event", de: "");
 
 var floatDismissSecond=10,tba_console="1";
 
@@ -28,7 +29,7 @@ class CheckTypeHep implements CheckListener{
   checkType()async{
     var url = await _createCloakUrl();
     var forsaken = await FlutterTbaInfo.instance.getDistinctId();
-    FlutterCheckAdjustCloak.instance.forceBuyUser(true);
+    // FlutterCheckAdjustCloak.instance.forceBuyUser(true);
     FlutterCheckAdjustCloak.instance.initCheck(
       cloakPath: url,
       normalModeStr: "breathe",
@@ -128,6 +129,11 @@ class CheckTypeHep implements CheckListener{
       floatDismissSecond=s.toint(10);
     }
     tba_console=await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("tba_console");
+
+    var kwai_event = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("kwai_event");
+    if(kwai_event.isNotEmpty){
+      kwaiEventB.putV(kwai_event);
+    }
   }
   
   @override

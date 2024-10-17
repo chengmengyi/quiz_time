@@ -52,7 +52,7 @@ class TimeQuizWork(context: Context, workerParams: WorkerParameters,):Worker(con
         val notificationLayout = RemoteViews(mApplicationContext.packageName, R.layout.time_quiz_notification_layout)
         notificationLayout.setTextViewText(R.id.notificationContent,notificationContent.random())
         notificationLayout.setTextViewText(R.id.notificationBtn,notificationBtn)
-        notificationLayout.setImageViewResource(R.id.notificationB,if(isB) R.drawable.icon_m else R.drawable.icon_c)
+        notificationLayout.setImageViewResource(R.id.notificationB,if(isB) R.drawable.noti_money_icon else R.drawable.noti_coins_icon)
 
         val notification = NotificationCompat.Builder(mApplicationContext, createNotificationChannel(
             "time_quiz_$id",

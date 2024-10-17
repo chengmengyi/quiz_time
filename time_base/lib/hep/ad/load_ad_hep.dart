@@ -38,7 +38,6 @@ class LoadAdHep{
           firstInterAdList: intAd1,
           secondInterAdList: intAd2,
         ),
-        maxOpenDebugger: true,
         topOnAppId: strBase64Decode(toponId),
         topOnAppKey: strBase64Decode(toponKey),
       );

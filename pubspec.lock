@@ -28,9 +28,10 @@ packages:
   anythink_sdk:
     dependency: transitive
     description:
-      path: "../flutter_max_ad-0.3.3/plugins/anythink_sdk-1.0.2"
-      relative: true
-    source: path
+      name: anythink_sdk
+      sha256: "5a5c363284128933195446c4777b3ff9547b184ee6bcb88b66ede43cfb67bacc"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.0.2"
   app_settings:
     dependency: transitive
@@ -256,9 +257,10 @@ packages:
   flutter_max_ad:
     dependency: transitive
     description:
-      path: "/Users/qut55/Documents/q55/flutter_max_ad-0.3.3"
-      relative: false
-    source: path
+      name: flutter_max_ad
+      sha256: e1831e1f1fb5761a7b5ca95eeb247f635cadae872b0e2ed4480628dc38873b67
+      url: "https://pub.dev"
+    source: hosted
     version: "0.3.3"
   flutter_screenutil:
     dependency: transitive

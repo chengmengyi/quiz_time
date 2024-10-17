@@ -47,4 +47,8 @@ enum PointName{
   kztym_ad_chance,
   kztym_ad_impression,
   inform_c,
+  qt_ltv0,
+  qt_pv,
+  qt_ltv0_other,
+  qt_pv_other,
 }

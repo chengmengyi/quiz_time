@@ -537,6 +537,7 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
     var indexWhere = payTypeList.indexWhere((value)=>value.payType==selectedPayType);
     if(indexWhere<0){
       selectedPayType=payTypeList.first.payType;
+      payTypeIndexBean.putV(selectedPayType.name);
     }
   }
 }

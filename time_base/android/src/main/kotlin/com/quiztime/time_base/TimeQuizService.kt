@@ -57,7 +57,7 @@ class TimeQuizService : Service(){
         val notificationLayout = RemoteViews(mApplicationContext.packageName, R.layout.time_quiz_service_notification_layout)
         notificationLayout.setTextViewText(R.id.serviceNotificationTitle,serviceNotificationTitle)
         notificationLayout.setTextViewText(R.id.serviceNotificationMoney,serviceNotificationMoney)
-        notificationLayout.setImageViewResource(R.id.notificationB,if(isB) R.drawable.icon_m else R.drawable.icon_c)
+        notificationLayout.setImageViewResource(R.id.notificationB,if(isB) R.drawable.service_money_icon else R.drawable.service_coins_icon)
 
         val builder = createBuilder(pendingIntent,notificationLayout)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:quiztime55/pro/pro_p.dart';
 import 'package:time_a/hep/sign/sign_hep.dart';
 import 'package:time_a/hep/value_hep.dart';
+import 'package:time_b/hep/ad/adjust_event_hep.dart';
 import 'package:time_b/hep/value_hep.dart';
 import 'package:time_base/hep/ad/load_ad_hep.dart';
 import 'package:time_base/hep/check_type/check_type_hep.dart';
@@ -25,6 +26,7 @@ void main() async {
   LoadAdHep.instance.loadAd();
   TTTTHep.instance.installEvent();
   TTTTHep.instance.sessionEvent();
+  AdjustEventHep.instance.initConf();
   runApp(const MyApp());
 }
 

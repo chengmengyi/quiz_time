@@ -442,19 +442,21 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     }
     Future.delayed(const Duration(milliseconds: 800),(){
       _quizResult=-1;
-      SqlHepB.instance.updateTodayAnswerNum();
       if(result){
         if(newGuideBean.getV()==NewUserGuideStep.rightAnswerFinger){
           _toNextQuiz();
           GuideHep.instance.updateNewGuide(NewUserGuideStep.cashDialog);
+          SqlHepB.instance.updateTodayAnswerNum();
           return;
         }
         if(ProHep.instance.showFirstBoxOverlay(context: context,globalKey: _firstProgressBoxGlobalKey)){
           _toNextQuiz();
+          SqlHepB.instance.updateTodayAnswerNum();
           return;
         }
         if(ProHep.instance.showFirstWheelOverlay(context: context,globalKey: _firstProgressWheelGlobalKey)){
           _toNextQuiz();
+          SqlHepB.instance.updateTodayAnswerNum();
           return;
         }
         Incent(
@@ -464,9 +466,11 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
             _toNextQuiz();
           },
         ).show();
+        SqlHepB.instance.updateTodayAnswerNum();
         return;
       }
       _toNextQuiz();
+      SqlHepB.instance.updateTodayAnswerNum();
     });
   }
 
@@ -600,6 +604,8 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     if(!kDebugMode){
       return;
     }
+
+    InfoHep.instance.addCoins(300);
   }
 
 }
