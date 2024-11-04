@@ -51,4 +51,5 @@ enum PointName{
   qt_pv,
   qt_ltv0_other,
   qt_pv_other,
+  quiz_guide,
 }

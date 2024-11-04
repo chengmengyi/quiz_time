@@ -105,6 +105,9 @@ class _CommentDialogState extends State<CommentDialog>{
                 right: 0,
                 child: InkWell(
                   onTap: (){
+                    if(chooseIndex!=-1){
+                      return;
+                    }
                     closeDialog();
                   },
                   child: QtImage("icon_close",w: 40.w,h: 40.w,),
@@ -121,10 +124,13 @@ class _CommentDialogState extends State<CommentDialog>{
   );
 
   _clickItem(index){
+    if(chooseIndex!=-1){
+      return;
+    }
     setState(() {
       chooseIndex=index;
     });
-    Future.delayed(const Duration(milliseconds: 800),(){
+    Future.delayed(const Duration(milliseconds: 400),(){
       closeDialog();
       widget.call.call(index);
     });

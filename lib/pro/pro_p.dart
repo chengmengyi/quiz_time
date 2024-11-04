@@ -45,7 +45,7 @@ class ProP extends StatelessWidget {
 
   _progressFinish(BuildContext context){
     var checkType = FlutterCheckAdjustCloak.instance.checkType();
-    if(checkType&&FlutterMaxAd.instance.checkHasCache(AdType.inter)){
+    if(FlutterMaxAd.instance.checkHasCache(AdType.inter)){
       ShowAdHep.instance.showOpenAd(
         adType: AdType.inter,
         adPPPP: AdPPPP.kztym_launch,

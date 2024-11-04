@@ -38,7 +38,7 @@ class CheckTypeHep implements CheckListener{
       adjustSandbox: false,
       distinctId: forsaken,
       unknownFirebaseKey: "qt_unknown",
-      referrerConfKey: "",
+      referrerConfKey: "refer_from",
       adjustConfKey: "qt_adjust_on",
       checkListener: this,
     );

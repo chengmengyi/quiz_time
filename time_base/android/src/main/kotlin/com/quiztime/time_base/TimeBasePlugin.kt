@@ -109,7 +109,7 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
         ActivityCompat.requestPermissions(
           it,
           arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-          TimeQuizData.requestNotificationPermissionCallResult
+          100
         )
       }
     }
@@ -200,12 +200,13 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
       return false
     }
     var permissionStatus = false
-    if(requestCode==TimeQuizData.requestNotificationPermissionCallResult){
-      val permissionIndex = permissions.indexOf(Manifest.permission.POST_NOTIFICATIONS)
+    if(requestCode==100){
+      var permission=Manifest.permission.POST_NOTIFICATIONS
+      val permissionIndex = permissions.indexOf(permission)
       if (permissionIndex >= 0 && grantResults[permissionIndex] == PackageManager.PERMISSION_GRANTED) {
         permissionStatus = true
       } else {
-        if (mActivity?.shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) == false) {
+        if (mActivity?.shouldShowRequestPermissionRationale(permission) == false) {
           permissionStatus = false
         }
       }

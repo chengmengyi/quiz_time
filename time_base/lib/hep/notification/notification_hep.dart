@@ -1,5 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_check_adjust_cloak/flutter_check_adjust_cloak.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/notification/notification_call.dart';
 import 'package:time_base/hep/notification/notification_id.dart';
@@ -25,8 +27,10 @@ class NotificationHep{
   NotificationHep._internal();
 
   initNotification(double userCoins)async{
-    var hasPer = await TimeBase.instance.requestTimeQuizNotificationPer();
-    if (hasPer) {
+    // var hasPer = await TimeBase.instance.requestTimeQuizNotificationPer();
+
+    var result = await Permission.notification.request();
+    if (result.isGranted) {
       _startForegroundService(userCoins);
 
       TimeBase.instance.startTimeQuizWork(
@@ -35,15 +39,11 @@ class NotificationHep{
         notificationContent: [LocalText.getPaidForEvery.tr,LocalText.signUpInMinutes.tr,LocalText.hugeRewardsAreWaiting.tr],
         notificationBtn: LocalText.withdraw.tr,
       );
-    _addClickListener();
-    // FirebaseMessaging.instance.subscribeToTopic("BR~ALL");
+      _addClickListener();
+
+
+    FirebaseMessaging.instance.subscribeToTopic("BR~ALL");
     }
-    // else{
-    //   OpenNotifiDialog(
-    //     openCall: ()async{
-    //     },
-    //   ).show();
-    // }
   }
 
   _startForegroundService(double userCoins) async{
@@ -57,8 +57,8 @@ class NotificationHep{
   }
 
   updateForegroundData(double userCoins) async {
-    var has = await TimeBase.instance.checkTimeQuizHasNotificationPer();
-    if(has){
+    var status = await Permission.notification.status;
+    if(status.isGranted){
       _startForegroundService(userCoins);
     }
   }

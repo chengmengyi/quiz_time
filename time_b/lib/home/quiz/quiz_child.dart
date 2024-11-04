@@ -536,6 +536,9 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
       _rightAnswerOffset=renderBox.localToGlobal(Offset.zero);
     });
     _rightAnswerFingerFrom=from;
+    if(from==RightAnswerFingerFrom.newUser){
+      TTTTHep.instance.pointEvent(PointName.quiz_guide,params: {"guide_from":"B"});
+    }
   }
 
   @override

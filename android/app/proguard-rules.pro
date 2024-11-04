@@ -188,5 +188,11 @@
 -keep class com.chartboost.** { *; }
 
 
+-keep class com.alex.** { *;}
+-keepclassmembers public class com.alex.** {
+   public *;
+}
+
+
 
 

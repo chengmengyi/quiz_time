@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:time_a/dia/get_coins.dart';
 import 'package:time_a/hep/call_listener/call_listener_hep.dart';
 import 'package:time_base/hep/heppppp.dart';
+import 'package:time_base/hep/notification/notification_hep.dart';
 import 'package:time_base/hep/save/qt_save.dart';
 
 const QtSaveKey<double> coinsBean = QtSaveKey(key: "coinsBeanA", de: 0.0);
@@ -47,6 +48,7 @@ class InfoHep{
           CallListenerHep.instance.showCoinsAnimator(userCoins);
         },
       ).show(barrierColor: Colors.transparent);
+      NotificationHep.instance.updateForegroundData(userCoins);
     }else{
       coinsBean.putV(userCoins);
     }

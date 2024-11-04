@@ -5,6 +5,8 @@ import 'package:time_a/hep/info_hep.dart';
 import 'package:time_a/hep/value_hep.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/tttt/ad_pppp.dart';
+import 'package:time_base/hep/tttt/point_name.dart';
+import 'package:time_base/hep/tttt/tttt_hep.dart';
 
 class ShowAdHep{
   factory ShowAdHep()=>_getInstance();
@@ -37,11 +39,14 @@ class ShowAdHep{
       return;
     }
     if(hasCache){
+      TTTTHep.instance.pointEvent(PointName.kztym_ad_chance,params: {"ad_pos_id":adPPPP.name});
       FlutterMaxAd.instance.showAd(
         adType: adType,
         adShowListener: AdShowListener(
           showAdSuccess: (ad,info){
             InfoHep.instance.updateWatchAdNum();
+            TTTTHep.instance.adEvent(ad, info, adPPPP, adType);
+            TTTTHep.instance.pointEvent(PointName.kztym_ad_impression,params: {"ad_pos_id":adPPPP.name});
           },
           onAdHidden: (ad){
             hiddenAd.call();
@@ -68,10 +73,13 @@ class ShowAdHep{
       FlutterMaxAd.instance.loadAdByType(adType);
       hiddenAd.call();
     }else{
+      TTTTHep.instance.pointEvent(PointName.kztym_ad_chance,params: {"ad_pos_id":adPPPP.name});
       FlutterMaxAd.instance.showAd(
         adType: adType,
         adShowListener: AdShowListener(
             showAdSuccess: (ad,info){
+              TTTTHep.instance.adEvent(ad, info, adPPPP, adType);
+              TTTTHep.instance.pointEvent(PointName.kztym_ad_impression,params: {"ad_pos_id":adPPPP.name});
               InfoHep.instance.updateWatchAdNum();
             },
             onAdHidden: (ad){

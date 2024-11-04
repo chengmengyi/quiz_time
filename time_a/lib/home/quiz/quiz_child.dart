@@ -26,6 +26,8 @@ import 'package:time_a/home/top_coins_w.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/notification/notification_hep.dart';
 import 'package:time_base/hep/save/qt_quiz_hep.dart';
+import 'package:time_base/hep/tttt/point_name.dart';
+import 'package:time_base/hep/tttt/tttt_hep.dart';
 import 'package:time_base/w/qt_image.dart';
 import 'package:time_base/w/ws_text.dart';
 
@@ -522,6 +524,9 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
       _rightAnswerOffset=renderBox.localToGlobal(Offset.zero);
     });
     _rightAnswerFingerFrom=from;
+    if(from==RightAnswerFingerFrom.newUser){
+      TTTTHep.instance.pointEvent(PointName.quiz_guide,params: {"guide_from":"A"});
+    }
   }
 
   @override
