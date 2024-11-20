@@ -38,8 +38,8 @@ class ShowAdHep{
       hiddenAd.call();
       return;
     }
+    TTTTHep.instance.pointEvent(PointName.kztym_ad_chance,params: {"ad_pos_id":adPPPP.name});
     if(hasCache){
-      TTTTHep.instance.pointEvent(PointName.kztym_ad_chance,params: {"ad_pos_id":adPPPP.name});
       FlutterMaxAd.instance.showAd(
         adType: adType,
         adShowListener: AdShowListener(

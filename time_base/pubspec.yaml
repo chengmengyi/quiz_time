@@ -17,7 +17,7 @@ dependencies:
   fluttertoast: 8.2.6 #toast
   synchronized: 3.2.0
   decimal: 3.0.2
-  flutter_max_ad: 0.3.3
+  flutter_max_ad: 0.3.9
 #  flutter_max_ad:
 #    path: /Users/qut55/Documents/q55/flutter_max_ad-0.3.3
   get: 4.6.6
@@ -31,8 +31,6 @@ dependencies:
   intl: 0.19.0
   permission_handler: 11.3.1
   firebase_messaging: 15.0.4
-  firebase_crashlytics: 4.0.0
-#  firebase_analytics: 11.3.3
 
 
 dev_dependencies:

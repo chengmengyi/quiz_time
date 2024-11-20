@@ -18,7 +18,7 @@ enum IncentFrom{
   answerRight,box,wheel
 }
 
-class Incent extends StatelessWidget{
+class Incent extends StatefulWidget{
   double add;
   IncentFrom incentFrom;
   Function() dismissCall;
@@ -26,8 +26,20 @@ class Incent extends StatelessWidget{
   Incent({required this.add,required this.incentFrom,required this.dismissCall});
 
   @override
-  Widget build(BuildContext context){
+  State<StatefulWidget> createState() => _IncentState();
+}
+
+class _IncentState extends State<Incent>{
+
+  @override
+  void initState() {
+    super.initState();
     TTTTHep.instance.pointEvent(PointName.coin_pop,params: {"source_from":_getSourceFrom()});
+  }
+
+
+  @override
+  Widget build(BuildContext context){
     return WillPopScope(
       child: Material(
         type: MaterialType.transparency,
@@ -51,7 +63,7 @@ class Incent extends StatelessWidget{
                 ],
               ),
               QtText(
-                "+${moneyDou2Str(add)}",
+                "+${moneyDou2Str(widget.add)}",
                 fontSize: 32.sp,
                 color: const Color(0xffFFBB19),
                 fontWeight: FontWeight.w500,
@@ -89,7 +101,7 @@ class Incent extends StatelessWidget{
                         QtImage("video", w: 24.w, h: 24.w),
                         SizedBox(width: 8.w,),
                         QtText(
-                          "${LocalText.claim.tr} ${moneyDou2Str(add.tox2())}",
+                          "${LocalText.claim.tr} ${moneyDou2Str(widget.add.tox2())}",
                           fontSize: 18.sp,
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -116,7 +128,7 @@ class Incent extends StatelessWidget{
                   );
                 },
                 child: QtText(
-                  "+${moneyDou2Str(add)}",
+                  "+${moneyDou2Str(widget.add)}",
                   fontSize: 14.sp,
                   color: const Color(0xffFFBB19),
                   fontWeight: FontWeight.w500,
@@ -134,24 +146,24 @@ class Incent extends StatelessWidget{
 
   _clickBtn(bool d,context){
     closeDialog();
-    dismissCall.call();
+    widget.dismissCall.call();
     if(d){
-      InfoHep.instance.addCoins(add.tox2());
+      InfoHep.instance.addCoins(widget.add.tox2());
     }else{
-      InfoHep.instance.addCoins(add);
+      InfoHep.instance.addCoins(widget.add);
     }
   }
 
   Future<AdPPPP> _getRewardAdPPP()async{
     var start = await SqlHepB.instance.checkStartCashTask();
     if(start){
-      switch(incentFrom){
+      switch(widget.incentFrom){
         case IncentFrom.answerRight:return AdPPPP.kztym_rv_task_answer;
         case IncentFrom.box:return AdPPPP.kztym_rv_task_box;
         case IncentFrom.wheel:return AdPPPP.kztym_rv_task_claim_spin;
       }
     }else{
-      switch(incentFrom){
+      switch(widget.incentFrom){
         case IncentFrom.answerRight:return AdPPPP.kztym_rv_claim_answer;
         case IncentFrom.box:return AdPPPP.kztym_rv_open_box;
         case IncentFrom.wheel:return AdPPPP.kztym_rv_claim_spin;
@@ -162,13 +174,13 @@ class Incent extends StatelessWidget{
   Future<AdPPPP> _getIntAdPPP()async{
     var start = await SqlHepB.instance.checkStartCashTask();
     if(start){
-      switch(incentFrom){
+      switch(widget.incentFrom){
         case IncentFrom.answerRight:return AdPPPP.kztym_int_task_answer_close;
         case IncentFrom.box:return AdPPPP.kztym_rv_task_box_close;
         case IncentFrom.wheel:return AdPPPP.kztym_int_task_claim_spin;
       }
     }else{
-      switch(incentFrom){
+      switch(widget.incentFrom){
         case IncentFrom.answerRight:return AdPPPP.kztym_int_answer_continue;
         case IncentFrom.box:return AdPPPP.kztym_int_box_continue;
         case IncentFrom.wheel:return AdPPPP.kztym_int_claim_spin;
@@ -177,7 +189,7 @@ class Incent extends StatelessWidget{
   }
 
   String _getSourceFrom(){
-    switch(incentFrom){
+    switch(widget.incentFrom){
       case IncentFrom.answerRight: return "quiz";
       case IncentFrom.wheel: return "wheel";
       case IncentFrom.box: return "box";

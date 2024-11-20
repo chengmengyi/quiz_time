@@ -52,4 +52,5 @@ enum PointName{
   qt_ltv0_other,
   qt_pv_other,
   quiz_guide,
+  kztym_config_success,
 }

@@ -3,6 +3,7 @@ import 'package:adjust_sdk/adjust_event_success.dart';
 import 'package:flutter_check_adjust_cloak/flutter_check_adjust_cloak.dart';
 import 'package:flutter_check_adjust_cloak/util/check_listener.dart';
 import 'package:flutter_tba_info/flutter_tba_info.dart';
+import 'package:time_base/hep/ad/load_ad_hep.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/save/qt_save.dart';
 import 'package:time_base/hep/tttt/point_name.dart';
@@ -112,9 +113,13 @@ class CheckTypeHep implements CheckListener{
   }
 
   _getFirebaseConf()async{
+    var start = DateTime.now().millisecondsSinceEpoch;
     var ad = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("kztym_ad_config");
+    var end = DateTime.now().millisecondsSinceEpoch;
+    TTTTHep.instance.pointEvent(PointName.kztym_config_success,params: {"time":"${(end-start)/1000}"});
     if(ad.isNotEmpty){
       localAdBean.putV(ad);
+      LoadAdHep.instance.resetMaxInfo();
     }
     var small = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("qt_a_number");
     if(small.isNotEmpty&&valueConfBeanA.getV().isEmpty){

@@ -24,20 +24,10 @@ class LoadAdHep{
   loadAd()async{
     _getAdStr((ad){
       var json = jsonDecode(ad);
-      var intAd1 = _getAdListByType(json["kztym_int_one"], "kztym_int_one");
-      var intAd2 = _getAdListByType(json["kztym_int_two"], "kztym_int_two");
-      var rvAd1 = _getAdListByType(json["kztym_rv_one"], "kztym_rv_one");
-      var rvAd2 = _getAdListByType(json["kztym_rv_two"], "kztym_rv_two");
       FlutterMaxAd.instance.initMax(
         maxKey: strBase64Decode(maxKeyBase64),
-        maxAdBean: MaxAdBean(
-          maxShowNum: json["mlpokjiu"],
-          maxClickNum: json["hnbvgytf"],
-          firstRewardedAdList: rvAd1,
-          secondRewardedAdList:rvAd2,
-          firstInterAdList: intAd1,
-          secondInterAdList: intAd2,
-        ),
+        maxAdBean: _getMaxAd(json),
+        logFacebookPurchase: true,
         topOnAppId: strBase64Decode(toponId),
         topOnAppKey: strBase64Decode(toponKey),
       );
@@ -75,5 +65,27 @@ class LoadAdHep{
     }catch(e){
       return [];
     }
+  }
+
+  resetMaxInfo(){
+    _getAdStr((ad){
+      var json = jsonDecode(ad);
+      FlutterMaxAd.instance.setMaxAdInfo(_getMaxAd(json));
+    });
+  }
+
+  MaxAdBean _getMaxAd(json){
+    var intAd1 = _getAdListByType(json["kztym_int_one"], "kztym_int_one");
+    var intAd2 = _getAdListByType(json["kztym_int_two"], "kztym_int_two");
+    var rvAd1 = _getAdListByType(json["kztym_rv_one"], "kztym_rv_one");
+    var rvAd2 = _getAdListByType(json["kztym_rv_two"], "kztym_rv_two");
+    return MaxAdBean(
+      maxShowNum: json["mlpokjiu"],
+      maxClickNum: json["hnbvgytf"],
+      firstRewardedAdList: rvAd1,
+      secondRewardedAdList:rvAd2,
+      firstInterAdList: intAd1,
+      secondInterAdList: intAd2,
+    );
   }
 }
