@@ -3,6 +3,7 @@ import 'package:flutter_max_ad/ad/listener/ad_show_listener.dart';
 import 'package:flutter_max_ad/flutter_max_ad.dart';
 import 'package:time_a/hep/info_hep.dart';
 import 'package:time_a/hep/value_hep.dart';
+import 'package:time_base/hep/ad/adjust_event_hep.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/tttt/ad_pppp.dart';
 import 'package:time_base/hep/tttt/point_name.dart';
@@ -78,6 +79,7 @@ class ShowAdHep{
         adType: adType,
         adShowListener: AdShowListener(
             showAdSuccess: (ad,info){
+              AdjustEventHep.instance.countAdRevenueAndShowNum(ad);
               TTTTHep.instance.adEvent(ad, info, adPPPP, adType);
               TTTTHep.instance.pointEvent(PointName.kztym_ad_impression,params: {"ad_pos_id":adPPPP.name});
               InfoHep.instance.updateWatchAdNum();
