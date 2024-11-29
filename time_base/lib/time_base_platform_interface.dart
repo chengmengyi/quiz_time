@@ -29,8 +29,9 @@ abstract class TimeBasePlatform extends PlatformInterface {
     required bool notificationB,
     required List<String> notificationContent,
     required String notificationBtn,
+    required int repeatIntervalMinutes
 }){
-    return _instance.startTimeQuizWork(notificationId: notificationId, notificationB: notificationB, notificationContent: notificationContent, notificationBtn: notificationBtn);
+    return _instance.startTimeQuizWork(notificationId: notificationId, notificationB: notificationB, notificationContent: notificationContent, notificationBtn: notificationBtn,repeatIntervalMinutes: repeatIntervalMinutes);
   }
 
   Future<bool> requestPer()=>_instance.requestPer();
@@ -48,4 +49,21 @@ abstract class TimeBasePlatform extends PlatformInterface {
   }
 
   Future<int?> getLaunchNotificationId()=>_instance.getLaunchNotificationId();
+
+
+  Future<void> showUrlByBrowser(String url){
+    return _instance.showUrlByBrowser(url);
+  }
+
+
+  Future<void> showOnceNotification(
+      int notificationId,
+      bool notificationB,
+      List<String> notificationContent,
+      String notificationBtn,
+      ) => _instance.showOnceNotification(notificationId,notificationB,notificationContent,notificationBtn);
+
+   setMainExist(bool exist){
+     _instance.setMainExist(exist);
+   }
 }

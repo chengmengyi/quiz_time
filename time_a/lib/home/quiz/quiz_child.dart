@@ -61,7 +61,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     Future((){
       GuideHep.instance.showGuide();
       _checkProgressFingerIndex();
-      NotificationHep.instance.initNotification(coinsBean.getV());
+      NotificationHep.instance.initNotificationA(coinsBean.getV());
     });
   }
 

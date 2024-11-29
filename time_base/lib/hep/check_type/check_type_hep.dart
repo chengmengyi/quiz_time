@@ -13,6 +13,7 @@ const QtSaveKey<String> localAdBean = QtSaveKey(key: "localAd", de: "");
 const QtSaveKey<String> valueConfBeanA = QtSaveKey(key: "valueConfA", de: "");
 const QtSaveKey<String> valueConfBeanB = QtSaveKey(key: "valueConfB", de: "");
 const QtSaveKey<String> kwaiEventB = QtSaveKey(key: "kwai_event", de: "");
+const QtSaveKey<String> repeatIntervalMinutes = QtSaveKey(key: "qt_inform_hour", de: "120");
 
 var floatDismissSecond=10,tba_console="1";
 
@@ -138,6 +139,11 @@ class CheckTypeHep implements CheckListener{
     var kwai_event = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("kwai_event");
     if(kwai_event.isNotEmpty){
       kwaiEventB.putV(kwai_event);
+    }
+
+    var qt_inform_hour = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("qt_inform_hour");
+    if(qt_inform_hour.isNotEmpty){
+      repeatIntervalMinutes.putV(qt_inform_hour);
     }
   }
   

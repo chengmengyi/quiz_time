@@ -14,11 +14,12 @@ class TimeBase {
     required bool notificationB,
     required List<String> notificationContent,
     required String notificationBtn,
+    required int repeatIntervalMinutes,
   }){
     if(Platform.isIOS){
       return;
     }
-    TimeBasePlatform.instance.startTimeQuizWork(notificationId: notificationId, notificationB: notificationB, notificationContent: notificationContent, notificationBtn: notificationBtn);
+    TimeBasePlatform.instance.startTimeQuizWork(notificationId: notificationId, notificationB: notificationB, notificationContent: notificationContent, notificationBtn: notificationBtn,repeatIntervalMinutes: repeatIntervalMinutes);
   }
 
   Future<bool> requestTimeQuizNotificationPer()async{
@@ -47,5 +48,24 @@ class TimeBase {
 
   Future<int?> getLaunchNotificationId()async{
     return await TimeBasePlatform.instance.getLaunchNotificationId();
+  }
+
+  Future<void> showUrlByBrowser({required String url})async{
+    await TimeBasePlatform.instance.showUrlByBrowser(url);
+  }
+
+  showOnceNotification({
+    required int notificationId,
+    required bool notificationB,
+    required List<String> notificationContent,
+    required String notificationBtn,
+  }){
+    TimeBasePlatform.instance.showOnceNotification(notificationId, notificationB, notificationContent, notificationBtn);
+  }
+
+  setMainExist({
+    required bool exist,
+  }){
+    TimeBasePlatform.instance.setMainExist(exist);
   }
 }

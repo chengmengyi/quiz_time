@@ -13,6 +13,7 @@ import 'package:time_base/hep/save/qt_quiz_hep.dart';
 import 'package:time_base/hep/sql/sql_hep.dart';
 import 'package:time_base/hep/tttt/tttt_hep.dart';
 import 'package:time_base/quiz_language/quiz_translations.dart';
+import 'package:time_base/time_base.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +28,7 @@ void main() async {
   TTTTHep.instance.installEvent();
   TTTTHep.instance.sessionEvent();
   AdjustEventHep.instance.initConf();
+  TimeBase.instance.setMainExist(exist: true);
   runApp(const MyApp());
 }
 

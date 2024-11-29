@@ -39,10 +39,17 @@ class TimeQuizWork(context: Context, workerParams: WorkerParameters,):Worker(con
         val notificationContent = inputData.getStringArray("notificationContent")?: arrayOf("Get paid for every answer you provide—cash out anytime!","Sign up in minutes and start earning right away!","Huge Rewards are waiting for you! come and claim it!")
         val notificationBtn = inputData.getString("notificationBtn")?:"Withdraw"
         val isB=inputData.getBoolean("notificationB",false)
-        val intent = mApplicationContext.packageManager.getLaunchIntentForPackage(mApplicationContext.packageName)?.apply {
+//        val intent = mApplicationContext.packageManager.getLaunchIntentForPackage(mApplicationContext.packageName)?.apply {
+//            action=TimeQuizData.workManagerNotificationAction
+//            putExtra("notificationId",id)
+//        }
+
+
+        val intent=Intent(mApplicationContext,NotificationActivity::class.java).apply {
             action=TimeQuizData.workManagerNotificationAction
             putExtra("notificationId",id)
         }
+
         val pendingIntent = if (VERSION.SDK_INT >= VERSION_CODES.S) {
             PendingIntent.getActivity(mApplicationContext, id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         }else{

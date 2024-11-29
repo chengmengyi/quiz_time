@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.IBinder
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.getSystemService
 
 class TimeQuizService : Service(){
     private val serviceId=33
@@ -43,14 +44,17 @@ class TimeQuizService : Service(){
         val serviceNotificationMoney = intent?.getStringExtra("serviceNotificationMoney")?:""
 
 
-        val intent = mApplicationContext.packageManager.getLaunchIntentForPackage(mApplicationContext.packageName)?.apply {
-            action=TimeQuizData.workManagerNotificationAction
+//        val intent = mApplicationContext.packageManager.getLaunchIntentForPackage(mApplicationContext.packageName)?.apply {
+//            action=TimeQuizData.workManagerNotificationAction
+//            putExtra("notificationId",serviceNotificationId)
+        val intent=Intent(mApplicationContext,NotificationActivity::class.java).apply {
+            action=TimeQuizData.foregroundNotificationAction
             putExtra("notificationId",serviceNotificationId)
         }
         val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getActivity(mApplicationContext, 10001, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getActivity(mApplicationContext, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         }else{
-            PendingIntent.getActivity(mApplicationContext, 10001, intent, PendingIntent.FLAG_ONE_SHOT)
+            PendingIntent.getActivity(mApplicationContext, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
 

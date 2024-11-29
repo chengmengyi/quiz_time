@@ -53,4 +53,5 @@ enum PointName{
   qt_pv_other,
   quiz_guide,
   kztym_config_success,
+  home_page_h5,
 }

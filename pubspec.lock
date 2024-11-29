@@ -262,6 +262,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.1"
+  flutter_broadcasts:
+    dependency: transitive
+    description:
+      name: flutter_broadcasts
+      sha256: "9e76eeeda4a9faef63e3b08af5664c79219a2eabffc8ce95296858ea70423b1e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
   flutter_check_adjust_cloak:
     dependency: transitive
     description:

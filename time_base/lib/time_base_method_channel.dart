@@ -26,6 +26,7 @@ class MethodChannelTimeBase extends TimeBasePlatform {
     required bool notificationB,
     required List<String> notificationContent,
     required String notificationBtn,
+    required int repeatIntervalMinutes,
   }) async{
     await methodChannel.invokeMethod(
       "startTimeQuizWork",
@@ -35,6 +36,7 @@ class MethodChannelTimeBase extends TimeBasePlatform {
         "notificationContent":notificationContent,
         "notificationBtn":notificationBtn,
         "test":kDebugMode,
+        "repeatIntervalMinutes":repeatIntervalMinutes
       }
     );
   }
@@ -70,5 +72,28 @@ class MethodChannelTimeBase extends TimeBasePlatform {
   @override
   Future<int?> getLaunchNotificationId()async{
     return await methodChannel.invokeMethod("getLaunchNotificationId");
+  }
+
+  @override
+  Future<void> showUrlByBrowser(String url) async{
+    await methodChannel.invokeMethod("showUrlByBrowser",{"url":url});
+  }
+
+  @override
+  Future<void> showOnceNotification(int notificationId, bool notificationB, List<String> notificationContent, String notificationBtn) async{
+    await methodChannel.invokeMethod(
+        "showOnceNotification",
+        {
+          "notificationId":notificationId,
+          "notificationB":notificationB,
+          "notificationContent":notificationContent,
+          "notificationBtn":notificationBtn,
+        }
+    );
+  }
+
+  @override
+  setMainExist(bool exist) async{
+    await methodChannel.invokeMethod("setMainExist",{"exist":exist});
   }
 }

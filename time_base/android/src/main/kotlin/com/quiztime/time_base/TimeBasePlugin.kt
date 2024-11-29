@@ -4,7 +4,10 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
@@ -22,6 +25,17 @@ import org.json.JSONObject
 import java.util.ArrayList
 import java.util.concurrent.TimeUnit
 
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
+import android.widget.RemoteViews
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+
+
 
 lateinit var mApplicationContext: Context
 
@@ -36,9 +50,10 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
   private lateinit var result: MethodChannel.Result
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "time_base")
-    channel.setMethodCallHandler(this)
     mApplicationContext=flutterPluginBinding.applicationContext
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "time_base")
+    NotificationCall.setChannel(channel)
+    channel.setMethodCallHandler(this)
   }
 
   override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
@@ -50,6 +65,8 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
       "startTimeQuizWork"->startQuizTimeWork(call)
       "startTimeQuizService"->startTimeQuizService(call)
 //      "toNotificationSetting"->toNotificationSetting()
+      "showUrlByBrowser"->showUrlByBrowser(call)
+      "showOnceNotification"->showOnceNotification(call)
     }
   }
 
@@ -59,29 +76,19 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
         WorkManager.getInstance(mApplicationContext).cancelAllWork()
 
         val map = it as? Map<*, *>
-        val test = map?.get("test") as? Boolean
+        val timer = (map?.get("repeatIntervalMinutes") as? Int) ?: 0
 
         val builder = getWorkBuilder(map)
         val constraints = Constraints.Builder()
           .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
           .setRequiresBatteryNotLow(true).build()
 
-        if(test==true){
-          val workRequest=OneTimeWorkRequest
-            .Builder(TimeQuizWork::class.java)
-            .setConstraints(constraints)
-            .setInitialDelay(20000,TimeUnit.MILLISECONDS)
-            .setInputData(builder)
-            .build()
-          WorkManager.getInstance(mApplicationContext).enqueue(workRequest)
-        }else{
-          val periodicWorkRequest = PeriodicWorkRequest
-            .Builder(TimeQuizWork::class.java, 5, TimeUnit.HOURS)
-            .setConstraints(constraints)
-            .setInputData(builder)
-            .build()
-          WorkManager.getInstance(mApplicationContext).enqueue(periodicWorkRequest)
-        }
+        val periodicWorkRequest = PeriodicWorkRequest
+          .Builder(TimeQuizWork::class.java, if(timer<15) 15 else timer.toLong(), TimeUnit.MINUTES)
+          .setConstraints(constraints)
+          .setInputData(builder)
+          .build()
+        WorkManager.getInstance(mApplicationContext).enqueueUniquePeriodicWork("startQuizTimeWork",ExistingPeriodicWorkPolicy.KEEP,periodicWorkRequest)
       }
     }
   }
@@ -130,17 +137,18 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
   }
 
   private fun getLaunchNotificationId(){
-    if(null!=mActivity){
-      val intent = mActivity?.intent
-      val fromHistory=intent != null && intent.flags and Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY== Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY
-      if(null!=intent&&(TimeQuizData.workManagerNotificationAction==intent.action||TimeQuizData.foregroundNotificationAction==intent.action)&&!fromHistory){
-        result.success(intent.extras?.getInt("notificationId")?:0)
-      }else{
-        result.success(null)
-      }
-    }else{
-      result.success(null)
-    }
+    result.success(NotificationCall.notificationId)
+    NotificationCall.notificationId=null
+//    if(null!=mActivity){
+//      val intent = mActivity?.intent
+//      if(null!=intent&&(TimeQuizData.workManagerNotificationAction==intent.action||TimeQuizData.foregroundNotificationAction==intent.action)){
+//        result.success(intent.extras?.getInt("notificationId")?:0)
+//      }else{
+//        result.success(null)
+//      }
+//    }else{
+//      result.success(null)
+//    }
   }
 
   private fun startTimeQuizService(call: MethodCall){
@@ -222,5 +230,120 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
       return JSONObject(map).toString()
     }
     return ""
+  }
+
+  private fun showUrlByBrowser(call: MethodCall){
+    call.arguments?.let {
+      runCatching {
+        val map = it as? Map<*, *>
+        val url=(map?.get("url") as? String)?:""
+        var intent = if (url.startsWith("intent")) {
+          Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+        } else {
+          Intent("android.intent.action.VIEW", Uri.parse(url))
+        }
+        if (intent != null) {
+          if ("huawei".equals(Build.MANUFACTURER, ignoreCase = true)) {
+            intent.setPackage(getHwBrowser())
+          }
+          intent.addCategory(Intent.CATEGORY_BROWSABLE)
+          intent.component = null
+          intent.flags = FLAG_ACTIVITY_NEW_TASK
+        }
+        mApplicationContext.startActivity(intent)
+      }
+    }
+  }
+
+  private fun showOnceNotification(call: MethodCall){
+    call.arguments?.let {
+      runCatching {
+        val map = it as? Map<*, *>
+        val list = (map?.get("notificationContent") as? ArrayList<String>)?: arrayListOf()
+        val notificationId=(map?.get("notificationId") as? Int)?:0
+        val notificationB=(map?.get("notificationB") as? Boolean)?:false
+        val notificationBtn=(map?.get("notificationBtn") as? String)?:""
+        createNotification(notificationId,notificationB,notificationBtn,list)
+      }
+    }
+  }
+
+  fun getHwBrowser(): String? {
+    var packageName: String? = null
+    var systemApp: String? = null
+    var userApp: String? = null
+    val userAppList: MutableList<String?> = ArrayList()
+    val browserIntent = Intent("android.intent.action.VIEW", Uri.parse("https://"))
+    val resolveInfo =
+      mApplicationContext.packageManager.resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY)
+    if (resolveInfo != null && resolveInfo.activityInfo != null) {
+      packageName = resolveInfo.activityInfo.packageName
+    }
+    if (packageName == null || packageName == "android") {
+      val lists = mApplicationContext.packageManager.queryIntentActivities(browserIntent, 0)
+      for (app in lists) {
+        if (app.activityInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0) {
+          systemApp = app.activityInfo.packageName
+        } else {
+          userApp = app.activityInfo.packageName
+          userAppList.add(userApp)
+        }
+      }
+      if (userAppList.contains("com.android.chrome")) {
+        packageName = "com.android.chrome"
+      } else {
+        if (systemApp != null) {
+          packageName = systemApp
+        }
+        if (userApp != null) {
+          packageName = userApp
+        }
+      }
+    }
+    return packageName
+  }
+
+  @SuppressLint("MissingPermission")
+  private fun createNotification(id:Int,isB:Boolean,notificationBtn:String,notificationContent:ArrayList<String>){
+    val intent=Intent(mApplicationContext,NotificationActivity::class.java).apply {
+      action=TimeQuizData.workManagerNotificationAction
+      putExtra("notificationId",id)
+    }
+
+    val pendingIntent = if (VERSION.SDK_INT >= VERSION_CODES.S) {
+      PendingIntent.getActivity(mApplicationContext, id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    }else{
+      PendingIntent.getActivity(mApplicationContext, id, intent, PendingIntent.FLAG_ONE_SHOT)
+    }
+
+    val notificationLayout = RemoteViews(mApplicationContext.packageName, R.layout.time_quiz_notification_layout)
+    notificationLayout.setTextViewText(R.id.notificationContent,notificationContent.random())
+    notificationLayout.setTextViewText(R.id.notificationBtn,notificationBtn)
+    notificationLayout.setImageViewResource(R.id.notificationB,if(isB) R.drawable.noti_money_icon else R.drawable.noti_coins_icon)
+
+    val notification = NotificationCompat.Builder(mApplicationContext, createNotificationChannel(
+      "time_quiz_$id",
+      "time_quiz_$id",
+      NotificationManager.IMPORTANCE_MAX
+    )?:"time_quiz_$id")
+      .setSmallIcon(R.drawable.logoooo)
+      .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+      .setCustomContentView(notificationLayout)
+      .setCustomHeadsUpContentView(notificationLayout)
+      .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+      .setPriority(NotificationCompat.PRIORITY_MAX)
+      .setAutoCancel(true)
+      .setContentIntent(pendingIntent)
+    val notificationManager = NotificationManagerCompat.from(mApplicationContext)
+    notificationManager.notify(id, notification.build())
+  }
+
+  private fun createNotificationChannel(channelID: String, channelNAME: String, level: Int)=if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    val manager = mApplicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+    val channel = NotificationChannel(channelID, channelNAME, level)
+    manager!!.createNotificationChannel(channel)
+    channelID
+  } else {
+    null
   }
 }

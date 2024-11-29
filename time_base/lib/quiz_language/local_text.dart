@@ -59,15 +59,6 @@ class LocalText{
   static const String getPaidForEvery="Get paid for every answer you provide—cash out anytime!";
   static const String signUpInMinutes="Sign up in minutes and start earning right away!";
   static const String hugeRewardsAreWaiting="Huge Rewards are waiting for you! come and claim it!";
+  static const String playAndLearn="Play and Learn";
 
-
-
-  var map={
-    LocalText.pleaseInputYourAccount:"",
-    LocalText.waitingForWithdrawal:"",
-    LocalText.getPaidForAnsweringQuestions:"",
-    LocalText.getPaidForEvery:"",
-    LocalText.signUpInMinutes:"",
-    LocalText.hugeRewardsAreWaiting:"",
-  };
 }

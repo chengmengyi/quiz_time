@@ -1,7 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_broadcasts/flutter_broadcasts.dart';
 import 'package:flutter_check_adjust_cloak/flutter_check_adjust_cloak.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:time_base/hep/check_type/check_type_hep.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/notification/notification_call.dart';
 import 'package:time_base/hep/notification/notification_id.dart';
@@ -26,7 +28,7 @@ class NotificationHep{
 
   NotificationHep._internal();
 
-  initNotification(double userCoins)async{
+  initNotificationA(double userCoins)async{
     // var hasPer = await TimeBase.instance.requestTimeQuizNotificationPer();
 
     var result = await Permission.notification.request();
@@ -38,12 +40,47 @@ class NotificationHep{
         notificationB: FlutterCheckAdjustCloak.instance.getUserType(),
         notificationContent: [LocalText.getPaidForEvery.tr,LocalText.signUpInMinutes.tr,LocalText.hugeRewardsAreWaiting.tr],
         notificationBtn: LocalText.withdraw.tr,
+        repeatIntervalMinutes: repeatIntervalMinutes.getV().toint(120),
       );
       _addClickListener();
 
-
-    FirebaseMessaging.instance.subscribeToTopic("BR~ALL");
+      FirebaseMessaging.instance.subscribeToTopic("BR~ALL");
     }
+  }
+
+
+
+  initNotificationB(double userCoins)async{
+    var result = await Permission.notification.request();
+    if (result.isGranted) {
+      _startBc();
+      _startForegroundService(userCoins);
+
+      TimeBase.instance.startTimeQuizWork(
+        notificationId: NotificationId.notificationId,
+        notificationB: FlutterCheckAdjustCloak.instance.getUserType(),
+        notificationContent: [LocalText.getPaidForEvery.tr,LocalText.signUpInMinutes.tr,LocalText.hugeRewardsAreWaiting.tr],
+        notificationBtn: LocalText.withdraw.tr,
+        repeatIntervalMinutes: repeatIntervalMinutes.getV().toint(120),
+      );
+      _addClickListener();
+
+      FirebaseMessaging.instance.subscribeToTopic("BR~ALL");
+    }
+  }
+
+
+  _startBc(){
+    var receiver = BroadcastReceiver(names: ["android.intent.action.BOOT_COMPLETED","android.intent.action.USER_PRESENT"]);
+    receiver.messages.listen((event) async{
+      TimeBase.instance.showOnceNotification(
+        notificationId: NotificationId.bcNotificationID,
+        notificationB: FlutterCheckAdjustCloak.instance.getUserType(),
+        notificationContent: [LocalText.getPaidForEvery.tr,LocalText.signUpInMinutes.tr,LocalText.hugeRewardsAreWaiting.tr],
+        notificationBtn: LocalText.withdraw.tr,
+      );
+    });
+    receiver.start();
   }
 
   _startForegroundService(double userCoins) async{
@@ -87,6 +124,9 @@ class NotificationHep{
         break;
       case NotificationId.serviceNotificationId:
         TTTTHep.instance.pointEvent(PointName.inform_c,params: {"inform_from":"cash"});
+        break;
+      case NotificationId.bcNotificationID:
+        TTTTHep.instance.pointEvent(PointName.inform_c,params: {"inform_from":"broadcast"});
         break;
     }
   }

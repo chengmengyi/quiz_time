@@ -70,7 +70,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     Future((){
       GuideHep.instance.showGuide();
       _checkProgressFingerIndex();
-      NotificationHep.instance.initNotification(coinsBean.getV());
+      NotificationHep.instance.initNotificationB(coinsBean.getV());
     });
   }
 
@@ -361,6 +361,7 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
         right: 16.w,
         child: InkWell(
           onTap: (){
+            TTTTHep.instance.pointEvent(PointName.home_page_h5,);
             Navigator.push(context, MaterialPageRoute(builder: (_)=>WebPage()));
           },
           child: Image.asset("qtf/f1/1.gif",width: 60.w,height: 60.w,),
