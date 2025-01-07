@@ -23,7 +23,6 @@ import 'package:time_a/home/coins_animator.dart';
 import 'package:time_a/home/finger_w.dart';
 import 'package:time_a/home/set/set_page.dart';
 import 'package:time_a/home/top_coins_w.dart';
-import 'package:time_base/hep/ad/test_ad.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/notification/notification_hep.dart';
 import 'package:time_base/hep/save/qt_quiz_hep.dart';
@@ -596,7 +595,6 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     if(!kDebugMode){
       return;
     }
-    TestAd.instance.loadMax();
   }
 
 }

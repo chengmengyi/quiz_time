@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_check_adjust_cloak/flutter_check_adjust_cloak.dart';
 import 'package:flutter_max_ad/ad/ad_type.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:time_b/hep/info_hep.dart';
 import 'package:time_base/hep/check_type/check_type_hep.dart';
 import 'package:time_base/hep/heppppp.dart';
+import 'package:time_base/hep/save/qt_save.dart';
 
+const QtSaveKey<bool> alreadyStartCashTask = QtSaveKey(key: "alreadyStartCashTaskB", de: false);
 
 
 class ValueHepB{
@@ -135,7 +136,7 @@ class ValueHepB{
       return false;
     }
     var userCoins = InfoHep.instance.userCoins;
-    if(userCoins>=(list.last.endNumber??800)){
+    if((AdType.inter==type&&alreadyStartCashTask.getV())||userCoins>=(list.last.endNumber??800)){
       return Random().nextInt(100)<(list.last.point??0);
     }
     for(var v in list){

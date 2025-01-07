@@ -31,6 +31,7 @@ import 'package:time_b/home/finger_w.dart';
 import 'package:time_b/home/set/set_page.dart';
 import 'package:time_b/home/top_coins_w.dart';
 import 'package:time_b/home/web/web_page.dart';
+import 'package:time_base/hep/check_type/check_type_hep.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/notification/notification_hep.dart';
 import 'package:time_base/hep/notification/open_notifi.dart';
@@ -359,12 +360,15 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
       Positioned(
         top: 20.h,
         right: 16.w,
-        child: InkWell(
-          onTap: (){
-            TTTTHep.instance.pointEvent(PointName.home_page_h5,);
-            Navigator.push(context, MaterialPageRoute(builder: (_)=>WebPage()));
-          },
-          child: Image.asset("qtf/f1/1.gif",width: 60.w,height: 60.w,),
+        child: Visibility(
+          visible: CheckTypeHep.instance.qt_h5_console=="1",
+          child: InkWell(
+            onTap: (){
+              TTTTHep.instance.pointEvent(PointName.home_page_h5,);
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>WebPage()));
+            },
+            child: Image.asset("qtf/f1/1.gif",width: 60.w,height: 60.w,),
+          ),
         ),
       )
     ],

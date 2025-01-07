@@ -363,6 +363,7 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
       call: (card)async{
         var result = await SqlHepB.instance.insertTaskRecord(selectedPayType, chooseMoney, card);
         if(result){
+          alreadyStartCashTask.putV(true);
           InfoHep.instance.addCoins(-(chooseMoney.toDouble()));
           await _initTaskList();
           _showTaskDialog();
