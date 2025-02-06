@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_base/hep/check_type/check_type_hep.dart';
 import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/save/qt_str.dart';
 import 'package:time_base/quiz_language/local_text.dart';
@@ -8,6 +9,9 @@ import 'package:time_base/w/qt_image.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebPage extends StatefulWidget{
+  bool isLuckyPrize;
+  WebPage({required this.isLuckyPrize});
+
   @override
   State<StatefulWidget> createState() => _WebPageState();
 }
@@ -87,9 +91,10 @@ class _WebPageState extends State<WebPage>{
   );
 
   _initController(){
-    webViewController=WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
+    webViewController=WebViewController();
+    if(widget.isLuckyPrize){
+      webViewController.setJavaScriptMode(JavaScriptMode.unrestricted);
+      webViewController.setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
           },
@@ -106,11 +111,16 @@ class _WebPageState extends State<WebPage>{
           },
         ),
       );
+    }
   }
 
   _loadUrl()async{
-    var url="https://s.gamifyspace.com/tml?pid=12997&appk=zbTtTBL6b1ULBVd6c0YgBB0dPilslt9k&did=${await FlutterTbaInfo.instance.getGaid()}&cdid=${await FlutterTbaInfo.instance.getDistinctId()}";
-    webViewController.loadRequest(Uri.parse(url));
+    if(widget.isLuckyPrize){
+      var url="https://s.gamifyspace.com/tml?pid=12997&appk=zbTtTBL6b1ULBVd6c0YgBB0dPilslt9k&did=${await FlutterTbaInfo.instance.getGaid()}&cdid=${await FlutterTbaInfo.instance.getDistinctId()}";
+      webViewController.loadRequest(Uri.parse(url));
+    }else{
+      webViewController.loadRequest(Uri.parse(CheckTypeHep.instance.c55_h5));
+    }
   }
 
   String _checkToBrowser(String url){

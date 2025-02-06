@@ -7,6 +7,7 @@ import 'package:time_b/home/cash/cash_child.dart';
 import 'package:time_b/home/quiz/quiz_child.dart';
 import 'package:time_base/hep/tttt/point_name.dart';
 import 'package:time_base/hep/tttt/tttt_hep.dart';
+import 'package:time_base/time_base.dart';
 import 'package:time_base/w/qt_image.dart';
 
 import '../hep/call_listener/change_home_tab_index_listener.dart';
@@ -28,6 +29,7 @@ class _QuizHomeBState extends State<QuizHomeB> implements ClickTaskListener,Chan
     CallListenerHep.instance.updateChangeHomeTabIndexListener(this);
     LifecycleHep.instance.initListener();
     TTTTHep.instance.uploadLocalTbaData();
+    TimeBase.instance.openData();
   }
 
   @override

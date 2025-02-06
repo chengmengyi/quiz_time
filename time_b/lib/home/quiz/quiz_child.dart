@@ -365,9 +365,22 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
           child: InkWell(
             onTap: (){
               TTTTHep.instance.pointEvent(PointName.home_page_h5,);
-              Navigator.push(context, MaterialPageRoute(builder: (_)=>WebPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>WebPage(isLuckyPrize: true,)));
             },
             child: Image.asset("qtf/f1/1.gif",width: 60.w,height: 60.w,),
+          ),
+        ),
+      ),
+      Positioned(
+        top: 20.h,
+        left: 16.w,
+        child: Visibility(
+          visible: CheckTypeHep.instance.c55_h5.isNotEmpty,
+          child: InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>WebPage(isLuckyPrize: false,)));
+            },
+            child: QtImage("dhjw9dhjw",w: 86.w,h: 86.w,),
           ),
         ),
       )
