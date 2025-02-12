@@ -4,8 +4,7 @@ class TaskRecord{
   String? taskType;
   int? completedNum;
   int? totalNum;
-  int? signedNum;
-  int? signTotalNum;
+  int? taskIndex;
   String? cardsNum;
   TaskRecord({
     required this.payType,
@@ -13,8 +12,7 @@ class TaskRecord{
     required this.taskType,
     required this.completedNum,
     required this.totalNum,
-    required this.signedNum,
-    required this.signTotalNum,
+    required this.taskIndex,
     required this.cardsNum,
   });
 
@@ -24,8 +22,7 @@ class TaskRecord{
     "taskType":taskType,
     "completedNum":completedNum,
     "totalNum":totalNum,
-    "signedNum":signedNum,
-    "signTotalNum":signTotalNum,
+    "taskIndex":taskIndex,
     "cardsNum":cardsNum,
   };
 
@@ -36,13 +33,7 @@ class TaskRecord{
     taskType = json['taskType'];
     completedNum = json['completedNum'];
     totalNum = json['totalNum'];
-    signedNum = json['signedNum'];
-    signTotalNum = json['signTotalNum'];
+    taskIndex = json['taskIndex'];
     cardsNum = json['cardsNum'];
-  }
-
-  @override
-  String toString() {
-    return 'TaskRecord{payType: $payType, chooseMoney: $chooseMoney, taskType: $taskType, completedNum: $completedNum, totalNum: $totalNum, signedNum: $signedNum, signTotalNum: $signTotalNum, cardsNum: $cardsNum}';
   }
 }

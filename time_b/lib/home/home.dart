@@ -5,6 +5,7 @@ import 'package:time_b/hep/call_listener/click_task_listener.dart';
 import 'package:time_b/hep/lifecycle_hep.dart';
 import 'package:time_b/home/cash/cash_child.dart';
 import 'package:time_b/home/quiz/quiz_child.dart';
+import 'package:time_base/hep/heppppp.dart';
 import 'package:time_base/hep/tttt/point_name.dart';
 import 'package:time_base/hep/tttt/tttt_hep.dart';
 import 'package:time_base/time_base.dart';
@@ -48,6 +49,39 @@ class _QuizHomeBState extends State<QuizHomeB> implements ClickTaskListener,Chan
               alignment: Alignment.bottomCenter,
               child: _bottomWidget(),
             ),
+            
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(onPressed: (){
+                    FlutterMaxAd.instance.inittest();
+                  }, child: Text("init")),
+                  TextButton(onPressed: (){
+                    FlutterMaxAd.instance.loadtest();
+                  }, child: Text("load")),
+                  TextButton(onPressed: (){
+                    FlutterMaxAd.instance.tradtest();
+                  }, child: Text("trad")),
+                  TextButton(onPressed: (){
+                    FlutterMaxAd.instance.tradLoad();
+                  }, child: Text("load")),
+                  TextButton(onPressed: (){
+                    FlutterMaxAd.instance.tradShow();
+                  }, child: Text("show")),
+                  TextButton(onPressed: (){
+                    FlutterMaxAd.instance.initTopOn(strBase64Decode(toponId), strBase64Decode(toponKey));
+                  }, child: Text("topinit")),
+                  TextButton(onPressed: (){
+                    FlutterMaxAd.instance.loadTopon();
+                  }, child: Text("loadtopon")),
+                  TextButton(onPressed: (){
+                    FlutterMaxAd.instance.showTopon();
+                  }, child: Text("showtopon")),
+                ],
+              ),
+            )
           ],
         )
       ],

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:decimal/decimal.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_max_ad/ad/ad_type.dart';
 import 'package:synchronized/synchronized.dart';
@@ -27,11 +28,21 @@ class ValueHepB{
 
   ValueHepB._internal(){
     valueConfBeanB.listen((v){
+      if(kDebugMode){
+        return;
+      }
       loadQtData();
     });
   }
 
   loadQtData() async {
+    if(kDebugMode){
+      await _lock.synchronized(() async {
+        var s = await rootBundle.loadString("qtf/f2/value_b.txt");
+        _valueB=ValueLargeBean.fromJson(jsonDecode(_decode(s)));
+      });
+      return;
+    }
     if(valueConfBeanB.getV().isNotEmpty){
       _valueB=ValueLargeBean.fromJson(jsonDecode(valueConfBeanB.getV()));
     }else{
@@ -75,9 +86,11 @@ class ValueHepB{
     try{
       return (_valueB?.tixianTask??[])[index];
     }catch(e){
-      return TixianTask(title: "quiz",data: 50,time: 1);
+      return TixianTask(title: "quiz",data: 10);
     }
   }
+
+  bool isLastTask(int taskIndex)=>(_valueB?.tixianTask??[]).length-1==taskIndex;
 
   TixianTask getTaskByTitle(String title){
     try{
@@ -85,7 +98,7 @@ class ValueHepB{
       var indexWhere = list.indexWhere((value)=>value.title==title);
       return list[indexWhere];
     }catch(e){
-      return TixianTask(title: "quiz",data: 50,time: 1);
+      return TixianTask(title: "quiz",data: 10);
     }
   }
 
@@ -291,22 +304,19 @@ class TixianTask {
   TixianTask({
     this.title,
     this.data,
-    this.time,});
+  });
 
   TixianTask.fromJson(dynamic json) {
     title = json['title'];
     data = json['data'];
-    time = json['time'];
   }
   String? title;
   int? data;
-  int? time;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['title'] = title;
     map['data'] = data;
-    map['time'] = time;
     return map;
   }
 

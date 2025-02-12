@@ -284,7 +284,7 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
                             ),
                           ),
                           SizedBox(width: 10.w,),
-                          QtImage(bean.current>=bean.total?"mepfpef":"fnewfmow",w: 24.w,h: 24.w,),
+                          // QtImage(bean.current>=bean.total?"mepfpef":"fnewfmow",w: 24.w,h: 24.w,),
                         ],
                       ),
                     );
@@ -386,9 +386,11 @@ class _CashChildState extends State<CashChild> implements UpdateTaskListener{
   }
 
   Future<void> _initTaskList()async{
-    var list = await TaskHep.instance.getTaskListByPayTypeAndChooseMoney(selectedPayType, moneyList[chooseMoneyIndex]);
     taskList.clear();
-    taskList.addAll(list);
+    var taskBean = await TaskHep.instance.getTaskListByPayTypeAndChooseMoney(selectedPayType, moneyList[chooseMoneyIndex]);
+    if(null!=taskBean){
+      taskList.add(taskBean);
+    }
     completedTask=_checkHasCompletedTask();
     setState(() {});
   }

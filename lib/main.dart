@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:quiztime55/pro/pro_p.dart';
 import 'package:time_a/hep/sign/sign_hep.dart';
 import 'package:time_a/hep/value_hep.dart';
+import 'package:time_b/hep/sql/sql_hep_b.dart';
 import 'package:time_b/hep/value_hep.dart';
 import 'package:time_base/hep/ad/adjust_event_hep.dart';
 import 'package:time_base/hep/ad/load_ad_hep.dart';
@@ -29,6 +30,7 @@ void main() async {
   TTTTHep.instance.sessionEvent();
   AdjustEventHep.instance.initConf();
   TimeBase.instance.setMainExist(exist: true);
+  SqlHepB.instance.checkHasFirstVersionTaskRecord();
   runApp(const MyApp());
 }
 

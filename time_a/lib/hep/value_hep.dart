@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:decimal/decimal.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_check_adjust_cloak/flutter_check_adjust_cloak.dart';
 import 'package:flutter_max_ad/ad/ad_type.dart';
@@ -132,7 +133,7 @@ class ValueHepA{
 
   bool canShowAdByType(AdType type){
     // if(kDebugMode){
-    //   return false;
+    //   return true;
     // }
     List<IntadPoint> list = type==AdType.inter?(_valueB?.intadPoint??[]):type==AdType.reward?(_valueB?.rvadPoint??[]):[];
     if(list.isEmpty){

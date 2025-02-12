@@ -28,10 +28,9 @@ packages:
   anythink_sdk:
     dependency: transitive
     description:
-      name: anythink_sdk
-      sha256: "5a5c363284128933195446c4777b3ff9547b184ee6bcb88b66ede43cfb67bacc"
-      url: "https://pub.dev"
-    source: hosted
+      path: "/Users/qut55/Documents/anythink_sdk-1.0.2"
+      relative: false
+    source: path
     version: "1.0.2"
   app_settings:
     dependency: transitive
@@ -655,6 +654,14 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  tradplus_sdk:
+    dependency: transitive
+    description:
+      name: tradplus_sdk
+      sha256: "3d239549756d56ec6f5432afe50444cac2ce1e7f534db048847b10d7095bd835"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.7"
   typed_data:
     dependency: transitive
     description:

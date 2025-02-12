@@ -24,7 +24,8 @@ class ShowAdHep{
   }){
     var hasCache = FlutterMaxAd.instance.checkHasCache(adType);
     if(!hasCache){
-      FlutterMaxAd.instance.loadAdByType(adType);
+      FlutterMaxAd.instance.loadAdByType(AdType.inter);
+      FlutterMaxAd.instance.loadAdByType(AdType.reward);
       if(adType==AdType.inter){
         hiddenAd.call();
         return;

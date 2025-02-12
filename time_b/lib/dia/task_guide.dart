@@ -98,16 +98,11 @@ class TaskGuideDialog extends StatelessWidget{
   _clickBtn(){
     TTTTHep.instance.pointEvent(PointName.cash_task_pop_c,params: {"task_from":_getSourceFrom()});
     closeDialog();
-    if(taskBean.taskType==TaskType.sign){
-      "Today's check-in is completed, please come back tomorrow！".toast();
-      return;
-    }
     CallListenerHep.instance.clickTask(taskBean.taskType);
   }
 
   String _getIcon(){
     switch(taskBean.taskType){
-      case TaskType.sign: return "task_sign";
       case TaskType.spin: return "task_wheel";
       case TaskType.quiz: return "task_quiz";
       case TaskType.pop: return "task_pop";
@@ -118,7 +113,6 @@ class TaskGuideDialog extends StatelessWidget{
 
   String _getSourceFrom(){
     switch(taskBean.taskType){
-      case TaskType.sign: return "check";
       case TaskType.spin: return "wheel";
       case TaskType.quiz: return "quiz";
       case TaskType.pop: return "pop";

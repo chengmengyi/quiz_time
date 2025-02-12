@@ -636,8 +636,6 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     if(!kDebugMode){
       return;
     }
-
-    InfoHep.instance.addCoins(300);
   }
 
 }

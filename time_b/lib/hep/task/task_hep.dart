@@ -10,10 +10,9 @@ import 'package:time_base/quiz_language/local_text.dart';
 
 class TaskType{
   static const String quiz="quiz";
+  static const String pop="pop";
   static const String box="box";
   static const String spin="spin";
-  static const String pop="pop";
-  static const String sign="sign";
 }
 
 class TaskHep{
@@ -28,30 +27,39 @@ class TaskHep{
 
   final List<String> _taskTypeList=[TaskType.quiz,TaskType.box,TaskType.spin,TaskType.pop];
 
-  Future<List<TaskBean>> getTaskListByPayTypeAndChooseMoney(PayType payType,int chooseMoney)async{
-    //list only one
+  Future<TaskBean?> getTaskListByPayTypeAndChooseMoney(PayType payType,int chooseMoney)async{
     var list = await SqlHepB.instance.queryTaskRecordByPayTypeAndChooseMoney(payType,chooseMoney);
     if(list.isEmpty){
-      return [];
+      return null;
     }
     var taskRecord = list.first;
-    var currentTaskTypeIndex = _taskTypeList.indexWhere((value)=>value==taskRecord.taskType);
-    if((taskRecord.completedNum??0)<(taskRecord.totalNum??0)||(taskRecord.signedNum??0)<(taskRecord.signTotalNum??0)||currentTaskTypeIndex==_taskTypeList.length-1){
-      List<TaskBean> taskList=[];
-      taskList.add(TaskBean(title: _getTaskTitleByType(taskRecord), current: taskRecord.completedNum??0, total: taskRecord.totalNum??0, taskType: taskRecord.taskType??""));
-      taskList.add(TaskBean(title: LocalText.signInFor10Days.tr.tihuan(taskRecord.signTotalNum??0), current: taskRecord.signedNum??0, total: taskRecord.signTotalNum??0, taskType: TaskType.sign));
-      return taskList;
-    }else{
-      var nextTaskType = _taskTypeList[currentTaskTypeIndex+1];
-      var newTaskRecord = await SqlHepB.instance.refreshTaskRecordByTaskType(payType, chooseMoney, nextTaskType);
-      if(null==newTaskRecord){
-        return [];
-      }
-      List<TaskBean> taskList=[];
-      taskList.add(TaskBean(title: _getTaskTitleByType(newTaskRecord), current: newTaskRecord.completedNum??0, total: newTaskRecord.totalNum??0, taskType: newTaskRecord.taskType??""));
-      taskList.add(TaskBean(title: LocalText.signInFor10Days.tr.tihuan(newTaskRecord.signTotalNum??0), current: newTaskRecord.signedNum??0, total: newTaskRecord.signTotalNum??0, taskType: TaskType.sign));
-      return taskList;
-    }
+    return TaskBean(
+      title: _getTaskTitleByType(taskRecord),
+      current: taskRecord.completedNum??0,
+      total: taskRecord.totalNum??0,
+      taskType: taskRecord.taskType??"",
+    );
+    // var currentTaskTypeIndex = _taskTypeList.indexWhere((value)=>value==taskRecord.taskType);
+    // if((taskRecord.completedNum??0)<(taskRecord.totalNum??0)||(taskRecord.signedNum??0)<(taskRecord.signTotalNum??0)||currentTaskTypeIndex==_taskTypeList.length-1){
+    //   List<TaskBean> taskList=[];
+    //   taskList.add(TaskBean(title: _getTaskTitleByType(taskRecord), current: taskRecord.completedNum??0, total: taskRecord.totalNum??0, taskType: taskRecord.taskType??""));
+    //   taskList.add(TaskBean(title: LocalText.signInFor10Days.tr.tihuan(taskRecord.signTotalNum??0), current: taskRecord.signedNum??0, total: taskRecord.signTotalNum??0, taskType: TaskType.sign));
+    //   return taskList;
+    // }else{
+    //   var nextTaskType = _taskTypeList[currentTaskTypeIndex+1];
+    //   var newTaskRecord = await SqlHepB.instance.refreshTaskRecordByTaskType(payType, chooseMoney, nextTaskType);
+    //   if(null==newTaskRecord){
+    //     return [];
+    //   }
+    //   List<TaskBean> taskList=[];
+    //   taskList.add(TaskBean(title: _getTaskTitleByType(newTaskRecord), current: newTaskRecord.completedNum??0, total: newTaskRecord.totalNum??0, taskType: newTaskRecord.taskType??""));
+    //   taskList.add(TaskBean(title: LocalText.signInFor10Days.tr.tihuan(newTaskRecord.signTotalNum??0), current: newTaskRecord.signedNum??0, total: newTaskRecord.signTotalNum??0, taskType: TaskType.sign));
+    //   return taskList;
+    // }
+  }
+
+  updateTaskData(String taskType)async{
+    await SqlHepB.instance.updateTaskCompletedNumRecord(taskType);
   }
 
   String _getTaskTitleByType(TaskRecord taskRecord){

@@ -23,63 +23,92 @@ class SqlHepB {
   Future<void> initDB()async{
     await SqlHep.instance.createDB();
   }
-
-  Future<bool> checkFirstCash(PayType payType,int chooseMoney)async{
-    var result = await queryTaskRecordByPayTypeAndChooseMoney(payType, chooseMoney);
-    return result.isEmpty;
-  }
+  //
+  // Future<bool> checkFirstCash(PayType payType,int chooseMoney)async{
+  //   var result = await queryTaskRecordByPayTypeAndChooseMoney(payType, chooseMoney);
+  //   return result.isEmpty;
+  // }
 
   Future<bool> insertTaskRecord(PayType payType,int chooseMoney,String cards)async{
-    var firstCash = await checkFirstCash(payType, chooseMoney);
-    if(!firstCash){
+    var result = await queryTaskRecordByPayTypeAndChooseMoney(payType, chooseMoney);
+    if(result.isNotEmpty){
       return false;
     }
     var db = await SqlHep.instance.createDB();
     var task = ValueHepB.instance.getTaskByIndex(0);
-    var id = await db.insert(TableName.taskB, TaskRecord(payType: payType.name, chooseMoney: chooseMoney, taskType: task.title??"", completedNum: 0, totalNum: task.data??0, signedNum: 0, signTotalNum: task.time??0, cardsNum: cards).toJson());
+    var id = await db.insert(TableName.taskB2, TaskRecord(payType: payType.name, chooseMoney: chooseMoney, taskType: task.title??"", completedNum: 0, totalNum: task.data??0, taskIndex: 0,cardsNum: cards).toJson());
     return id>0;
   }
 
-
-  Future<TaskRecord?> refreshTaskRecordByTaskType(PayType payType,int chooseMoney,String nextTaskType)async{
-    var db = await SqlHep.instance.createDB();
-    var resultList = await db.query(TableName.taskB,where: '"payType" = ? AND "chooseMoney" = ?',whereArgs: [payType.name,chooseMoney]);
-    if(resultList.isEmpty){
-      return null;
-    }
-    var map = resultList.first;
-    var id = map["id"];
-    var newMap = Map<String,Object>.from(map);
-    var task = ValueHepB.instance.getTaskByTitle(nextTaskType);
-    newMap["taskType"]=nextTaskType;
-    newMap["completedNum"]=0;
-    newMap["totalNum"]=task.data??0;
-    newMap["signedNum"]=0;
-    newMap["signTotalNum"]=task.time??0;
-    await db.update(TableName.taskB, newMap,where: "id = ?",whereArgs: [id]);
-    return TaskRecord.fromJson(newMap);
-  }
+  //
+  // Future<TaskRecord?> refreshTaskRecordByTaskType(PayType payType,int chooseMoney,String nextTaskType)async{
+  //   var db = await SqlHep.instance.createDB();
+  //   var resultList = await db.query(TableName.taskB,where: '"payType" = ? AND "chooseMoney" = ?',whereArgs: [payType.name,chooseMoney]);
+  //   if(resultList.isEmpty){
+  //     return null;
+  //   }
+  //   var map = resultList.first;
+  //   var id = map["id"];
+  //   var newMap = Map<String,Object>.from(map);
+  //   var task = ValueHepB.instance.getTaskByTitle(nextTaskType);
+  //   newMap["taskType"]=nextTaskType;
+  //   newMap["completedNum"]=0;
+  //   newMap["totalNum"]=task.data??0;
+  //   await db.update(TableName.taskB, newMap,where: "id = ?",whereArgs: [id]);
+  //   return TaskRecord.fromJson(newMap);
+  // }
 
   updateTaskCompletedNumRecord(String taskType)async{
     var db = await SqlHep.instance.createDB();
-    var resultList = await db.query(TableName.taskB,where: '"taskType" = ? AND completedNum < totalNum',whereArgs: [taskType]);
-    var resultNum=0;
+    var resultList = await db.query(TableName.taskB2,where: '"taskType" = ?',whereArgs: [taskType]);
+    if(resultList.isEmpty){
+      return;
+    }
     for (var value in resultList) {
+      var newMap = Map<String,Object>.from(value);
       var id = value["id"];
       var completedNum = value["completedNum"] as int;
-      var newMap = Map<String,Object>.from(value);
-      newMap["completedNum"]=completedNum+1;
-      await db.update(TableName.taskB, newMap,where: "id = ?",whereArgs: [id]);
-      resultNum++;
-      if(resultNum==resultList.length){
-        CallListenerHep.instance.updateTaskProgress();
+      var totalNum = value["totalNum"] as int;
+      var taskIndex = value["taskIndex"] as int;
+      //已完成当前任务
+      if(completedNum>=totalNum-1){
+        //已完成所有任务
+        if(ValueHepB.instance.isLastTask(taskIndex)){
+          newMap["completedNum"]=totalNum;
+        }else{
+          // payType TEXT, chooseMoney INTEGER, taskType TEXT, completedNum INTEGER, totalNum INTEGER,taskIndex INTEGER, cardsNum TEXT
+          var nextTaskIndex = taskIndex+1;
+          var tixianTask = ValueHepB.instance.getTaskByIndex(nextTaskIndex);
+          newMap["completedNum"]=0;
+          newMap["totalNum"]=tixianTask.data??0;
+          newMap["taskType"]=tixianTask.title??"";
+          newMap["taskIndex"]=nextTaskIndex;
+        }
+      }else{
+        newMap["completedNum"]=completedNum+1;
       }
+      await db.update(TableName.taskB2, newMap,where: "id = ?",whereArgs: [id]);
     }
+    CallListenerHep.instance.updateTaskProgress();
+
+
+    // var resultNum=0;
+    // for (var value in resultList) {
+    //   var id = value["id"];
+    //   var completedNum = value["completedNum"] as int;
+    //   var newMap = Map<String,Object>.from(value);
+    //   newMap["completedNum"]=completedNum+1;
+    //   await db.update(TableName.taskB, newMap,where: "id = ?",whereArgs: [id]);
+    //   resultNum++;
+    //   if(resultNum==resultList.length){
+    //     CallListenerHep.instance.updateTaskProgress();
+    //   }
+    // }
   }
 
   Future<List<TaskRecord>> queryTaskRecordByPayTypeAndChooseMoney(PayType payType,int chooseMoney)async{
     var db = await SqlHep.instance.createDB();
-    var resultList = await db.query(TableName.taskB,where: '"payType" = ? AND "chooseMoney" = ?',whereArgs: [payType.name,chooseMoney]);
+    var resultList = await db.query(TableName.taskB2,where: '"payType" = ? AND "chooseMoney" = ?',whereArgs: [payType.name,chooseMoney]);
     List<TaskRecord> taskList=[];
     for(var value in resultList){
       taskList.add(TaskRecord.fromJson(value));
@@ -93,30 +122,30 @@ class SqlHepB {
   }
 
   insertSignData(SignBean bean)async{
-    var db = await SqlHep.instance.createDB();
-    var resultList = await db.query(TableName.taskB,where: 'signedNum < signTotalNum');
-    if(resultList.isNotEmpty){
-      db.insert(TableName.signB, bean.toJson());
-      var resultNum=0;
-      for (var value in resultList) {
-        var id = value["id"];
-        var signedNum = value["signedNum"] as int;
-        var newMap = Map<String,Object>.from(value);
-        newMap["signedNum"]=signedNum+1;
-        await db.update(TableName.taskB, newMap,where: "id = ?",whereArgs: [id]);
-        resultNum++;
-        if(resultNum==resultList.length){
-          CallListenerHep.instance.updateTaskProgress();
-        }
-      }
-    }else{
-      CallListenerHep.instance.updateTaskProgress();
-    }
+    // var db = await SqlHep.instance.createDB();
+    // var resultList = await db.query(TableName.taskB,where: 'signedNum < signTotalNum');
+    // if(resultList.isNotEmpty){
+    //   db.insert(TableName.signB, bean.toJson());
+    //   var resultNum=0;
+    //   for (var value in resultList) {
+    //     var id = value["id"];
+    //     var signedNum = value["signedNum"] as int;
+    //     var newMap = Map<String,Object>.from(value);
+    //     newMap["signedNum"]=signedNum+1;
+    //     await db.update(TableName.taskB, newMap,where: "id = ?",whereArgs: [id]);
+    //     resultNum++;
+    //     if(resultNum==resultList.length){
+    //       CallListenerHep.instance.updateTaskProgress();
+    //     }
+    //   }
+    // }else{
+    //   CallListenerHep.instance.updateTaskProgress();
+    // }
   }
 
   Future<bool> checkStartCashTask()async{
     var db = await SqlHep.instance.createDB();
-    var list = await db.query(TableName.taskB,);
+    var list = await db.query(TableName.taskB2,);
     return list.isNotEmpty;
   }
 
@@ -145,9 +174,29 @@ class SqlHepB {
     }
   }
 
-  test()async{
+  checkHasFirstVersionTaskRecord()async{
     var db = await SqlHep.instance.createDB();
-    var list = await db.query(TableName.everyDayAnswerNumB,);
-    print(list);
+    var list = await db.query(TableName.taskB);
+    if(list.isEmpty){
+      return;
+    }
+    for (var value in list) {
+      var payType=value["payType"] as String;
+      var cardsNum=value["cardsNum"] as String;
+      var chooseMoney = value["chooseMoney"] as int;
+      var type = PayType.values.firstWhere(
+            (e)=>e.toString().split(".").last==payType,
+        orElse: ()=>PayType.paypal,
+      );
+      await insertTaskRecord(type, chooseMoney, cardsNum);
+    }
+    db.delete(TableName.taskB);
   }
+
+
+// test()async{
+  //   var db = await SqlHep.instance.createDB();
+  //   var list = await db.query(TableName.everyDayAnswerNumB,);
+  //   print(list);
+  // }
 }
