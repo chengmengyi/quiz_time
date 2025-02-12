@@ -28,6 +28,8 @@ class CheckTypeHep implements CheckListener{
 
   CheckTypeHep._internal();
 
+  var qt_h5_console="1",c55_h5="";
+
   checkType()async{
     var url = await _createCloakUrl();
     var forsaken = await FlutterTbaInfo.instance.getDistinctId();
@@ -144,6 +146,22 @@ class CheckTypeHep implements CheckListener{
     var qt_inform_hour = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("qt_inform_hour");
     if(qt_inform_hour.isNotEmpty){
       repeatIntervalMinutes.putV(qt_inform_hour);
+    }
+
+    var c55quiztime_fb = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("c55quiztime_fb");
+    if(c55quiztime_fb.isEmpty){
+      c55quiztime_fb=strBase64Decode(localFacebookStrBase64);
+    }
+    FlutterMaxAd.instance.initFaceBook(c55quiztime_fb);
+
+    var qt_h5 = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("qt_h5_console");
+    if(qt_h5.isNotEmpty){
+      qt_h5_console=qt_h5;
+    }
+
+    var h5 = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("c55_h5");
+    if(h5.isNotEmpty){
+      c55_h5=h5;
     }
   }
   

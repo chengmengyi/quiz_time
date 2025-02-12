@@ -20,6 +20,7 @@ export 'package:flutter_check_adjust_cloak/flutter_check_adjust_cloak.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:flutter_tba_info/flutter_tba_info.dart';
 export 'package:flutter_max_ad/flutter_max_ad.dart';
+export 'package:flutter_max_ad/ad/listener/ad_show_listener.dart';
 export 'package:flutter_max_ad/ad/ad_type.dart';
 export 'package:synchronized/synchronized.dart';
 export 'package:applovin_max/applovin_max.dart';
@@ -31,7 +32,8 @@ const String tbaUrl="https://lipstick.quizrightanswer.com/habitant/simper/argive
 const String cloakUrl="https://doctrine.quizrightanswer.com/further/tyler";
 const String toponId="YTY3MDhlMDAwNzIxYjQ=";
 const String toponKey="YTQ3N2FjMWRiZjE1N2Q5MWM2MTY3MGEwMjJlYmU0YWU3";
-
+const String localFacebookStrBase64="ewogICAgImFwcF9pZCI6MTE4MjEyMjQ2MzQyODkzNCwKICAgICJjbGllbnRfdG9rZW4iOiAiZGI2MWI4NDIzMTY1NzE4MTVmNzM2YTEzMTQ0YmRhNjYiLAogICAgImFwcF9uYW1lIjogImM1NXF1aXp0aW1lIgp9";
+const String tradplusAppId="OEIyQTU4RUFGQzk2RjI5Q0I5REM5MkIwNkNENzRCNEQ=";
 
 extension Str2Dou on String{
   double toDou(){

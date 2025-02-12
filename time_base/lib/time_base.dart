@@ -68,4 +68,8 @@ class TimeBase {
   }){
     TimeBasePlatform.instance.setMainExist(exist);
   }
+
+  openData(){
+    TimeBasePlatform.instance.openData();
+  }
 }

@@ -96,4 +96,9 @@ class MethodChannelTimeBase extends TimeBasePlatform {
   setMainExist(bool exist) async{
     await methodChannel.invokeMethod("setMainExist",{"exist":exist});
   }
+
+  @override
+  openData() {
+    methodChannel.invokeMethod("openData");
+  }
 }

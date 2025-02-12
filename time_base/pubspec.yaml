@@ -17,12 +17,14 @@ dependencies:
   fluttertoast: 8.2.6 #toast
   synchronized: 3.2.0
   decimal: 3.0.2
-  flutter_max_ad: 0.3.9
-#  flutter_max_ad:
-#    path: /Users/qut55/Documents/q55/flutter_max_ad-0.3.3
+#  flutter_max_ad: 0.3.9
+  flutter_max_ad:
+    path: lugins/flutter_max_ad-0.3.9
   get: 4.6.6
   sqflite: 2.3.3+1
-  flutter_check_adjust_cloak: 0.3.2
+#  flutter_check_adjust_cloak: 0.3.2
+  flutter_check_adjust_cloak:
+    path: lugins/flutter_check_adjust_cloak-0.3.2
   flutter_tba_info: 0.0.8
   flutter_app_lifecycle: 0.0.1
   app_settings: 5.1.1

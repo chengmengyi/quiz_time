@@ -23,16 +23,30 @@ class LoadAdHep{
   final Lock _lock = Lock();
 
   loadAd()async{
-    _getAdStr((ad){
-      var json = jsonDecode(ad);
-      FlutterMaxAd.instance.initMax(
-        maxKey: strBase64Decode(maxKeyBase64),
-        maxAdBean: _getMaxAd(json),
-        logFacebookPurchase: true,
-        topOnAppId: strBase64Decode(toponId),
-        topOnAppKey: strBase64Decode(toponKey),
-      );
-    });
+    // if(kDebugMode){
+    //   var json = jsonDecode(strBase64Decode("ewogICJtbHBva2ppdSI6IDEwMCwKICAiaG5idmd5dGYiOiAxMDAsCiAgImt6dHltX2ludF9vbmUiOiBbCiAgICB7CiAgICAgICJjeGRyZXN6YSI6ICJBM0ZCN0Y0RTJEQzgzQjI2NjlDNkZDOUNFOUEyMzIxMSIsCiAgICAgICJxZXR1b2xqZyI6ICJ0cmFkcGx1cyIsCiAgICAgICJkYXh2bmxoZiI6ICJpbnRlcnN0aXRpYWwiLAogICAgICAiZmhpdXJzbmoiOiAzMDAwLAogICAgICAib3NuZW5oZnEiOiAzCiAgICAgfQogIF0sCgogImt6dHltX3J2X29uZSI6IFsKICAgICB7CiAgICAgICJjeGRyZXN6YSI6ICI2OUEzOUZFRUU1MzA5RDAwQkVBNDdGRkU3QjdGNDc1QyIsCiAgICAgICJxZXR1b2xqZyI6ICJ0cmFkcGx1cyIsCiAgICAgICJkYXh2bmxoZiI6ICJyZXdhcmQiLAogICAgICAiZmhpdXJzbmoiOiAzMDAwLAogICAgICAib3NuZW5oZnEiOiAzCiAgICAgfQogIF0KfQ=="));
+    //   FlutterMaxAd.instance.initMax(
+    //       maxKey: strBase64Decode(maxKeyBase64),
+    //       maxAdBean: _getMaxAd(json),
+    //       logFacebookPurchase: true,
+    //       topOnAppId: strBase64Decode(toponId),
+    //       topOnAppKey: strBase64Decode(toponKey),
+    //       tradplusAppId: strBase64Decode(tradplusAppId)
+    //   );
+    //   return;
+    // }
+
+    // _getAdStr((ad){
+    //   var json = jsonDecode(ad);
+    //   FlutterMaxAd.instance.initMax(
+    //     maxKey: strBase64Decode(maxKeyBase64),
+    //     maxAdBean: _getMaxAd(json),
+    //     logFacebookPurchase: true,
+    //     topOnAppId: strBase64Decode(toponId),
+    //     topOnAppKey: strBase64Decode(toponKey),
+    //     tradplusAppId: strBase64Decode(tradplusAppId)
+    //   );
+    // });
   }
   
   _getAdStr(Function(String ad) call)async{

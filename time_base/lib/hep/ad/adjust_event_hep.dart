@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:time_base/hep/ad/adjust_event_conf_bean.dart';
 import 'package:time_base/hep/check_type/check_type_hep.dart';

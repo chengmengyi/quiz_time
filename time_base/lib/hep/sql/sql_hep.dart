@@ -9,6 +9,7 @@ class TableName{
   static const String everyDayAnswerNum="everyDayAnswerNum";
   //b包数据库
   static const String taskB="taskB";
+  static const String taskB2="taskB2";
   static const String signB="signB";
   static const String everyDayAnswerNumB="everyDayAnswerNumB";
 
@@ -55,26 +56,24 @@ class SqlHep {
 
   Future<Database> createDB() async => await openDatabase(
     "quiz.db",
-    version: 1,
+    version: 2,
     onCreate: (db,version)async{
       db.execute('CREATE TABLE ${TableName.sign} (id INTEGER PRIMARY KEY AUTOINCREMENT, signTimer TEXT)');
       db.execute('CREATE TABLE ${TableName.task} (id INTEGER PRIMARY KEY AUTOINCREMENT, payType TEXT, chooseMoney INTEGER, taskType TEXT, completedNum INTEGER, totalNum INTEGER, signedNum INTEGER, signTotalNum INTEGER, cardsNum TEXT)');
       db.execute('CREATE TABLE ${TableName.everyDayAnswerNum} (id INTEGER PRIMARY KEY AUTOINCREMENT, timer TEXT, answerNum INTEGER)');
       db.execute('CREATE TABLE ${TableName.tbaData} (id INTEGER PRIMARY KEY AUTOINCREMENT, data TEXT)');
 
-      _createTableB(db);
+      _createTable2(db);
       },
-    // onUpgrade: (db,oldVersion,newVersion){
-    //   if(newVersion==2){
-    //     _createTableB(db);
-    //   }
-    // }
+    onUpgrade: (db,oldVersion,newVersion){
+      if(newVersion==2){
+        _createTable2(db);
+      }
+    }
   );
 
-  _createTableB(Database db){
-    db.execute('CREATE TABLE ${TableName.signB} (id INTEGER PRIMARY KEY AUTOINCREMENT, signTimer TEXT)');
-    db.execute('CREATE TABLE ${TableName.taskB} (id INTEGER PRIMARY KEY AUTOINCREMENT, payType TEXT, chooseMoney INTEGER, taskType TEXT, completedNum INTEGER, totalNum INTEGER, signedNum INTEGER, signTotalNum INTEGER, cardsNum TEXT)');
-    db.execute('CREATE TABLE ${TableName.everyDayAnswerNumB} (id INTEGER PRIMARY KEY AUTOINCREMENT, timer TEXT, answerNum INTEGER)');
+  _createTable2(Database db){
+    db.execute('CREATE TABLE ${TableName.taskB2} (id INTEGER PRIMARY KEY AUTOINCREMENT, payType TEXT, chooseMoney INTEGER, taskType TEXT, completedNum INTEGER, totalNum INTEGER,taskIndex INTEGER, cardsNum TEXT)');
   }
 
   // test()async{
@@ -83,4 +82,7 @@ class SqlHep {
   //   var first = list.first;
   //   first["timer"]=getTodayStr();
   // }
+
+
+
 }

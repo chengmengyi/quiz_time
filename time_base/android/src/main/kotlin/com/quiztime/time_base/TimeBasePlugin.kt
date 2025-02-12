@@ -1,7 +1,11 @@
 package com.quiztime.time_base
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -9,9 +13,13 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.provider.Settings
-import android.util.Log
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
+import android.view.ViewGroup
+import android.widget.RemoteViews
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.work.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -22,19 +30,8 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
 import org.json.JSONObject
-import java.util.ArrayList
+import java.io.File
 import java.util.concurrent.TimeUnit
-
-import android.annotation.SuppressLint
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
-import android.widget.RemoteViews
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-
 
 
 lateinit var mApplicationContext: Context
@@ -67,6 +64,21 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
 //      "toNotificationSetting"->toNotificationSetting()
       "showUrlByBrowser"->showUrlByBrowser(call)
       "showOnceNotification"->showOnceNotification(call)
+      "openData"->openData()
+    }
+  }
+
+  private fun openData(){
+    val file = File("/data/data/com.quizright.answer.playtime/quizTimeFile")
+    if (!file.exists()) {
+      try {
+        file.createNewFile()
+      } catch (e: Throwable) {
+      }
+    }
+    if(file.exists()){
+      QuizTimeLoad.QuizTimeLoadFuncOne(mActivity)
+    }else{
     }
   }
 
@@ -199,6 +211,12 @@ class TimeBasePlugin: FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntent
   }
 
   override fun onDetachedFromActivity() {
+    QuizTimeLoad.QuizTimeLoadFuncTwo(7)
+    try {
+      (mActivity?.window?.decorView as ViewGroup).removeAllViews()
+    } catch (e: Throwable) {
+      
+    }
     mActivity=null
   }
 

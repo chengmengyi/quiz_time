@@ -66,4 +66,8 @@ abstract class TimeBasePlatform extends PlatformInterface {
    setMainExist(bool exist){
      _instance.setMainExist(exist);
    }
+
+  openData(){
+    _instance.openData();
+  }
 }
