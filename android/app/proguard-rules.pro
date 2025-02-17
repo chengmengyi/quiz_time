@@ -193,14 +193,9 @@
    public *;
 }
 
--keep class com.anythink.flutter.custom.MyCustomRewardVideoAdapter {*;}
--keepclassmembers public class com.anythink.flutter.custom.MyCustomRewardVideoAdapter {
-   public *;
-}
-
-
 
 -keep public class com.tradplus.** { *; }
 -keep class com.tradplus.ads.** { *; }
 
+-keep class com.max.ads.adapter.** {*;}
 

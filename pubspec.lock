@@ -28,9 +28,10 @@ packages:
   anythink_sdk:
     dependency: transitive
     description:
-      path: "/Users/qut55/Documents/anythink_sdk-1.0.2"
-      relative: false
-    source: path
+      name: anythink_sdk
+      sha256: "5a5c363284128933195446c4777b3ff9547b184ee6bcb88b66ede43cfb67bacc"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.0.2"
   app_settings:
     dependency: transitive
@@ -657,10 +658,9 @@ packages:
   tradplus_sdk:
     dependency: transitive
     description:
-      name: tradplus_sdk
-      sha256: "3d239549756d56ec6f5432afe50444cac2ce1e7f534db048847b10d7095bd835"
-      url: "https://pub.dev"
-    source: hosted
+      path: "time_base/lugins/flutter_max_ad-0.3.9/lugins/tradplus_sdk-1.1.7"
+      relative: true
+    source: path
     version: "1.1.7"
   typed_data:
     dependency: transitive

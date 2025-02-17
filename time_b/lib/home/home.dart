@@ -50,38 +50,38 @@ class _QuizHomeBState extends State<QuizHomeB> implements ClickTaskListener,Chan
               child: _bottomWidget(),
             ),
             
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextButton(onPressed: (){
-                    FlutterMaxAd.instance.inittest();
-                  }, child: Text("init")),
-                  TextButton(onPressed: (){
-                    FlutterMaxAd.instance.loadtest();
-                  }, child: Text("load")),
-                  TextButton(onPressed: (){
-                    FlutterMaxAd.instance.tradtest();
-                  }, child: Text("trad")),
-                  TextButton(onPressed: (){
-                    FlutterMaxAd.instance.tradLoad();
-                  }, child: Text("load")),
-                  TextButton(onPressed: (){
-                    FlutterMaxAd.instance.tradShow();
-                  }, child: Text("show")),
-                  TextButton(onPressed: (){
-                    FlutterMaxAd.instance.initTopOn(strBase64Decode(toponId), strBase64Decode(toponKey));
-                  }, child: Text("topinit")),
-                  TextButton(onPressed: (){
-                    FlutterMaxAd.instance.loadTopon();
-                  }, child: Text("loadtopon")),
-                  TextButton(onPressed: (){
-                    FlutterMaxAd.instance.showTopon();
-                  }, child: Text("showtopon")),
-                ],
-              ),
-            )
+            // Align(
+            //   alignment: Alignment.bottomLeft,
+            //   child: Column(
+            //     mainAxisSize: MainAxisSize.min,
+            //     children: [
+            //       TextButton(onPressed: (){
+            //         FlutterMaxAd.instance.inittest();
+            //       }, child: Text("init")),
+            //       TextButton(onPressed: (){
+            //         FlutterMaxAd.instance.loadtest();
+            //       }, child: Text("load")),
+            //       TextButton(onPressed: (){
+            //         FlutterMaxAd.instance.tradtest();
+            //       }, child: Text("trad")),
+            //       TextButton(onPressed: (){
+            //         FlutterMaxAd.instance.tradLoad();
+            //       }, child: Text("load")),
+            //       TextButton(onPressed: (){
+            //         FlutterMaxAd.instance.tradShow();
+            //       }, child: Text("show")),
+            //       TextButton(onPressed: (){
+            //         FlutterMaxAd.instance.initTopOn(strBase64Decode(toponId), strBase64Decode(toponKey));
+            //       }, child: Text("topinit")),
+            //       TextButton(onPressed: (){
+            //         FlutterMaxAd.instance.loadTopon();
+            //       }, child: Text("loadtopon")),
+            //       TextButton(onPressed: (){
+            //         FlutterMaxAd.instance.showTopon();
+            //       }, child: Text("showtopon")),
+            //     ],
+            //   ),
+            // )
           ],
         )
       ],

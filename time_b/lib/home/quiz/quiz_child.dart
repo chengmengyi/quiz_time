@@ -41,6 +41,7 @@ import 'package:time_base/hep/tttt/tttt_hep.dart';
 import 'package:time_base/time_base.dart';
 import 'package:time_base/w/qt_image.dart';
 import 'package:time_base/w/ws_text.dart';
+import 'package:tradplus_sdk/tradplus_sdk.dart';
 
 
 class QuizChild extends StatefulWidget{
@@ -636,6 +637,11 @@ class _QuizChildState extends State<QuizChild> implements GuideListener{
     if(!kDebugMode){
       return;
     }
+    // FlutterMaxAd.instance.tradLoad();
+    // InfoHep.instance.addCoins(1000);
+    TPSDKManager.openTradPlusTool(strBase64Decode(tradplusAppId));
+    // FlutterMaxAd.instance.tradLoad();
+
   }
 
 }
