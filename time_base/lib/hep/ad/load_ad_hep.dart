@@ -36,17 +36,17 @@ class LoadAdHep{
     //   return;
     // }
 
-    // _getAdStr((ad){
-    //   var json = jsonDecode(ad);
-    //   FlutterMaxAd.instance.initMax(
-    //     maxKey: strBase64Decode(maxKeyBase64),
-    //     maxAdBean: _getMaxAd(json),
-    //     logFacebookPurchase: true,
-    //     topOnAppId: strBase64Decode(toponId),
-    //     topOnAppKey: strBase64Decode(toponKey),
-    //     tradplusAppId: strBase64Decode(tradplusAppId)
-    //   );
-    // });
+    _getAdStr((ad){
+      var json = jsonDecode(ad);
+      FlutterMaxAd.instance.initMax(
+        maxKey: strBase64Decode(maxKeyBase64),
+        maxAdBean: _getMaxAd(json),
+        logFacebookPurchase: true,
+        topOnAppId: strBase64Decode(toponId),
+        topOnAppKey: strBase64Decode(toponKey),
+        tradplusAppId: strBase64Decode(tradplusAppId)
+      );
+    });
   }
   
   _getAdStr(Function(String ad) call)async{

@@ -29,37 +29,6 @@ class FlutterMaxAd {
   // LoadAdListener? _loadAdListener;
   final _facebookAppEvents = FacebookAppEvents();
 
-
-
-  // I/anythink_network(21203): {"placementId":"b67a454ff84829","adtype":"reward","api":"result_callback","result":"fail","reason":"returned no eligible ads from any mediated networks. [listener:com.anythink.rewardvideo.api.ATRewardVideoAd$2@e2f575f]"}
-  // E/ATFlutterBridge(21203): onRewardedVideoAdFailed: b67a454ff84829,
-  // E/ATFlutterBridge(21203): code[ 4001 ]
-  // E/ATFlutterBridge(21203): desc[ Return Ad is empty. ]
-  // E/ATFlutterBridge(21203): detail[
-  // E/ATFlutterBridge(21203):   { ad_source_id[ 7614077 ];network_firm_id[ 102441 ];network_name=[  ];network_error:[ code:[ 4001 ]desc:[ Return Ad is empty. ]platformCode:[  ]platformMSG:[ This network don't support head bidding in current TopOn's version. ] ] }
-  // E/ATFlutterBridge(21203): ]
-  // I/flutter (21203): qwer====>rewardedVideoEventHandler===>RewardedStatus.rewardedVideoDidFailToLoad
-
-  inittest(){
-    print("kkkkk");
-    ATInitManger.setLogEnabled(logEnabled: true);
-    ATInitManger.initAnyThinkSDK(appidStr: "a6708e000721b4", appidkeyStr: "a477ac1dbf157d91c61670a022ebe4ae7");
-
-    ATListenerManager.rewardedVideoEventHandler.listen((event) {
-      print("qwer====>rewardedVideoEventHandler===>${event.rewardStatus}");
-    });
-  }
-
-  loadtest(){
-    print("loadtest");
-    ATRewardedManager.loadRewardedVideo(
-      placementID: "b67a454ff84829",
-      extraMap: {
-        ATSplashManager.tolerateTimeout(): 20000
-      },
-    );
-  }
-
   initMax({
     required String maxKey,
     required String topOnAppId,
@@ -77,7 +46,7 @@ class FlutterMaxAd {
     }
     _initTopOn(topOnAppId,topOnAppKey,topOnTestDeviceId);
     var maxConfiguration = await AppLovinMAX.initialize(maxKey);
-    // _initTradPlus(tradplusAppId);
+    _initTradPlus(tradplusAppId);
     if(null!=maxConfiguration){
       _maxInit=true;
       if(kDebugMode&&maxOpenDebugger==true){
@@ -89,35 +58,46 @@ class FlutterMaxAd {
     }
   }
 
-  tradtest(){
+  // tradtest(){
+  //   _initTradPlus("8B2A58EAFC96F29CB9DC92B06CD74B4D");
+  // }
+  //
+  tradLoad(){
+    print("kkkk");
+    TPRewardVideoManager.loadRewardVideoAd("0C56485B7F4771BF1F6DD5D1021CCB72");
+    // TPInterstitialManager.loadInterstitialAd("0C56485B7F4771BF1F6DD5D1021CCB72");
+  }
+
+  initTrad(){
     _initTradPlus("8B2A58EAFC96F29CB9DC92B06CD74B4D");
   }
 
-  tradLoad(){
-    // TPRewardVideoManager.loadRewardVideoAd("69A39FEEE5309D00BEA47FFE7B7F475C");
-    TPInterstitialManager.loadInterstitialAd("A3FB7F4E2DC83B2669C6FC9CE9A23211");
-  }
-
-  tradShow(){
-    TPInterstitialManager.showInterstitialAd("A3FB7F4E2DC83B2669C6FC9CE9A23211");
-  }
-
-  initTopOn(topOnAppId,topOnAppKey){
-    _initTopOn(topOnAppId,topOnAppKey,"");
-  }
-
-  loadTopon(){
-    ATInterstitialManager.loadInterstitialAd(
-      placementID: "b6708eb002b870",
-      extraMap: {
-        ATSplashManager.tolerateTimeout(): 20000
-      },
-    );
+ 
+  tradDebugger(){
+    TPSDKManager.openTradPlusTool("8B2A58EAFC96F29CB9DC92B06CD74B4D");
   }
   
-  showTopon(){
-    ATInterstitialManager.showInterstitialAd(placementID: "b6708eb002b870");
-  }
+  //
+  // tradShow(){
+  //   TPInterstitialManager.showInterstitialAd("A3FB7F4E2DC83B2669C6FC9CE9A23211");
+  // }
+  //
+  // initTopOn(topOnAppId,topOnAppKey){
+  //   _initTopOn(topOnAppId,topOnAppKey,"");
+  // }
+  //
+  // loadTopon(){
+  //   ATInterstitialManager.loadInterstitialAd(
+  //     placementID: "b6708eb002b870",
+  //     extraMap: {
+  //       ATSplashManager.tolerateTimeout(): 20000
+  //     },
+  //   );
+  // }
+  //
+  // showTopon(){
+  //   ATInterstitialManager.showInterstitialAd(placementID: "b6708eb002b870");
+  // }
 
   _initTradPlus(String tradplusAppId){
     TPSDKManager.setInitListener(
@@ -144,7 +124,7 @@ class FlutterMaxAd {
             LoadAdUtils2.instance.loadAdFail(adUnitId);
           },
           onAdImpression: (String adUnitId, Map<dynamic, dynamic> adInfo) {
-            printDebug("FlutterMaxAd show ad success---->$adUnitId");
+            printDebug("FlutterMaxAd show ad success---->$adUnitId--->$adInfo");
             _fullAdShowing=true;
             _removeMaxAd(adUnitId);
             AdNumUtils.instance.updateShowNum();
@@ -284,7 +264,6 @@ class FlutterMaxAd {
         }
       });
       ATListenerManager.rewardedVideoEventHandler.listen((event) {
-        print("FlutterMaxAd==rewardedVideoEventHandler===${event.requestMessage}===${event.rewardStatus}===${event.extraMap}");
         var adUnitId = event.placementID;
         switch (event.rewardStatus) {
         //广告加载失败
@@ -617,7 +596,7 @@ class FlutterMaxAd {
     // ecpm: 0.3984, isoCode: CN, bannerH: 0, ecpmExact: 0.3984, width: 0, isBiddingNetwork: true,
     // adNetworkId: 75, adSourceName: KwaiAd, ecpmExactCny: 2.9}
     try{
-      return MaxAd(adUnitId, extraMap["networkType"], extraMap["ecpm"], extraMap["ecpmPrecision"], "", "tradplus", "", MaxAdWaterfallInfo("", "", [], 0.0), null);
+      return MaxAd(adUnitId, extraMap["networkType"], extraMap["ecpm"].toString().toDou(), extraMap["ecpmPrecision"], "", "tradplus", "", MaxAdWaterfallInfo("", "", [], 0.0), null);
     }catch(e){
       return null;
     }
@@ -648,4 +627,14 @@ class FlutterMaxAd {
   //     });
   //   }
   // }
+}
+
+extension Str2Dou on String{
+  double toDou(){
+    try{
+      return double.parse(this);
+    }catch(e){
+      return 0.0;
+    }
+  }
 }

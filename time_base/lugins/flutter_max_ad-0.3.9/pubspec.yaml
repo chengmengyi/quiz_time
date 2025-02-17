@@ -13,15 +13,19 @@ dependencies:
   plugin_platform_interface: ^2.0.2
   get_storage: 2.1.1
   applovin_max: 4.0.0
+#  applovin_max:
+#    path: /Users/qut55/Documents/applovin_max-4.0.0
   adjust_sdk: 4.31.0
 #  facebook_app_events: 0.19.2
   facebook_app_events:
     path: ../facebook_app_events-0.19.2
   firebase_analytics: 11.2.1
-  tradplus_sdk: 1.1.7
-#  anythink_sdk: 1.0.2
-  anythink_sdk:
-    path: /Users/qut55/Documents/anythink_sdk-1.0.2
+#  tradplus_sdk: 1.1.7
+  tradplus_sdk:
+    path: lugins/tradplus_sdk-1.1.7
+  anythink_sdk: 1.0.2
+#  anythink_sdk:
+#    path: /Users/qut55/Documents/anythink_sdk-1.0.2
 
 dev_dependencies:
   flutter_test:

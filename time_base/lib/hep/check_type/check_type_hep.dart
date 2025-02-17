@@ -117,7 +117,7 @@ class CheckTypeHep implements CheckListener{
 
   _getFirebaseConf()async{
     var start = DateTime.now().millisecondsSinceEpoch;
-    var ad = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("kztym_ad_config");
+    var ad = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("kztym_ad_config_new");
     var end = DateTime.now().millisecondsSinceEpoch;
     TTTTHep.instance.pointEvent(PointName.kztym_config_success,params: {"time":"${(end-start)/1000}"});
     if(ad.isNotEmpty){
@@ -128,7 +128,7 @@ class CheckTypeHep implements CheckListener{
     if(small.isNotEmpty&&valueConfBeanA.getV().isEmpty){
       valueConfBeanA.putV(small);
     }
-    var large = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("qt_b_number");
+    var large = await FlutterCheckAdjustCloak.instance.getFirebaseStrValue("qt_b_number_new");
     if(large.isNotEmpty&&valueConfBeanB.getV().isEmpty){
       valueConfBeanB.putV(large);
     }

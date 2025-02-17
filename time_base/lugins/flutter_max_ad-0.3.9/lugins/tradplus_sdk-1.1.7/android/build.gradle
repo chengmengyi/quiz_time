@@ -1,0 +1,52 @@
+group 'com.example.tradplus_sdk'
+version '1.0'
+
+buildscript {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.2'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+        google()
+        mavenCentral()
+
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 33
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 23
+    }
+}
+
+def TRADPLUS_VERSION = "12.3.0.1"
+
+dependencies {
+    //TradPlus
+    compileOnly "com.tradplusad:tradplus:12.8.0.1"
+    compileOnly 'com.quality-ad:uid2-adapter:1.0.0'
+    compileOnly 'com.tradplusad:tradplus-tool:1.1.0'
+
+}
